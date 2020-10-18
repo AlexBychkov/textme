@@ -1,0 +1,32 @@
+body {
+	background-color: #f1f3f4;
+}
+/* .Container {
+	
+} */
+
+.Dialog {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	height: 95vh;
+}
+
+/*  WE HAVE BUG HERE BELOW      !!!!!!!!!!!!!!!!!!!!! */
+/*  WE HAVE BUG HERE BELOW      !!!!!!!!!!!!!!!!!!!!! */
+/*  WE HAVE BUG HERE BELOW      !!!!!!!!!!!!!!!!!!!!! */
+/*  WE HAVE BUG HERE BELOW      !!!!!!!!!!!!!!!!!!!!! */
+/* overflow property doesnt works perfectly(((( */
+.DialogField {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	background-color: white;
+	margin: 0 auto;
+	padding: 20px;
+	width: 80vw;
+	overflow-y: scroll;
+	max-height: infinite;
+}
