@@ -2,12 +2,8 @@ import React, { Component } from 'react'
 import * as firebase from 'firebase/app'
 import "firebase/auth"
 import 'fontsource-roboto'
-import TextField from '@material-ui/core/TextField'
-import Container from '@material-ui/core/Container'
-import Button from '@material-ui/core/Button'
+import { TextField, Container, Button, Backdrop, CircularProgress } from '@material-ui/core'
 import { AsYouType } from 'libphonenumber-js'
-import Backdrop from '@material-ui/core/Backdrop'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import logo from '../../big-logo.png'
 
 function Progress(props) {
@@ -21,10 +17,10 @@ function Progress(props) {
 function User(props) {
   return (
     <div>
-      <p>Мы вошли</p>
-      <p>Номер телефона: {props.user.phoneNumber}</p>
+      <p>We entered</p>
+      <p>Phone number: {props.user.phoneNumber}</p>
       <p>ID: {props.user.uid}</p>
-      <Button id="logout" onClick={props.logout} color="primary">Выход</Button>
+      <Button id="logout" onClick={props.logout} color="primary">Sign Out</Button>
     </div>
   )
 }
@@ -32,18 +28,19 @@ function User(props) {
 function PhoneBlock(props) {
   return (
     <div>
-      <p>Добро пожаловать</p>
-      <p>Для входа в приложение введите ваш номер телефона, <br />на него мы отправим СМС с кодом</p>
+      <p>Welcome</p>
+      <p>To enter the application, enter your phone number, <br />
+      we will send an SMS with a code to it</p>
       <TextField
         key="phone-number"
-        label="Номер телефона"
+        label="Phone"
         placeholder="+7 707 070 00 77"
         onChange={props.changePhone}
-        helperText={props.phone.error ? "Ошибка" : ""}
+        helperText={props.phone.error ? "Error" : ""}
         error={props.phone.error}
       />
       <br />
-      <Button id="send-sms" onClick={props.sendPhone} color="primary">Отпрвить СМС</Button>
+      <Button id="send-sms" onClick={props.sendPhone} color="primary">Send SMS</Button>
     </div>
   )
 }
@@ -51,17 +48,17 @@ function PhoneBlock(props) {
 function CodeBlock(props) {
   return (
     <div>
-      <p>Введите код, отправленный на номер <b>{props.formatPhone}</b></p>
+      <p>Enter the code sent to the number <b>{props.formatPhone}</b></p>
       <TextField
         key="sms-code"
-        label="СМС код"
+        label="Code"
         placeholder="123456"
         onChange={props.changeCode}
-        helperText={props.code.error ? "Ошибка" : ""}
+        helperText={props.code.error ? "Error" : ""}
         error={props.code.error}
       />
       <br />
-      <Button onClick={props.sendCode} color="primary">Проверить код</Button>
+      <Button onClick={props.sendCode} color="primary">Validate</Button>
     </div>
   )
 }
@@ -99,7 +96,6 @@ export default class Login extends Component {
 
   firebaseInit() {
     firebase.initializeApp(this.firebaseConfig)
-    firebase.auth().languageCode = 'ru'
   }
 
   componentDidMount() {
