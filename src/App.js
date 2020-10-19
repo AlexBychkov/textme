@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Home from './pages/home/Home';
-import GlobalMenu from './components/menu/Menu'
+import Header from './components/header/Header'
 
 import {
   Route,
@@ -12,11 +12,11 @@ import {
 function App() {
     return (
       <div className="App">
-        <GlobalMenu />
+        <Header />
         <Switch>
           <Route path='/home' component={Home} />
           <Route path='/component' component={Home} />
-          <Redirect from='/' to='/home'/>
+         {/*  <Redirect from='/' to='/home'/> */}
         </Switch>
       </div>
     );

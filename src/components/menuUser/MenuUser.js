@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
-import { Button, Menu, MenuItem } from '@material-ui/core';
+import { Avatar, Box, Button, Menu, MenuItem } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 
 
-export default function GlobalMenu(props) {
+export default function MenuUser(props) {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
@@ -15,7 +15,7 @@ export default function GlobalMenu(props) {
     setAnchorEl(null);
   };
 
-  
+
   //style for link
   const active = {
     fontWeight: "bold",
@@ -26,12 +26,13 @@ export default function GlobalMenu(props) {
     textDecoration: 'none',
     color: "gray"
   }
+  const logOut = () => {
+    alert('Вышел')
+  }
 
   return (
     <div>
-      <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-       Menu
-      </Button>
+      <Avatar aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>H</Avatar>
       <Menu
         anchorEl={anchorEl}
         keepMounted
@@ -39,13 +40,10 @@ export default function GlobalMenu(props) {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose}>
-            <NavLink to='/' activeStyle={active} style={styleLink}>Profile</NavLink>
+          <NavLink to='/' activeStyle={active} style={styleLink}>Profile</NavLink>
         </MenuItem>
         <MenuItem onClick={handleClose}>
-            <NavLink to='/contact' activeStyle={active} style={styleLink}>Contact</NavLink>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-            <NavLink to='/setings' activeStyle={active} style={styleLink}>Setings</NavLink>
+          <Box style={styleLink} onClick={logOut}>Log Out</Box>
         </MenuItem>
       </Menu>
     </div>
