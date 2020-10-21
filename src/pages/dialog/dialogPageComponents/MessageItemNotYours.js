@@ -5,7 +5,7 @@ const MessageItemNotYours = props => {
 	return (
 		<div className = {classes.NotYourMessage}>
 			<div className = {classes.NotYourMessageLeftBlock}>
-				<span style = {{fontWeight: 100, fontSize: '0.7em'}}>{props.name}  {props.time}</span>
+				<span>{props.name}  {props.time}</span>
 				<p>
 					{props.value}
 				</p>

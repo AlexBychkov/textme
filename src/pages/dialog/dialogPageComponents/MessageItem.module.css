@@ -18,6 +18,8 @@ img {
 .YourMessageRightBlock span {
 	text-align: start;
 	margin-left: 20px;
+	font-weight: 100;
+	font-size: '0.7em;
 }
 .YourMessageRightBlock p {
 	max-width: 30vw;
@@ -50,4 +52,6 @@ img {
 .NotYourMessageLeftBlock span {
 	text-align: end;
 	margin-right: 10px;
+	font-weight: 100;
+	font-size: '0.7em;
 }

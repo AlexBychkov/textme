@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import { Container } from '@material-ui/core';
 import classes from './Dialog.module.css'
-import MessageItemYours from './components/MessageItemYours'
-import MessageItemNotYours from './components/MessageItemNotYours'
-import TextArea from './components/TextArea'
+import MessageItemYours from './dialogPageComponents/MessageItemYours'
+import MessageItemNotYours from './dialogPageComponents/MessageItemNotYours'
+import TextArea from './dialogPageComponents/TextArea'
 
 
 export default class Dialog extends Component {
@@ -58,8 +58,7 @@ export default class Dialog extends Component {
 		copy.push(objToPush);
 		this.setState({
 			messagesData: copy
-		}
-		)	
+		})	
 	}
 
 	
