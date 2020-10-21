@@ -1,14 +1,15 @@
 import React, {Component} from 'react'
 import { Container } from '@material-ui/core';
 import classes from './Dialog.module.css'
-import MessageItemYours from './dialogPageComponents/MessageItemYours'
-import MessageItemNotYours from './dialogPageComponents/MessageItemNotYours'
-import TextArea from './dialogPageComponents/TextArea'
+import MessageItemYours from './components/MessageItemYours'
+import MessageItemNotYours from './components/MessageItemNotYours'
+import InputTextArea from './components/InputTextArea'
 
 
 export default class Dialog extends Component {
 
 	state = {
+		// Temporal data.....
 		messagesData : [
 			{
 				id : 0, 
@@ -59,6 +60,11 @@ export default class Dialog extends Component {
 		this.setState({
 			messagesData: copy
 		})	
+			
+		// Do we have better option to access element in React????
+		// still workin  on it
+		let x = document.getElementById('dialogFieldId')
+		x.scrollTop = x.scrollHeight;
 	}
 
 	
@@ -67,7 +73,10 @@ export default class Dialog extends Component {
 		return (
 			<Container className = {classes.Container}> 
 				<div className = {classes.Dialog}> 
-					<div className = {classes.DialogField}> 						
+					<div 
+						id = 'dialogFieldId'
+						className = {classes.DialogField}
+					> 						
 						{this.state.messagesData.map((value, index) => {
 							if (value.areYou) {
 								return (
@@ -92,7 +101,7 @@ export default class Dialog extends Component {
 						})}							
 					</div>
 
-					<TextArea 
+					<InputTextArea 
 						sendMessage = {this.sendMessageHandler}
 						messagesData = {this.state.messagesData}
 					/>

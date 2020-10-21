@@ -12,7 +12,7 @@ const MessageItemNotYours = props => {
 			</div>							
 			
 			<div>
-				<img src={props.avatar} alt = 'avatar'/>
+				<img className = {classes.Avatar} src={props.avatar} alt = 'avatar'/>
 			</div>
 			
 		</div>

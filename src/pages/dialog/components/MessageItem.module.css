@@ -1,7 +1,8 @@
-img {
+.Avatar {
 	border-radius: 50%;
 	width: 50px;
 	height: 50px;
+	object-fit: cover;
 }
 
 
@@ -11,7 +12,7 @@ img {
 	position: relative;
 	left: 5vw;
 }
-.YourMessageRightBlock {
+.YourMessageRightBlock, .NotYourMessageLeftBlock {
 	display: flex;
 	flex-direction: column;
 }
@@ -19,15 +20,16 @@ img {
 	text-align: start;
 	margin-left: 20px;
 	font-weight: 100;
-	font-size: '0.7em;
+	font-size: 0.7em;
 }
 .YourMessageRightBlock p {
 	max-width: 30vw;
 	margin: 5px 0px 5px 5px;
 	padding: 5px;
 	background-color: white;
-	border: 2px solid #f1f3f4;
+	border: 1px solid #f1f3f4;
 	border-radius: 10px 10px 10px 0px;
+	white-space: pre-wrap;
 }
 
 
@@ -35,12 +37,8 @@ img {
 	max-width: 40vw;
 	display: flex;
 	position: relative;
-	justify-content: flex-end;
+	justify-content: flex-end; 
 	left: 15vw;
-}
-.NotYourMessageLeftBlock {
-	display: flex;
-	flex-direction: column;
 }
 .NotYourMessageLeftBlock p{
 	max-width: 30vw;
@@ -53,5 +51,5 @@ img {
 	text-align: end;
 	margin-right: 10px;
 	font-weight: 100;
-	font-size: '0.7em;
+	font-size: 0.7em;
 }
