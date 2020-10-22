@@ -1,0 +1,56 @@
+.contact-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.contact-list .table {
+  width: 70%;
+}
+
+.contact-list .table thead .table-item {
+  position: relative;
+  max-width: 200px;
+}
+
+.contact-list .table thead .table-item input {
+  width: 100%;
+  padding-right: 22px;
+}
+
+.contact-list .table thead .table-item:after {
+  content: "\1F50D";
+  position: absolute;
+  right: .5rem;
+  top: 50%;
+  width: 15px;
+  height: 15px;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+.contact-list .table thead th:nth-last-child(1) {
+  max-width: 50px;
+}
+
+.contact-list .table tbody tr:nth-child(2n) {
+  background: #e6e6e6;
+}
+
+.contact-list .table-add-btn {
+  background: #00ff3c;
+  border-radius: 4px;
+  height: 20px;
+  width: 30px;
+}
+/*# sourceMappingURL=ContactList.css.map */

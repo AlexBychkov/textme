@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import Home from './pages/home/Home';
 import Contact from './pages/contact/Contact';
-import ContactList from './pages/contactList/ContactList';
+import ContactList from './pages/contact/contactList/ContactList';
 
 import {
   Route,
