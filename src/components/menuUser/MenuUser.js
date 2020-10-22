@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Avatar, Box, Button, Menu, MenuItem } from '@material-ui/core';
+import { Avatar, Box, Menu, MenuItem } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 
 
@@ -40,7 +40,7 @@ export default function MenuUser(props) {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose}>
-          <NavLink to='/' activeStyle={active} style={styleLink}>Profile</NavLink>
+          <NavLink to='/profile' activeStyle={active} style={styleLink}>Profile</NavLink>
         </MenuItem>
         <MenuItem onClick={handleClose}>
           <Box style={styleLink} onClick={logOut}>Log Out</Box>
