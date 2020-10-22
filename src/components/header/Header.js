@@ -2,7 +2,9 @@ import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Drawer, AppBar, Toolbar, CssBaseline, Typography, Divider, IconButton, Box } from '@material-ui/core';
-import { MenuIcon, ChevronLeftIcon, ChevronRightIcon } from '@material-ui/icons';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'; 
+import MenuIcon from '@material-ui/icons/Menu'; 
 import MenuUser from '../menuUser/MenuUser';
 import { FirstListMenu, SecondListMenu } from './listMenu/ListMenu';
 

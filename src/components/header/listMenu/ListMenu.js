@@ -1,47 +1,47 @@
 import React from 'react';
-import { ListItem, ListItemText, List } from '@material-ui/core';
-
+import { ListItem, ListItemText, List, ListItemIcon } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
-
-/*
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-*/
-
+import PersonIcon from '@material-ui/icons/Person';
+import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
+import SendIcon from '@material-ui/icons/Send';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 export function FirstListMenu() {
-    const pathItem = {
-        'Profile': '/profile',
-        'Contact': '/contact',
-        'Send message': '/message'
-    }
+    const itemList = [
+        {text:'Send message',
+        path: '/message',
+        icon: <SendIcon />},
 
-    const listText = ['Profile', 'Contact', 'Send message']
+        {text:'Profile',
+        path: '/profile',
+        icon: <PersonIcon />},
+
+        {text:'Contact',
+        path: '/contact',
+        icon: <PermContactCalendarIcon />},
+    ]
 
     return (
-        <ListMenu listText={listText} listPath={pathItem} />
+        <ListMenu  itemList={itemList} />
     );
 };
 
 export function SecondListMenu() {
-    const pathItem = {
-        'Setings': '/setings',
-
-    }
-
-    const listText = ['Setings']
+    const itemList = [
+        {text:'Settings',
+        path: '/settings',
+        icon: <SettingsIcon />},
+    ]
 
     return (
-        <ListMenu listText={listText} listPath={pathItem} />
+        <ListMenu itemList={itemList} />
     );
 };
 
 
 
 export function ListMenu(props) {
-    const listText = props.listText // []
-    const listPath = props.listPath // {}
+    const itemList = props.itemList
 
     //style for link
     const active = {
@@ -54,14 +54,13 @@ export function ListMenu(props) {
         color: "black"
     }
 
-
     return (
         <List>
-            {listText.map((text, index) => (
-                <NavLink to={listPath[text]} activeStyle={active} style={styleLink}>
-                    <ListItem button key={text}>
-                        {/*     <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
-                        <ListItemText>{text}</ListItemText>
+            {itemList.map((elem, index) => (
+                <NavLink to={itemList[index].path} activeStyle={active} style={styleLink}>
+                    <ListItem button key={itemList[index].text}>
+                            <ListItemIcon>{itemList[index].icon}</ListItemIcon>
+                        <ListItemText>{itemList[index].text}</ListItemText>
                     </ListItem>
                 </NavLink>
             ))}
