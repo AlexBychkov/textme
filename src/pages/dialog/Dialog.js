@@ -46,27 +46,24 @@ export default class Dialog extends Component {
 				messageValue : 'Are you joking? loremadsasdfasdfAre you joking? loremadsasdfasdfAre you joking? loremadsasdfasdfAre you joking? loremadsasdfasdfAre you joking? loremadsasdfasdfAre you joking? loremadsasdfasdf',
 				areYou: true	
 			},
-
-		]
-
+		],
 	}
+	myRef = React.createRef();
 
 
 	
 	sendMessageHandler = (objToPush) => {
-		console.log(objToPush);
 		const copy = [...this.state.messagesData];
 		copy.push(objToPush);
 		this.setState({
 			messagesData: copy
 		})	
-			
-		// Do we have better option to access element in React????
-		// still workin  on it
-		let x = document.getElementById('dialogFieldId')
-		x.scrollTop = x.scrollHeight;
 	}
-
+	//still workin on that
+	setScroll = () => {
+		if (this.myRef) 
+			this.myRef.current.scrollTop = this.myRef.current.scrollHeight;
+	}
 	
 
 	render() {
@@ -74,8 +71,8 @@ export default class Dialog extends Component {
 			<Container className = {classes.Container}> 
 				<div className = {classes.Dialog}> 
 					<div 
-						id = 'dialogFieldId'
 						className = {classes.DialogField}
+						ref = {this.myRef}
 					> 						
 						{this.state.messagesData.map((value, index) => {
 							if (value.areYou) {
@@ -98,7 +95,9 @@ export default class Dialog extends Component {
 									/>
 								)
 							}	
-						})}							
+						})}	
+						{/* temporal */}
+						{/* {this.setScroll()} */}
 					</div>
 
 					<InputTextArea 

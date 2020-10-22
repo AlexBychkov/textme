@@ -10,17 +10,12 @@ body {
 	margin-bottom: 10px;
 	height: 95vh;
 }
-
-
-/* overflow property doesnt works perfectly... */
 .DialogField {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 	background-color: white;
 	margin: 0 auto;
 	padding: 20px;
 	width: 60vw;
 	overflow-y: scroll;
-	max-height: infinite;
 }
