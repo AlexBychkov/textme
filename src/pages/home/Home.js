@@ -2,6 +2,8 @@ import React from 'react';
 import Dialog from '../dialog/Dialog';
 
 import Header from '../../components/header/Header'
+import Contact from '../contact/Contact';
+import ContactList from '../contactList/ContactList';
 
 import {
   Route,
@@ -15,7 +17,11 @@ export default class Home extends React.Component {
         <Header />
         <Switch>
           <Route path='/dialog' component={Dialog} />
-
+          <Route path='/contact' component={Contact} />
+        <Route path='/contact-list' component={ContactList} />
+        
+        <Route component={'NotFoundPage'} />
+        <Route path="/404" component={'NotFoundPage'} />
         </Switch>
         </>
       );
