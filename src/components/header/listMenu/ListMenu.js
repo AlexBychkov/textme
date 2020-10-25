@@ -9,7 +9,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 export function FirstListMenu() {
     const itemList = [
         {text:'Send message',
-        path: '/message',
+        path: '/dialog',
         icon: <SendIcon />},
 
         {text:'Profile',
@@ -57,8 +57,8 @@ export function ListMenu(props) {
     return (
         <List>
             {itemList.map((elem, index) => (
-                <NavLink to={itemList[index].path} activeStyle={active} style={styleLink}>
-                    <ListItem button key={itemList[index].text}>
+                <NavLink to={itemList[index].path} key={index} activeStyle={active} style={styleLink}>
+                    <ListItem button >
                             <ListItemIcon>{itemList[index].icon}</ListItemIcon>
                         <ListItemText>{itemList[index].text}</ListItemText>
                     </ListItem>

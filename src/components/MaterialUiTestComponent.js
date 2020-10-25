@@ -6,7 +6,7 @@ import { Button, TextField } from '@material-ui/core'; //import Material IU elem
 const MaterialUiTestComponent = (props) => { //es 6 error function. method should return ONE element, that could contain several elements inside
     return <>
             <TextField name={props.fieldName}></TextField>
-            <Button><text color="primary">{props.btnName}</text></Button>
+            <Button color="primary">{props.btnName}</Button>
         </>;
 }
 
