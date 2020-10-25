@@ -18,10 +18,8 @@ export default class Home extends React.Component {
         <Switch>
           <Route path='/dialog' component={Dialog} />
           <Route path='/contact' component={Contact} />
-        <Route path='/contact-list' component={ContactList} />
-        
-        <Route component={'NotFoundPage'} />
-        <Route path="/404" component={'NotFoundPage'} />
+          <Route path='/contactList' component={ContactList} />
+
         </Switch>
         </>
       );

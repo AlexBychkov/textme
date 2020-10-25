@@ -1,3 +1,4 @@
+import { List, ListItem, ListItemText, TextField } from '@material-ui/core';
 import React, { Component } from 'react';
 
 
@@ -38,14 +39,22 @@ class ContactList extends Component {
     render() {
         const { contacts } = this.state;
         return (
-            <div className="contact-list">
-                {
-                    contacts.length > 0 && contacts.map(item => {
-
-                        if (item.id > 1) return <div>{item.id}</div>;
-
+            <div className="contact-list" style={{width: '100%',
+            maxWidth: 360,marginLeft: '140px'}}>
+                {/*contacts.length > 0 && contacts.map(item => {
+                        if (item.id > 1) return <div key={item}>{item.id}</div>;
                     })
-                }
+                 */}
+                <p>Contacts</p>
+                <List>
+                    {contacts.length > 0 && contacts.map(item => {
+                        return (
+                            <ListItem key={item.id} button>
+                                <ListItemText>{item.name}</ListItemText>
+                            </ListItem>
+                        )
+                    })
+                    } </List>
             </div>
         );
     }

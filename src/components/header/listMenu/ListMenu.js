@@ -17,7 +17,7 @@ export function FirstListMenu() {
         icon: <PersonIcon />},
 
         {text:'Contact',
-        path: '/contact',
+        path: '/contactList',
         icon: <PermContactCalendarIcon />},
     ]
 
