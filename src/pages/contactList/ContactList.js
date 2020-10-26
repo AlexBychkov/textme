@@ -1,5 +1,6 @@
 import { List, ListItem, ListItemText} from '@material-ui/core';
 import React, { Component } from 'react';
+import classes from './ContactList.module.css'
 
 
 class ContactList extends Component {
@@ -39,12 +40,7 @@ class ContactList extends Component {
     render() {
         const { contacts } = this.state;
         return (
-            <div className="contact-list" style={{width: '100%',
-            maxWidth: 360,marginLeft: '140px'}}>
-                {/*contacts.length > 0 && contacts.map(item => {
-                        if (item.id > 1) return <div key={item}>{item.id}</div>;
-                    })
-                 */}
+            <div className={classes.contactList}>
                 <p>Contacts</p>
                 <List>
                     {contacts.length > 0 && contacts.map(item => {
