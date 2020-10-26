@@ -1,0 +1,21 @@
+body {
+	background-color: #f1f3f4;
+}
+
+.Dialog {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	height: 95vh;
+}
+.DialogField {
+	display: flex;
+	flex-direction: column;
+	background-color: white;
+	margin: 0 auto;
+	padding: 20px;
+	width: 60vw;
+	overflow-y: scroll;
+}

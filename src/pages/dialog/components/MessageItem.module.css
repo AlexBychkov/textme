@@ -1,0 +1,55 @@
+.Avatar {
+	border-radius: 50%;
+	width: 50px;
+	height: 50px;
+	object-fit: cover;
+}
+
+
+.YourMessage {
+	max-width: 40vw;
+	display: flex;
+	position: relative;
+	left: 5vw;
+}
+.YourMessageRightBlock, .NotYourMessageLeftBlock {
+	display: flex;
+	flex-direction: column;
+}
+.YourMessageRightBlock span {
+	text-align: start;
+	margin-left: 20px;
+	font-weight: 100;
+	font-size: 0.7em;
+}
+.YourMessageRightBlock p {
+	max-width: 30vw;
+	margin: 5px 0px 5px 5px;
+	padding: 5px;
+	background-color: white;
+	border: 1px solid #f1f3f4;
+	border-radius: 10px 10px 10px 0px;
+	white-space: pre-wrap;
+}
+
+
+.NotYourMessage {
+	max-width: 40vw;
+	display: flex;
+	position: relative;
+	justify-content: flex-end; 
+	left: 15vw;
+}
+.NotYourMessageLeftBlock p{
+	max-width: 30vw;
+	padding: 5px;
+	background-color: #0e7cf1;
+	border-radius: 10px 10px 0px 10px;
+	color: white;
+}
+.NotYourMessageLeftBlock span {
+	text-align: end;
+	margin-right: 10px;
+	font-weight: 100;
+	font-size: 0.7em;
+}

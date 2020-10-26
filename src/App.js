@@ -1,23 +1,22 @@
 import React from 'react';
 import './App.css';
 import Home from './pages/home/Home';
-import Header from './components/header/Header';
+import Login from "./pages/login/Login";
+
 
 import {
   Route,
-  Switch,
+  Redirect,
 } from "react-router-dom";
+
 
 function App() {
   return (
     <div className="App">
-      <Header />
-      <Switch>
-        <Route path='/home' component={Home} />
-        <Route path='/component' component={Home} />
-
-        {/*  <Redirect from='/' to='/home'/> */}
-      </Switch>
+        <Route path="/">
+          {true ? <Home /> : <Redirect from='/' to="/login" />}
+        </Route>
+        <Route path='/login' component={Login} />
     </div>
   );
 }

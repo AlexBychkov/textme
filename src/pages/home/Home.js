@@ -1,14 +1,28 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Dialog from '../dialog/Dialog';
 
+import Header from '../../components/header/Header'
+/* import Contact from '../contact/Contact'; */
+import ContactList from '../contact/contactList/ContactList';
+import Contact from '../contact/Contact';
 
+import {
+  Route,
+  Switch,
+} from "react-router-dom"
 
 export default class Home extends React.Component {
-  render() {
-    return (
-      <div>
-        <Link to="/contact-list">Contact list</Link>
-      </div>
-    );
+    render() {
+      return (
+        <>
+        <Header />
+        <Switch>
+          <Route path='/dialog' component={Dialog} />
+          <Route path='/contact' component={Contact} />
+          <Route path='/contactList' component={ContactList} />
+
+        </Switch>
+        </>
+      );
+    }
   }
-}

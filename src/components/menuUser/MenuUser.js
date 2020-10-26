@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { Avatar, Box, Menu, MenuItem } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 
-
 export default function MenuUser(props) {
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -26,8 +25,8 @@ export default function MenuUser(props) {
     textDecoration: 'none',
     color: "gray"
   }
-  const logOut = () => {
-    alert('Вышел')
+  const handleLogout = () => {
+    
   }
 
   return (
@@ -43,7 +42,7 @@ export default function MenuUser(props) {
           <NavLink to='/profile' activeStyle={active} style={styleLink}>Profile</NavLink>
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <Box style={styleLink} onClick={logOut}>Log Out</Box>
+          <Box style={styleLink} onClick={handleLogout}>Log Out</Box>
         </MenuItem>
       </Menu>
     </div>

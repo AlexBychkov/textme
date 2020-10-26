@@ -9,24 +9,18 @@ import ContactList from '../../../pages/contact/contactList/ContactList';
 
 export function FirstListMenu() {
     const itemList = [
-        {
-            text: 'Send message',
-            path: '/message',
-            icon: <SendIcon />
-        },
+        {text:'Send message',
+        path: '/dialog',
+        icon: <SendIcon />},
 
-        {
-            text: 'Profile',
-            path: '/profile',
-            icon: <PersonIcon />
-        },
+        {text:'Profile',
+        path: '/profile',
+        icon: <PersonIcon />},
 
-        {
-            text: 'Contact',
-            path: '/contact-list',
-            icon: <PermContactCalendarIcon />
-        },
-    ];
+        {text:'Contact',
+        path: '/contactList',
+        icon: <PermContactCalendarIcon />},
+    ]
 
     return (
         <ListMenu itemList={itemList} />
@@ -66,8 +60,8 @@ export function ListMenu(props) {
     return (
         <List>
             {itemList.map((elem, index) => (
-                <NavLink to={itemList[index].path} activeStyle={active} style={styleLink}>
-                    <ListItem button key={itemList[index].text}>
+                <NavLink to={itemList[index].path} activeStyle={active} key={itemList[index].text}  style={styleLink}>
+                    <ListItem button >
                         <ListItemIcon>{itemList[index].icon}</ListItemIcon>
                         <ListItemText>{itemList[index].text}</ListItemText>
                     </ListItem>
