@@ -2,8 +2,9 @@ import React from 'react';
 import Dialog from '../dialog/Dialog';
 
 import Header from '../../components/header/Header'
+/* import Contact from '../contact/Contact'; */
+import ContactList from '../contact/contactList/ContactList';
 import Contact from '../contact/Contact';
-import ContactList from '../contactList/ContactList';
 
 import {
   Route,

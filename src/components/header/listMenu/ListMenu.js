@@ -60,8 +60,8 @@ export function ListMenu(props) {
     return (
         <List>
             {itemList.map((elem, index) => (
-                <NavLink to={itemList[index].path} activeStyle={active} style={styleLink}>
-                    <ListItem button key={itemList[index].text}>
+                <NavLink to={itemList[index].path} activeStyle={active} key={itemList[index].text}  style={styleLink}>
+                    <ListItem button >
                         <ListItemIcon>{itemList[index].icon}</ListItemIcon>
                         <ListItemText>{itemList[index].text}</ListItemText>
                     </ListItem>
