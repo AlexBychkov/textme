@@ -1,18 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { Router } from "react-router-dom";
+import { createBrowserHistory } from 'history';
+import { applyMiddleware, createStore } from 'redux';
+import { rootReducer } from './redux/rootReducer';
+import { message } from './redux/actions';
+import './index.css';
 
-import { Router } from "react-router-dom"
-import {createBrowserHistory} from 'history'
 
-const history = createBrowserHistory()
+const store = createStore(rootReducer, applyMiddleware());
+console.log(store.dispatch(message()));
+
+
+const history = createBrowserHistory();
 
 ReactDOM.render(
-   <Router history={history}>
-       <App/>
-     </Router>,
+  <Router history={history}>
+    <App />
+  </Router>,
   document.getElementById('root')
 );
 

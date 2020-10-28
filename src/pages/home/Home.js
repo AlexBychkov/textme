@@ -1,20 +1,19 @@
 import React from 'react';
 import Dialog from '../dialog/Dialog';
 
-import Header from '../../components/header/Header'
-/* import Contact from '../contact/Contact'; */
+import Header from '../../components/header/Header';
 import ContactList from '../contact/contactList/ContactList';
 import Contact from '../contact/Contact';
 
 import {
   Route,
   Switch,
-} from "react-router-dom"
+} from "react-router-dom";
 
 export default class Home extends React.Component {
-    render() {
-      return (
-        <>
+  render() {
+    return (
+      <>
         <Header />
         <Switch>
           <Route path='/dialog' component={Dialog} />
@@ -22,7 +21,7 @@ export default class Home extends React.Component {
           <Route path='/contactList' component={ContactList} />
 
         </Switch>
-        </>
-      );
-    }
+      </>
+    );
   }
+}
