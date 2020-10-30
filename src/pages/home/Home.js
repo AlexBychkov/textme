@@ -5,6 +5,7 @@ import Header from '../../components/header/Header'
 /* import Contact from '../contact/Contact'; */
 import ContactList from '../contact/contactList/ContactList';
 import Contact from '../contact/Contact';
+import {UsePositionDemo} from '../../components/map/UsePositionDemo';
 
 import {
   Route,
@@ -20,6 +21,7 @@ export default class Home extends React.Component {
           <Route path='/dialog' component={Dialog} />
           <Route path='/contact' component={Contact} />
           <Route path='/contactList' component={ContactList} />
+          <Route path='/map' component={UsePositionDemo} />
 
         </Switch>
         </>
