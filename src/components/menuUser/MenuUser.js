@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import { Avatar, Box, Menu, MenuItem } from '@material-ui/core';
-import { NavLink } from 'react-router-dom';
+import { Avatar, Box, Menu, MenuItem, Typography } from '@material-ui/core';
+import ProfileModal from './../profiles/ProfilesModal';
 
 export default function MenuUser(props) {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -15,12 +15,6 @@ export default function MenuUser(props) {
   };
 
 
-  //style for link
-  const active = {
-    fontWeight: "bold",
-    color: "black",
-    textDecoration: 'underline',
-  }
   const styleLink = {
     textDecoration: 'none',
     color: "gray"
@@ -39,7 +33,7 @@ export default function MenuUser(props) {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose}>
-          <NavLink to='/profile' activeStyle={active} style={styleLink}>Profile</NavLink>
+          <ProfileModal profile><Typography style={styleLink}>Profile</Typography></ProfileModal>
         </MenuItem>
         <MenuItem onClick={handleClose}>
           <Box style={styleLink} onClick={handleLogout}>Log Out</Box>
