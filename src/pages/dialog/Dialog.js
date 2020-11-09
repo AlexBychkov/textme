@@ -9,6 +9,7 @@ import InputTextArea from './components/InputTextArea'
 export default class Dialog extends Component {
 
 	state = {
+		dialogHeight : window.innerHeight,
 		// Temporal data.....
 		messagesData : [
 			{
@@ -68,7 +69,7 @@ export default class Dialog extends Component {
 
 	render() {
 		return (
-			<Container className = {classes.Container}> 
+			<Container style = {{height: this.state.dialogHeight - 68}}className = {classes.Container}> 
 				<div className = {classes.Dialog}> 
 					<div 
 						className = {classes.DialogField}

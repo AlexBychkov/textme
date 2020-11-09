@@ -5,7 +5,6 @@ import { Table, TableBody, TableCell, TableHead, TableRow, TextField } from '@ma
 import './ContactList.css';
 
 
-
 class ContactList extends Component {
     constructor(props) {
         super(props);
