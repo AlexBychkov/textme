@@ -1,8 +1,22 @@
-import { MESSAGE } from './type'
+import * as types from './type';
 
-export function message() {
+
+export const message = () => {
   return {
-    type: MESSAGE,
-    text: 'Hi I am a wolf',
+    type: types.MESSAGE,
+    payload: 'Hi I am a wolf', 
+  }
+}
+
+export const logIn = (user) => { 
+  return { 
+    type: types.USER_LOGIN,
+    payload: user 
+  }
+}
+
+export const logOut = () => { 
+  return { 
+    type: types.USER_LOGOUT
   }
 }

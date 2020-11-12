@@ -1,10 +1,12 @@
 import React from 'react';
 import { ListItem, ListItemText, List, ListItemIcon } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
+
 import PersonIcon from '@material-ui/icons/Person';
-import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
-import SendIcon from '@material-ui/icons/Send';
 import SettingsIcon from '@material-ui/icons/Settings';
+import PermContactCalendarIcon  from '@material-ui/icons/PermContactCalendar';
+import SendIcon  from '@material-ui/icons/Send';
+
 
 export function FirstListMenu() {
     const itemList = [

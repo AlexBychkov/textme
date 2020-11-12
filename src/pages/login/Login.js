@@ -1,18 +1,19 @@
-import React, { Component } from 'react'
-import * as firebase from 'firebase/app'
-import 'firebase/auth'
-import 'fontsource-roboto'
+import React, { Component } from 'react';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'fontsource-roboto';
 import {
   TextField,
   Container,
   Button,
   Backdrop,
   CircularProgress,
-} from '@material-ui/core'
-import { AsYouType } from 'libphonenumber-js'
-import { connect } from 'react-redux'
-import logo from '../../big-logo.png'
-import { USER_LOGIN, USER_LOGOUT } from '../../redux/type'
+} from '@material-ui/core';
+import { AsYouType } from 'libphonenumber-js';
+import { connect } from 'react-redux';
+import logo from '../../big-logo.png';
+import { logIn, logOut } from '../../redux/actions';
+
 
 function Progress(props) {
   return (
@@ -111,7 +112,9 @@ class Login extends Component {
   }
 
   firebaseInit() {
-    firebase.initializeApp(this.firebaseConfig)
+    //if (!firebase.apps.length) {
+      firebase.initializeApp(this.firebaseConfig)
+    //}
   }
 
   componentDidMount() {
@@ -177,7 +180,7 @@ class Login extends Component {
       .auth()
       .signOut()
       .then(() => {
-        this.props.onLogout()
+        this.props.onLogout();
         this.setState({ codeSended: false })
       })
       .catch((error) => {
@@ -237,8 +240,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onLogin: (user) => dispatch({ type: USER_LOGIN, payload: user }),
-    onLogout: () => dispatch({ type: USER_LOGOUT }),
+    onLogin: (user) => dispatch(logIn(user)),
+    onLogout: () => dispatch(logOut()),
   }
 }
 

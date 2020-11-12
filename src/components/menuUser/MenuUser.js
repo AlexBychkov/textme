@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Avatar, Box, Menu, MenuItem } from '@material-ui/core'
 import { NavLink } from 'react-router-dom'
+import { connect } from 'react-redux'
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
-import { connect } from 'react-redux'
-import { USER_LOGOUT } from '../../redux/type'
+import { logOut } from '../../redux/actions'
 
 function MenuUser(props) {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -42,29 +42,30 @@ function MenuUser(props) {
       })
   }
 
-  return (
-    <div>
-      <Avatar aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-        H
-      </Avatar>
-      <Menu
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={handleClose}>
-          <NavLink to="/profile" activeStyle={active} style={styleLink}>
-            Profile {props.user.phoneNumber}
-          </NavLink>
-        </MenuItem>
-        <MenuItem onClick={handleLogout}>
-          <Box style={styleLink}>Log Out</Box>
-        </MenuItem>
-      </Menu>
-    </div>
-  )
-}
+    return (
+    
+        <div>
+          <Avatar aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+            H
+          </Avatar>
+          <Menu
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleClose}>
+              <NavLink to="/profile" activeStyle={active} style={styleLink}>
+                Profile {props.user.phoneNumber}
+              </NavLink>
+            </MenuItem>
+            <MenuItem onClick={handleLogout}>
+              <Box style={styleLink}>Log Out</Box>
+            </MenuItem>
+          </Menu>
+        </div>
+    )
+  }
 
 function mapStateToProps(state) {
   return {
@@ -74,7 +75,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onLogout: () => dispatch({ type: USER_LOGOUT }),
+    onLogout: () => dispatch(logOut()),
   }
 }
 
