@@ -1,17 +1,15 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import clsx from 'clsx';
 import { useTheme } from '@material-ui/core/styles';
+import { useStyles } from './headerStyles'
 import { Drawer, AppBar, Toolbar, CssBaseline, Typography, Divider, IconButton, Box } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'; 
-import MenuIcon from '@material-ui/icons/Menu'; 
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+
 import MenuUser from '../menuUser/MenuUser';
 import { FirstListMenu, SecondListMenu } from './listMenu/ListMenu';
-import { NavLink } from 'react-router-dom';
-import { useStyles } from './headerStyles'
-
-
-
 
 export default function Header() {
     const classes = useStyles();
@@ -47,7 +45,7 @@ export default function Header() {
                             [classes.hide]: open,
                         })}
                     >
-                          <MenuIcon />
+                    <MenuIcon />
                     </IconButton>
                     <NavLink to='/home' className={classes.headerText}><Typography variant="h6" noWrap>
                        TextMe

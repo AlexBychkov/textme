@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { TableCell, TableRow } from '@material-ui/core';
-
+import ProfileModal from './../../components/profiles/ProfilesModal';
 
 
 
@@ -10,7 +10,7 @@ class Contact extends Component {
         return (
             <TableRow>
                 <TableCell>
-                    {name}
+                    <ProfileModal>{name}</ProfileModal>
                 </TableCell>
                 <TableCell>{phone}</TableCell>
                 <TableCell>{email}</TableCell>
