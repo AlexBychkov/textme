@@ -14,13 +14,12 @@ import { connect } from 'react-redux';
 import logo from '../../big-logo.png';
 import { logIn, logOut } from '../../redux/actions';
 
-
 function Progress(props) {
   return (
     <Backdrop open={props.open} style={{ zIndex: 10 }}>
       <CircularProgress style={{ color: '#ffffff' }} />
     </Backdrop>
-  )
+  );
 }
 
 function User(props) {
@@ -33,7 +32,7 @@ function User(props) {
         Sign Out
       </Button>
     </div>
-  )
+  );
 }
 
 function PhoneBlock(props) {
@@ -57,7 +56,7 @@ function PhoneBlock(props) {
         Send SMS
       </Button>
     </div>
-  )
+  );
 }
 
 function CodeBlock(props) {
@@ -79,12 +78,12 @@ function CodeBlock(props) {
         Validate
       </Button>
     </div>
-  )
+  );
 }
 
 class Login extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.firebaseConfig = {
       apiKey: 'AIzaSyCV18O6EkYzeNNLmyyStZa-TM1Err5YM5A',
       authDomain: 'textme-dev.firebaseapp.com',
@@ -93,86 +92,86 @@ class Login extends Component {
       storageBucket: 'textme-dev.appspot.com',
       messagingSenderId: '931156542953',
       appId: '1:931156542953:web:66225807e0781953dcb778',
-    }
+    };
 
     this.state = {
       phone: { value: '', error: false },
       code: { value: '', error: false },
       codeSended: false,
       progress: true,
-    }
+    };
 
-    this.handleChangePhone = this.handleChangePhone.bind(this)
-    this.handleChangeCode = this.handleChangeCode.bind(this)
-    this.handleSendPhone = this.handleSendPhone.bind(this)
-    this.handleSendCode = this.handleSendCode.bind(this)
-    this.handleLogout = this.handleLogout.bind(this)
+    this.handleChangePhone = this.handleChangePhone.bind(this);
+    this.handleChangeCode = this.handleChangeCode.bind(this);
+    this.handleSendPhone = this.handleSendPhone.bind(this);
+    this.handleSendCode = this.handleSendCode.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
 
-    this.asYouType = new AsYouType('RU')
+    this.asYouType = new AsYouType('RU');
   }
 
   firebaseInit() {
     //if (!firebase.apps.length) {
-      firebase.initializeApp(this.firebaseConfig)
+    firebase.initializeApp(this.firebaseConfig);
     //}
   }
 
   componentDidMount() {
-    this.firebaseInit()
+    this.firebaseInit();
     firebase.auth().onAuthStateChanged((user) => {
-      this.setState({ progress: false })
+      this.setState({ progress: false });
       if (user) {
-        this.props.onLogin(user)
+        this.props.onLogin(user);
       } else {
-        console.log('No user is signed in')
+        console.log('No user is signed in');
       }
-    })
+    });
     this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('send-sms', {
       size: 'invisible',
       callback: (response) => {
-        console.log('reCAPTCHA solved')
+        console.log('reCAPTCHA solved');
       },
-    })
+    });
   }
 
   handleChangePhone(e) {
-    const newPhone = this.state.phone
-    newPhone.value = e.target.value
-    this.setState({ phone: newPhone })
+    const newPhone = this.state.phone;
+    newPhone.value = e.target.value;
+    this.setState({ phone: newPhone });
   }
 
   handleChangeCode(e) {
-    const newCode = this.state.code
-    newCode.value = e.target.value
-    this.setState({ code: newCode })
+    const newCode = this.state.code;
+    newCode.value = e.target.value;
+    this.setState({ code: newCode });
   }
 
   handleSendPhone() {
-    this.asYouType.reset().input(this.state.phone.value)
+    this.asYouType.reset().input(this.state.phone.value);
 
     if (this.asYouType.getNumber() === undefined || !this.asYouType.isValid()) {
-      const newPhone = this.state.phone
-      newPhone.error = true
-      this.setState({ phone: newPhone })
-      return false
+      const newPhone = this.state.phone;
+      newPhone.error = true;
+      this.setState({ phone: newPhone });
+      return false;
     }
 
-    const newPhone = this.state.phone
-    newPhone.error = false
-    this.setState({ progress: true, phone: newPhone })
+    const newPhone = this.state.phone;
+    newPhone.error = false;
+    this.setState({ progress: true, phone: newPhone });
 
-    const phoneNumber = this.asYouType.getNumber().number
-    const appVerifier = this.recaptchaVerifier
+    const phoneNumber = this.asYouType.getNumber().number;
+    const appVerifier = this.recaptchaVerifier;
     firebase
       .auth()
       .signInWithPhoneNumber(phoneNumber, appVerifier)
       .then((confirmationResult) => {
-        this.setState({ progress: false, codeSended: true })
-        this.confirmationResult = confirmationResult
+        this.setState({ progress: false, codeSended: true });
+        this.confirmationResult = confirmationResult;
       })
       .catch((error) => {
-        this.setState({ progress: false })
-      })
+        this.setState({ progress: false });
+      });
   }
 
   handleLogout() {
@@ -181,26 +180,26 @@ class Login extends Component {
       .signOut()
       .then(() => {
         this.props.onLogout();
-        this.setState({ codeSended: false })
+        this.setState({ codeSended: false });
       })
       .catch((error) => {
-        console.log(error, 'signOut error')
-      })
+        console.log(error, 'signOut error');
+      });
   }
 
   handleSendCode() {
-    const code = this.state.code.value
-    this.setState({ progress: true })
+    const code = this.state.code.value;
+    this.setState({ progress: true });
     this.confirmationResult
       .confirm(code)
       .then((result) => {
-        this.setState({ progress: false })
+        this.setState({ progress: false });
       })
       .catch((error) => {
-        const newCode = this.state.code
-        newCode.error = true
-        this.setState({ code: newCode, progress: false })
-      })
+        const newCode = this.state.code;
+        newCode.error = true;
+        this.setState({ code: newCode, progress: false });
+      });
   }
 
   render() {
@@ -228,21 +227,21 @@ class Login extends Component {
           <User user={this.props.user} logout={this.handleLogout} />
         )}
       </Container>
-    )
+    );
   }
 }
 
 function mapStateToProps(state) {
   return {
     user: state.user,
-  }
+  };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     onLogin: (user) => dispatch(logIn(user)),
     onLogout: () => dispatch(logOut()),
-  }
+  };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
