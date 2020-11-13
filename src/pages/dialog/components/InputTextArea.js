@@ -25,17 +25,15 @@ class TextArea extends Component {
 	sendMessageOnClickHandler = (e) => {
 		if (this.state.inputValue !== '') this.props.sendMessage(this.createMessageObjectClickHandler(),e)
 	}
+	
 
-	// Very small bug here below 
-	// We don't have clear input after this handler. 
-	// And because of that    if (this.state.inputValue !== '') 
-	// pass handler when input have some sort of 'Enter key' input  'clear but not clear'
-	// i'll fix this soon
-	sendMessageOnKeyDownHandler = (e) => {
-		if (this.state.inputValue !== '')
-			if (e.key === 'Enter') {
-				this.props.sendMessage(this.createMessageObjectClickHandler(),e)
-			}
+	sendMessageOnKeyUpHandler = (e) => {		
+		if ((this.state.inputValue === `\n`) || (this.state.inputValue === '')) {
+			this.setState({inputValue : ''});
+			return
+		}
+		if (e.keyCode === 13)		
+			this.props.sendMessage(this.createMessageObjectClickHandler(),e)
 	}
 
 
@@ -43,10 +41,8 @@ class TextArea extends Component {
 		return (
 			<div className = {classes.TextArea}>
 				<TextField
-					onChange = {(e) => {
-						this.setState({inputValue: e.target.value})
-					}} 
-					onKeyDown = {this.sendMessageOnKeyDownHandler}
+					onChange = {(e) => {this.setState({inputValue: e.target.value})}} 
+					onKeyUp = {this.sendMessageOnKeyUpHandler}
 					value = {this.state.inputValue}
 					className = {classes.TextField}
 					multiline 
@@ -54,7 +50,7 @@ class TextArea extends Component {
 					rowsMax = '3' 
 					rows = '2' 
 					size = 'medium' 
-					placeholder = 'Введите сообщение'
+					placeholder = 'TextHere'
 				/>
 				<IconButton onClick = {this.sendMessageOnClickHandler}>
 					<SendIcon/>
