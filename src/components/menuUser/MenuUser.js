@@ -1,31 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
+import { Avatar, Box, Menu, MenuItem, Typography } from '@material-ui/core'
+import { connect } from 'react-redux'
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+import { logOut } from '../../redux/actions'
+import ProfileModal from './../profiles/ProfilesModal'
 
-import { Avatar, Box, Menu, MenuItem, Typography } from '@material-ui/core';
-import ProfileModal from './../profiles/ProfilesModal';
-
-export default function MenuUser(props) {
-  const [anchorEl, setAnchorEl] = useState(null);
+function MenuUser(props) {
+  const [anchorEl, setAnchorEl] = useState(null)
 
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
 
   const handleClose = () => {
-    setAnchorEl(null);
-  };
-
+    setAnchorEl(null)
+  }
 
   const styleLink = {
     textDecoration: 'none',
-    color: "gray"
+    display: 'block',
+    color: 'gray',
   }
+
   const handleLogout = () => {
-    
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        console.log('try logout')
+        props.onLogout()
+      })
+      .catch((error) => {
+        console.log(error, 'signOut error')
+      })
   }
 
   return (
     <div>
-      <Avatar aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>H</Avatar>
+      <Avatar aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+        H
+      </Avatar>
       <Menu
         anchorEl={anchorEl}
         keepMounted
@@ -33,12 +48,30 @@ export default function MenuUser(props) {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose}>
-          <ProfileModal profile><Typography style={styleLink}>Profile</Typography></ProfileModal>
+          <ProfileModal profile>
+            <Typography style={styleLink}>Profile</Typography>
+          </ProfileModal>
         </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Box style={styleLink} onClick={handleLogout}>Log Out</Box>
+        <MenuItem onClick={handleLogout}>
+          <Box style={styleLink} onClick={handleLogout}>
+            Log Out
+          </Box>
         </MenuItem>
       </Menu>
     </div>
-  );
+  )
 }
+
+function mapStateToProps(state) {
+  return {
+    user: state.user,
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onLogout: () => dispatch(logOut()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MenuUser)
