@@ -1,11 +1,11 @@
-import React from 'react'
-import { ListItem, ListItemText, List, ListItemIcon } from '@material-ui/core'
-import { NavLink } from 'react-router-dom'
-import PersonIcon from '@material-ui/icons/Person'
-import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar'
-import SendIcon from '@material-ui/icons/Send'
-import SettingsIcon from '@material-ui/icons/Settings'
-import ProfileModal from './../../profiles/ProfilesModal'
+import React from 'react';
+import { ListItem, ListItemText, List, ListItemIcon } from '@material-ui/core';
+import { NavLink } from 'react-router-dom';
+import PersonIcon from '@material-ui/icons/Person';
+import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
+import SendIcon from '@material-ui/icons/Send';
+import SettingsIcon from '@material-ui/icons/Settings';
+import ProfileModal from './../../profiles/ProfilesModal';
 
 export function FirstListMenu() {
   const itemList = [
@@ -18,9 +18,9 @@ export function FirstListMenu() {
       text: 'Profile',
     },
     { text: 'Contact', path: '/contactList', icon: <PermContactCalendarIcon /> },
-  ]
+  ];
 
-  return <ListMenu itemList={itemList} />
+  return <ListMenu itemList={itemList} />;
 }
 
 export function SecondListMenu() {
@@ -30,24 +30,24 @@ export function SecondListMenu() {
       path: '/settings',
       icon: <SettingsIcon />,
     },
-  ]
+  ];
 
-  return <ListMenu itemList={itemList} />
+  return <ListMenu itemList={itemList} />;
 }
 
 export function ListMenu(props) {
-  const itemList = props.itemList
+  const itemList = props.itemList;
 
   //style for link
   const active = {
     fontWeight: 'bold',
     color: 'black',
     textDecoration: 'underline',
-  }
+  };
   const styleLink = {
     textDecoration: 'none',
     color: 'black',
-  }
+  };
 
   return (
     <List>
@@ -62,7 +62,7 @@ export function ListMenu(props) {
                 <ListItemText>Profile</ListItemText>
               </ListItem>
             </ProfileModal>
-          )
+          );
         } else
           return (
             <NavLink
@@ -76,8 +76,8 @@ export function ListMenu(props) {
                 <ListItemText>{itemList[index].text}</ListItemText>
               </ListItem>
             </NavLink>
-          )
+          );
       })}
     </List>
-  )
+  );
 }
