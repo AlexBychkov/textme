@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles';
 
 export const useStyles = makeStyles((theme) => ({
   modalPaper: {
@@ -43,4 +43,4 @@ export const useStyles = makeStyles((theme) => ({
   profileAbout: {
     margin: '10px 0px 0px 20px',
   },
-}))
+}));

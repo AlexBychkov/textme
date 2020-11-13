@@ -6,5 +6,5 @@
   "singleQuote": true,
   "jsxBracketSameLine": false,
   "parser": "flow",
-  "semi": false
+  "semi": true
 }

@@ -1,11 +1,11 @@
-import React from 'react'
-import Dialog from '../dialog/Dialog'
+import React from 'react';
+import Dialog from '../dialog/Dialog';
 
-import Header from '../../components/header/Header'
-import ContactList from '../contact/contactList/ContactList'
-import Contact from '../contact/Contact'
+import Header from '../../components/header/Header';
+import ContactList from '../contact/contactList/ContactList';
+import Contact from '../contact/Contact';
 
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom';
 
 export default class Home extends React.Component {
   render() {
@@ -18,6 +18,6 @@ export default class Home extends React.Component {
           <Route path="/contactList" component={ContactList} />
         </Switch>
       </>
-    )
+    );
   }
 }
