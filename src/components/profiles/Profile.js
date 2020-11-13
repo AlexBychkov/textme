@@ -1,12 +1,12 @@
-import React from 'react'
-import { Grid, Avatar, Typography, Button } from '@material-ui/core'
-import { useStyles } from './profileStyles'
-import SmartphoneIcon from '@material-ui/icons/Smartphone'
-import { withRouter } from 'react-router-dom'
+import React from 'react';
+import { Grid, Avatar, Typography, Button } from '@material-ui/core';
+import { useStyles } from './profileStyles';
+import SmartphoneIcon from '@material-ui/icons/Smartphone';
+import { withRouter } from 'react-router-dom';
 
 const Profile = (props) => {
-  const classes = useStyles()
-  const { history } = props
+  const classes = useStyles();
+  const { history } = props;
 
   return (
     <Grid container direction="column" className={classes.profileMainGrid}>
@@ -44,7 +44,7 @@ const Profile = (props) => {
         </Grid>
       </Grid>
     </Grid>
-  )
-}
+  );
+};
 
-export default withRouter(Profile)
+export default withRouter(Profile);

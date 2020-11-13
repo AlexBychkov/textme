@@ -1,19 +1,19 @@
-import { Modal, Paper } from '@material-ui/core'
-import React from 'react'
-import Profile from './Profile'
-import ContactProfile from './ContactProfile'
-import { useStyles } from './profileStyles'
+import { Modal, Paper } from '@material-ui/core';
+import React from 'react';
+import Profile from './Profile';
+import ContactProfile from './ContactProfile';
+import { useStyles } from './profileStyles';
 
 export default function ProfileModal(props) {
-  const classes = useStyles()
-  const [open, setOpen] = React.useState(false)
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
   const handleClose = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
   return (
     <>
       <strong className={classes.modalPointer} onClick={handleOpen}>
@@ -25,5 +25,5 @@ export default function ProfileModal(props) {
         </Paper>
       </Modal>
     </>
-  )
+  );
 }
