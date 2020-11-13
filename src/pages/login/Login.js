@@ -1,19 +1,18 @@
-import React, { Component } from 'react';
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
-import 'fontsource-roboto';
+import React, { Component } from 'react'
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+import 'fontsource-roboto'
 import {
   TextField,
   Container,
   Button,
   Backdrop,
   CircularProgress,
-} from '@material-ui/core';
-import { AsYouType } from 'libphonenumber-js';
-import { connect } from 'react-redux';
-import logo from '../../big-logo.png';
-import { logIn, logOut } from '../../redux/actions';
-
+} from '@material-ui/core'
+import { AsYouType } from 'libphonenumber-js'
+import { connect } from 'react-redux'
+import logo from '../../big-logo.png'
+import { logIn, logOut } from '../../redux/actions'
 
 function Progress(props) {
   return (
@@ -86,13 +85,13 @@ class Login extends Component {
   constructor(props) {
     super(props)
     this.firebaseConfig = {
-      apiKey: 'AIzaSyCV18O6EkYzeNNLmyyStZa-TM1Err5YM5A',
-      authDomain: 'textme-dev.firebaseapp.com',
-      databaseURL: 'https://textme-dev.firebaseio.com',
-      projectId: 'textme-dev',
-      storageBucket: 'textme-dev.appspot.com',
-      messagingSenderId: '931156542953',
-      appId: '1:931156542953:web:66225807e0781953dcb778',
+      apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+      authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+      databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+      projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+      storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+      messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+      appId: process.env.REACT_APP_FIREBASE_APP_ID,
     }
 
     this.state = {
@@ -113,7 +112,7 @@ class Login extends Component {
 
   firebaseInit() {
     //if (!firebase.apps.length) {
-      firebase.initializeApp(this.firebaseConfig)
+    firebase.initializeApp(this.firebaseConfig)
     //}
   }
 
@@ -180,7 +179,7 @@ class Login extends Component {
       .auth()
       .signOut()
       .then(() => {
-        this.props.onLogout();
+        this.props.onLogout()
         this.setState({ codeSended: false })
       })
       .catch((error) => {
