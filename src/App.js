@@ -1,18 +1,33 @@
 import React from 'react';
-import './App.css';
-import Home from './pages/home/Home';
-import Login from './pages/login/Login';
+import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { Route, Redirect } from 'react-router-dom';
+import Login from './pages/login/Login';
+import Dialog from './pages/dialog/Dialog';
+import Header from './components/header/Header';
+import ContactList from './pages/contact/contactList/ContactList';
+import Contact from './pages/contact/Contact';
+
+import './App.css';
 
 function App(props) {
+  if (props.user === null) {
+    return (
+      <div className="App">
+        <Login />
+      </div>
+    );
+  }
   return (
     <div className="App">
+      <Header />
       <Route path="/">
-        {props.user !== null ? <Home /> : <Redirect from="/" to="/login" />}
+        <Switch>
+          <Route path="/dialog" component={Dialog} />
+          <Route path="/contact" component={Contact} />
+          <Route path="/contactList" component={ContactList} />
+        </Switch>
       </Route>
-      <Route path="/login" component={Login} />
     </div>
   );
 }
