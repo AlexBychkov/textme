@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import * as firebase from 'firebase/app'
-import 'firebase/auth'
-import 'fontsource-roboto'
+import React, { Component } from 'react';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'fontsource-roboto';
 import {
   TextField,
   Container,
