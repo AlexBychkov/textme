@@ -53,9 +53,7 @@ function MenuUser(props) {
           </ProfileModal>
         </MenuItem>
         <MenuItem onClick={handleLogout}>
-          <Box style={styleLink} onClick={handleLogout}>
-            Log Out
-          </Box>
+          <Box style={styleLink}>Log Out</Box>
         </MenuItem>
       </Menu>
     </div>
