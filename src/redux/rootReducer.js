@@ -12,11 +12,11 @@ function userReducer(state = null, action) {
   switch (action.type) {
     case USER_LOGOUT:
       console.log(USER_LOGOUT);
-      return { ...state, user: null };
+      return null;
 
     case USER_LOGIN:
       console.log(USER_LOGIN);
-      return { ...state, ...action.payload };
+      return { ...action.payload };
 
     default:
       return state;
