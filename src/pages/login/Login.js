@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import MaskedInput from 'react-text-mask';
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
 import 'fontsource-roboto'
@@ -13,6 +14,7 @@ import { AsYouType } from 'libphonenumber-js';
 import { connect } from 'react-redux';
 import logo from '../../big-logo.png';
 import { logIn, logOut } from '../../redux/actions';
+import './Login.css'
 
 function Progress(props) {
   return (
@@ -43,14 +45,15 @@ function PhoneBlock(props) {
         To enter the application, enter your phone number, <br />
         we will send an SMS with a code to it
       </p>
-      <TextField
-        key="phone-number"
-        label="Phone"
-        placeholder="+7 707 070 00 77"
-        onChange={props.changePhone}
-        helperText={props.phone.error ? 'Error' : ''}
-        error={props.phone.error}
-      />
+      <MaskedInput
+          key="phone-number"
+          className="mask-input"
+          label="Phone"
+          placeholder="+7 (707) 070-0077"
+          onChange={props.changePhone}
+          helperText={props.phone.error ? 'Error' : ''}
+          error={props.phone.error}   
+          mask={['+', /[1-9]/, '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]} />
       <br />
       <Button id="send-sms" onClick={props.sendPhone} color="primary">
         Send SMS
@@ -60,6 +63,7 @@ function PhoneBlock(props) {
 }
 
 function CodeBlock(props) {
+  
   return (
     <div>
       <p>
@@ -187,7 +191,7 @@ class Login extends Component {
       });
   }
 
-  handleSendCode() {
+  handleSendCode(e) {
     const code = this.state.code.value;
     this.setState({ progress: true });
     this.confirmationResult
@@ -199,7 +203,7 @@ class Login extends Component {
         const newCode = this.state.code;
         newCode.error = true;
         this.setState({ code: newCode, progress: false });
-      });
+      });   
   }
 
   render() {

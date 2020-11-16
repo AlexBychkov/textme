@@ -1,0 +1,20 @@
+.mask-input {
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #ccc;
+  height: 2rem;
+  width: 10rem;
+}
+
+.mask-input:hover {
+  border-bottom: 2px solid rgb(0, 0, 0);
+}
+
+.mask-input:focus,
+.mask-input:active {
+  border-bottom: 2px solid rgb(17, 0, 255);
+}
+
+
+
+          
