@@ -9,6 +9,7 @@ import { rootReducer } from './redux/rootReducer';
 import './index.css';
 
 const store = createStore(rootReducer, compose(applyMiddleware()));
+window.store = store;
 
 ReactDOM.render(
   <Provider store={store}>

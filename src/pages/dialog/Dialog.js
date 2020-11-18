@@ -1,109 +1,108 @@
-import React, { Component } from 'react';
-import { Container } from '@material-ui/core';
-import classes from './Dialog.module.css';
+import React, { useEffect, useState } from 'react';
+
 import MessageItemYours from './components/MessageItemYours';
 import MessageItemNotYours from './components/MessageItemNotYours';
 import InputTextArea from './components/InputTextArea';
 
-export default class Dialog extends Component {
-  state = {
-    dialogHeight: window.innerHeight,
-    // Temporal data.....
-    messagesData: [
-      {
-        id: 0,
-        time: new Date().toLocaleTimeString(),
-        user: {},
-        messageValue: 'hello buddy',
-        areYou: true,
-      },
-      {
-        id: 1,
-        time: new Date().toLocaleTimeString(),
-        user: {},
-        messageValue: 'hi',
-        areYou: false,
-      },
-      {
-        id: 2,
-        time: new Date().toLocaleTimeString(),
-        user: {},
-        messageValue: "How it's going",
-        areYou: true,
-      },
-      {
-        id: 3,
-        time: new Date().toLocaleTimeString(),
-        user: {},
-        messageValue:
-          'As always, perfect!!As always, perfect!!As always, perfect!!As always, perfect!!As always, perfect!!As always, perfect!!As always, perfect!!As always, perfect!!As always, perfect!!',
-        areYou: false,
-      },
-      {
-        id: 4,
-        time: new Date().toLocaleTimeString(),
-        user: {},
-        messageValue:
-          'Are you joking? loremadsasdfasdfAre you joking? loremadsasdfasdfAre you joking? loremadsasdfasdfAre you joking? loremadsasdfasdfAre you joking? loremadsasdfasdfAre you joking? loremadsasdfasdf',
-        areYou: true,
-      },
-    ],
-  };
-  myRef = React.createRef();
+import { connect } from 'react-redux';
+import { database } from '../../firebase';
+import { Container, CircularProgress } from '@material-ui/core';
 
-  sendMessageHandler = (objToPush) => {
-    const copy = [...this.state.messagesData];
-    copy.push(objToPush);
-    this.setState({
-      messagesData: copy,
-    });
+import classes from './Dialog.module.css';
+
+
+const Dialog = props => {
+  const [dialogHeight] = useState(window.innerHeight)
+  const [messages, setMessages] = useState('');
+  const [personInfo, setPersonInfo] = useState('')
+  const [loaded, setLoaded] = useState(false);
+  const [uid] = useState(props.user.uid);
+  // myRef = React.createRef();
+
+  const dbUsers = database.ref().child('users')
+  const dbMessages = database.ref().child('messages/first');
+
+  useEffect(() => {
+    dbMessages.on('value', snap => {
+      setMessages(snap.val());
+      
+    })
+    dbUsers.once('value', snap => {
+      setPersonInfo(snap.val())
+      setLoaded(true);
+    })
+    return () =>{
+      dbMessages.off();
+    }
+    }, [])
+    
+  
+  const sendMessageHandler = (messageValue) => {
+    const objToPush = {}
+    objToPush.message = messageValue;
+    objToPush.timestamp = new Date().getTime();
+    objToPush.type = 'text'
+    objToPush.user = props.user.uid;
+    dbMessages.push(objToPush)
   };
+    
   //still workin on that
-  setScroll = () => {
-    if (this.myRef) this.myRef.current.scrollTop = this.myRef.current.scrollHeight;
-  };
-
-  render() {
+  // setScroll = () => {
+  //   if (this.myRef) this.myRef.current.scrollTop = this.myRef.current.scrollHeight;
+  // };
     return (
       <Container
-        style={{ height: this.state.dialogHeight - 68 }}
+        style={{ height: dialogHeight - 68 }}
         className={classes.Container}
       >
         <div className={classes.Dialog}>
-          <div className={classes.DialogField} ref={this.myRef}>
-            {this.state.messagesData.map((value, index) => {
-              if (value.areYou) {
-                return (
-                  <MessageItemYours
-                    key={index}
-                    value={value.messageValue}
-                    time={value.time}
-                    name="wolf"
-                    avatar="https://i.pinimg.com/originals/c5/d6/6a/c5d66aa224f958d90a1c66f031fec857.jpg"
-                  />
-                );
-              } else {
-                return (
-                  <MessageItemNotYours
-                    key={index}
-                    value={value.messageValue}
-                    time={value.time}
-                    name="tiger"
-                    avatar="https://www.nepalitimes.com/wp-content/uploads/2018/08/page-8-9a-1.jpg"
-                  />
-                );
-              }
-            })}
-            {/* temporal */}
-            {/* {this.setScroll()} */}
+          <div className={classes.DialogField}>
+            <h3>Welcome</h3>
+            {!loaded && <CircularProgress className = {classes.Progress}/>}
+            {loaded && Object.keys(messages).map((messageItemKey, index) => {
+              const props = {}
+              const name = personInfo[messages[messageItemKey].user].name
+              const avatar = personInfo[messages[messageItemKey].user].avatar
+
+              props.key = messageItemKey
+              props.value = messages[messageItemKey].message
+              props.name = name
+                ? name
+                : 'NoName'
+              props.time = new Date(messages[messageItemKey].timestamp).toLocaleTimeString()
+              props.avatar = avatar
+                ? avatar
+                : 'https://124ural.ru/wp-content/uploads/2017/04/no-avatar.png' // default avatar
+
+              // weird thing below.... props.user.uid - undefined.......
+              if (uid === messages[messageItemKey].user)
+              return (
+                <MessageItemYours {...props} />
+              ) 
+              else return (
+                <MessageItemNotYours {...props} />
+              )
+          })
+          }
+
+          
           </div>
 
           <InputTextArea
-            sendMessage={this.sendMessageHandler}
-            messagesData={this.state.messagesData}
+            sendMessage={sendMessageHandler}
           />
         </div>
       </Container>
     );
-  }
 }
+
+function mapStateToProps(state) {
+  return {
+    user: state.user,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Dialog)

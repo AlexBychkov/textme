@@ -8,17 +8,13 @@ class TextArea extends Component {
     inputValue: '',
   };
 
-  createMessageObjectClickHandler = () => {
-    let obj = {};
-    obj.id = this.props.messagesData.length;
-    obj.time = new Date().toLocaleTimeString();
-    obj.messageValue = this.state.inputValue;
-    obj.areYou = true;
-    obj.user = {};
+  createMessageObjectClickHandler = (enter) => {
+    let messageValue = this.state.inputValue;
+    if (enter) messageValue = messageValue.slice(0,messageValue.length - 1);
     this.setState({
       inputValue: '',
     });
-    return obj;
+    return messageValue;
   };
 
   sendMessageOnClickHandler = (e) => {
@@ -32,7 +28,7 @@ class TextArea extends Component {
       return;
     }
     if (e.keyCode === 13)
-      this.props.sendMessage(this.createMessageObjectClickHandler(), e);
+      this.props.sendMessage(this.createMessageObjectClickHandler(true), e);
   };
 
   render() {
