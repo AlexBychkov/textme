@@ -1,20 +1,26 @@
-.mask-input {
+.first-input-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.PhoneInput {
+  height: 40px;
+  width: 300px;
+}
+.PhoneInput input {
   border: none;
   outline: none;
   border-bottom: 1px solid #ccc;
-  height: 2rem;
-  width: 10rem;
+  height: 20px;
+  width: 200px;
 }
 
-.mask-input:hover {
+.PhoneInput input:hover {
   border-bottom: 2px solid rgb(0, 0, 0);
 }
 
-.mask-input:focus,
-.mask-input:active {
+.PhoneInput input:focus,
+.PhoneInput input:active {
   border-bottom: 2px solid rgb(17, 0, 255);
 }
-
-
-
-          
