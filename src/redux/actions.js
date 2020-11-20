@@ -7,10 +7,10 @@ export const message = () => {
   };
 };
 
-export const loading = (is_load) => {
+export const loading = (isLoad) => {
   return {
     type: types.LOADING,
-    payload: is_load,
+    payload: isLoad,
   };
 };
 
