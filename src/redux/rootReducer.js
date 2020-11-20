@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { MESSAGE, USER_LOGIN, USER_LOGOUT } from './type';
+import { MESSAGE, USER_LOGIN, USER_LOGOUT, LOADING } from './type';
 
 function messageReducer(state = null, action) {
   if (action.type === MESSAGE) {
@@ -8,15 +8,23 @@ function messageReducer(state = null, action) {
   return state;
 }
 
+function loadingReducer(state = true, action) {
+  if (action.type === LOADING) {
+    console.log(LOADING);
+    return action.payload;
+  }
+  return state;
+}
+
 function userReducer(state = null, action) {
   switch (action.type) {
     case USER_LOGOUT:
       console.log(USER_LOGOUT);
-      return { ...state, user: null };
+      return null;
 
     case USER_LOGIN:
       console.log(USER_LOGIN);
-      return { ...state, ...action.payload };
+      return { ...action.payload };
 
     default:
       return state;
@@ -26,4 +34,5 @@ function userReducer(state = null, action) {
 export const rootReducer = combineReducers({
   message: messageReducer,
   user: userReducer,
+  loading: loadingReducer,
 });
