@@ -26,7 +26,6 @@ function MenuUser(props) {
     auth()
       .signOut()
       .then(() => {
-        console.log('try logout');
         props.onLogout();
       })
       .catch((error) => {

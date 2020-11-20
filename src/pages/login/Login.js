@@ -138,7 +138,6 @@ class Login extends Component {
       .confirm(code)
       .then((result) => {
         this.props.onLoading(false);
-        this.props.onLogin(result.user);
       })
       .catch((error) => {
         const newCode = this.state.code;
