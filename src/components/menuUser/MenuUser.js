@@ -35,8 +35,13 @@ function MenuUser(props) {
 
   return (
     <div>
-      <Avatar aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-        {props.user.name.charAt(0)}
+      <Avatar
+        aria-controls="simple-menu"
+        aria-haspopup="true"
+        src={props.user.avatar ?? ''}
+        onClick={handleClick}
+      >
+        {props.user.name && props.user.name.charAt(0)}
       </Avatar>
       <Menu
         anchorEl={anchorEl}
