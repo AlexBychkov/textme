@@ -1,44 +1,13 @@
-import React from 'react';
-
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import { usePosition } from './UsePosition';
-import RoomIcon from '@material-ui/icons/Room';
+import React, { useState } from 'react';
 
 import MyMapComponent from './Map';
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
+import classes from './ModalMap.module.css'
+import Modal from '@material-ui/core/Modal';
+import MapIcon from '@material-ui/icons/Map';
 
-function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    position: 'absolute',
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
-
-export default function ModalMap() {
-  const classes = useStyles();
-  const { latitude, longitude, error } = usePosition();
-  // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
-  const [open, setOpen] = React.useState(false);
+export default function ModalMap(props) {
+  const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -48,22 +17,18 @@ export default function ModalMap() {
     setOpen(false);
   };
 
-  const body = (
-    <div style={modalStyle} className={classes.paper}>
-     {error ? error : <MyMapComponent isMarkerShown coords={{ lat: parseFloat(latitude), lng: parseFloat(longitude) }}/>} 
-    </div>
-  );
-
   return (
     <div>
-      <RoomIcon onClick={handleOpen} fontSize="large"/>
+      <MapIcon onClick={handleOpen} fontSize="large" />
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        {body}
+        <div className={classes.paper}>
+          {props.error ? props.error : <MyMapComponent isMarkerShown coords={{ lat: parseFloat(props.latitude), lng: parseFloat(props.longitude) }} />}
+        </div>
       </Modal>
     </div>
   );

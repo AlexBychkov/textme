@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import classes from './InputTextArea.module.css'
 import {TextField, IconButton} from '@material-ui/core'
 import SendIcon from '@material-ui/icons/Send';
+import MenuDialog from '../../../components/menuDialog/MenuDialog';
 
 class TextArea extends Component {
 	state = {
@@ -58,6 +59,9 @@ class TextArea extends Component {
 				/>
 				<IconButton onClick = {this.sendMessageOnClickHandler}>
 					<SendIcon/>
+				</IconButton>	
+				<IconButton>
+					<MenuDialog /* sendMessage={this.sendMessageOnClickHandler} *//>
 				</IconButton>	
 				
 			</div>
