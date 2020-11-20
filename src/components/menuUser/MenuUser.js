@@ -36,7 +36,7 @@ function MenuUser(props) {
   return (
     <div>
       <Avatar aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-        H
+        {props.user.name.charAt(0)}
       </Avatar>
       <Menu
         anchorEl={anchorEl}
