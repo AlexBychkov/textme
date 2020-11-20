@@ -62,7 +62,7 @@ function mapDispatchToProps(dispatch) {
   return {
     onLogin: (user) => dispatch(logIn(user)),
     onLogout: () => dispatch(logOut()),
-    onLoading: (is_load) => dispatch(loading(is_load)),
+    onLoading: (isLoad) => dispatch(loading(isLoad)),
   };
 }
 

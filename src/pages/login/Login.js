@@ -182,7 +182,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onLogin: (user) => dispatch(logIn(user)),
-    onLoading: (is_load) => dispatch(loading(is_load)),
+    onLoading: (isLoad) => dispatch(loading(isLoad)),
   };
 }
 
