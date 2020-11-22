@@ -29,7 +29,6 @@ class TextArea extends Component {
     this.setState({
       inputValue: '',
     });
-    console.log(this.state.dialogId);
     database.ref().child(`/messages/${this.state.dialogId}`).push(objToPush);
   };
 
