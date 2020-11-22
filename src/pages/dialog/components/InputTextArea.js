@@ -15,7 +15,6 @@ class TextArea extends Component {
     dialogId: this.props.match.params.dialogId,
   };
 
-  
   createMessage = (type, enter) => {
     const objToPush = {};
     let messageValue = this.state.inputValue;

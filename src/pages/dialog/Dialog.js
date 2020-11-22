@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import MessageItemYours from './components/MessageItemYours';
 import MessageItemNotYours from './components/MessageItemNotYours';
@@ -15,13 +15,12 @@ const Dialog = (props) => {
   const [messages, setMessages] = useState('');
   const [personInfo, setPersonInfo] = useState('');
   const [loaded, setLoaded] = useState(false);
-  const {dialogId} = props.match.params
-  // myRef = React.createRef();
+  const { dialogId } = props.match.params;
 
-  const dbUsers = database.ref().child('users');
-  const dbMessages = database.ref().child(`messages/${dialogId}`);
-  
-  useEffect(() => {
+  const getData = useCallback(() => {
+    const dbUsers = database.ref().child('users');
+    const dbMessages = database.ref().child(`messages/${dialogId}`);
+
     dbMessages.on('value', (snap) => {
       setMessages(snap.val());
     });
@@ -29,26 +28,23 @@ const Dialog = (props) => {
       setPersonInfo(snap.val());
       setLoaded(true);
     });
+
     return () => {
       dbMessages.off();
     };
-    // crutch here)))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dialogId]);
 
+  useEffect(getData, []);
 
-  //still workin on that
-  // setScroll = () => {
-  //   if (this.myRef) this.myRef.current.scrollTop = this.myRef.current.scrollHeight;
-  // };
   return (
     <Container style={{ height: dialogHeight - 68 }} className={classes.Container}>
       <div className={classes.Dialog}>
         <div className={classes.DialogField}>
           <h3>Welcome</h3>
           {!loaded && <CircularProgress className={classes.Progress} />}
-          {loaded && (messages !== null) &&
-            Object.keys(messages).map((messageItemKey,index) => {
+          {loaded &&
+            messages !== null &&
+            Object.keys(messages).map((messageItemKey, index) => {
               const ItemProps = {};
               const name = personInfo[messages[messageItemKey].user].name;
               const avatar = personInfo[messages[messageItemKey].user].avatar;
