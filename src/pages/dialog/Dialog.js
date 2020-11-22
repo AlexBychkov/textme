@@ -15,10 +15,11 @@ const Dialog = (props) => {
   const [messages, setMessages] = useState('');
   const [personInfo, setPersonInfo] = useState('');
   const [loaded, setLoaded] = useState(false);
+  const {dialogId} = props.match.params
   // myRef = React.createRef();
 
   const dbUsers = database.ref().child('users');
-  const dbMessages = database.ref().child('messages/first');
+  const dbMessages = database.ref().child(`messages/${dialogId}`);
   
   useEffect(() => {
     dbMessages.on('value', (snap) => {
@@ -35,14 +36,6 @@ const Dialog = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const sendMessageHandler = (messageValue) => {
-    const objToPush = {};
-    objToPush.message = messageValue;
-    objToPush.timestamp = new Date().getTime();
-    objToPush.type = 'text';
-    objToPush.user = props.user.uid;
-    dbMessages.push(objToPush);
-  };
 
   //still workin on that
   // setScroll = () => {
@@ -54,7 +47,7 @@ const Dialog = (props) => {
         <div className={classes.DialogField}>
           <h3>Welcome</h3>
           {!loaded && <CircularProgress className={classes.Progress} />}
-          {loaded &&
+          {loaded && (messages !== null) &&
             Object.keys(messages).map((messageItemKey,index) => {
               const ItemProps = {};
               const name = personInfo[messages[messageItemKey].user].name;
@@ -75,7 +68,7 @@ const Dialog = (props) => {
             })}
         </div>
 
-        <InputTextArea sendMessage={sendMessageHandler} />
+        <InputTextArea />
       </div>
     </Container>
   );

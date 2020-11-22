@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Login from './pages/login/Login';
+import DialogList from './pages/dialogList/DialogList';
 import Dialog from './pages/dialog/Dialog';
 import Header from './components/header/Header';
 import ContactList from './pages/contact/contactList/ContactList';
@@ -23,7 +24,8 @@ function App(props) {
       <Header />
       <Route path="/">
         <Switch>
-          <Route path="/dialog" component={Dialog} />
+          <Route path="/dialog" exact component={DialogList} />
+          <Route exact path="/dialog/:dialogId" component={Dialog} />
           <Route path="/contact" component={Contact} />
           <Route path="/contactList" component={ContactList} />
         </Switch>
