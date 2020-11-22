@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { auth } from './services/firebase';
+import { auth, db } from './services/firebase';
 
 import { loading, logIn, logOut } from './redux/actions';
 
@@ -20,7 +20,13 @@ class App extends React.Component {
     auth().onAuthStateChanged((user) => {
       this.props.onLoading(false);
       if (user) {
-        this.props.onLogin(user);
+        db.ref('/users/' + user.uid).on('value', (snapshot) => {
+          if (snapshot.val()) {
+            this.props.onLogin({ ...snapshot.val(), uid: user.uid });
+          } else {
+            this.props.onLogout();
+          }
+        });
       } else {
         this.props.onLogout();
       }

@@ -10,7 +10,6 @@ function messageReducer(state = null, action) {
 
 function loadingReducer(state = true, action) {
   if (action.type === LOADING) {
-    console.log(LOADING);
     return action.payload;
   }
   return state;
@@ -19,12 +18,10 @@ function loadingReducer(state = true, action) {
 function userReducer(state = null, action) {
   switch (action.type) {
     case USER_LOGOUT:
-      console.log(USER_LOGOUT);
       return null;
 
     case USER_LOGIN:
-      console.log(USER_LOGIN);
-      return { ...action.payload };
+      return action.payload;
 
     default:
       return state;
