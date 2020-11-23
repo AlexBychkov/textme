@@ -9,13 +9,7 @@ import PhoneInput from 'react-phone-number-input';
 import { AsYouType } from 'libphonenumber-js';
 
 import 'fontsource-roboto';
-import {
-  TextField,
-  Container,
-  Button,
-  Backdrop,
-  CircularProgress,
-} from '@material-ui/core';
+import { TextField, Container, Button } from '@material-ui/core';
 
 import 'react-phone-number-input/style.css';
 import './Login.css';
