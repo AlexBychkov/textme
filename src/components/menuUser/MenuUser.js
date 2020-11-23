@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Avatar, Box, Menu, MenuItem, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
+import { auth } from '../../services/firebase';
 import { logOut } from '../../redux/actions';
 import ProfileModal from './../profiles/ProfilesModal';
 
@@ -24,11 +23,9 @@ function MenuUser(props) {
   };
 
   const handleLogout = () => {
-    firebase
-      .auth()
+    auth()
       .signOut()
       .then(() => {
-        console.log('try logout');
         props.onLogout();
       })
       .catch((error) => {
@@ -38,8 +35,13 @@ function MenuUser(props) {
 
   return (
     <div>
-      <Avatar aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-        H
+      <Avatar
+        aria-controls="simple-menu"
+        aria-haspopup="true"
+        src={props.user.avatar ?? ''}
+        onClick={handleClick}
+      >
+        {props.user.name && props.user.name.charAt(0)}
       </Avatar>
       <Menu
         anchorEl={anchorEl}
@@ -53,9 +55,7 @@ function MenuUser(props) {
           </ProfileModal>
         </MenuItem>
         <MenuItem onClick={handleLogout}>
-          <Box style={styleLink} onClick={handleLogout}>
-            Log Out
-          </Box>
+          <Box style={styleLink}>Log Out</Box>
         </MenuItem>
       </Menu>
     </div>
