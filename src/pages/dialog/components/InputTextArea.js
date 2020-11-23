@@ -1,72 +1,84 @@
-import React, {Component} from 'react'
-import classes from './InputTextArea.module.css'
-import {TextField, IconButton} from '@material-ui/core'
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+
+import { connect } from 'react-redux';
+import { database } from '../../../firebase';
+
+import { TextField, IconButton } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import MenuDialog from '../../../components/menuDialog/MenuDialog';
 
+import classes from './InputTextArea.module.css';
+
 class TextArea extends Component {
-	state = {
-		inputValue: ''
-	}
-	
+  state = {
+    inputValue: '',
+    dialogId: this.props.match.params.dialogId,
+  };
 
-	createMessageObjectClickHandler = () => {
-		let obj = {};
-		obj.id = this.props.messagesData.length;
-		obj.time = new Date().toLocaleTimeString()
-		obj.messageValue = this.state.inputValue;
-		obj.areYou = true;
-		obj.user = {}
-		this.setState({
-			inputValue : ''
-		})
-		return obj
-	}
+  createMessage = (type, enter) => {
+    const objToPush = {};
+    let messageValue = this.state.inputValue;
 
-	sendMessageOnClickHandler = (e) => {
-		if (this.state.inputValue !== '') this.props.sendMessage(this.createMessageObjectClickHandler(),e)
-	}
+    if (enter) messageValue = messageValue.slice(0, messageValue.length - 1);
 
-	// Very small bug here below 
-	// We don't have clear input after this handler. 
-	// And because of that    if (this.state.inputValue !== '') 
-	// pass handler when input have some sort of 'Enter key' input  'clear but not clear'
-	// i'll fix this soon
-	sendMessageOnKeyDownHandler = (e) => {
-		if (this.state.inputValue !== '')
-			if (e.key === 'Enter') {
-				this.props.sendMessage(this.createMessageObjectClickHandler(),e)
-			}
-	}
+    objToPush.message = messageValue;
+    objToPush.timestamp = new Date().getTime();
+    objToPush.type = type;
+    objToPush.user = this.props.user.uid;
 
+    this.setState({
+      inputValue: '',
+    });
+    database.ref().child(`/messages/${this.state.dialogId}`).push(objToPush);
+  };
 
-	render() {
-		return (
-			<div className = {classes.TextArea}>
-				<TextField
-					onChange = {(e) => {
-						this.setState({inputValue: e.target.value})
-					}} 
-					onKeyDown = {this.sendMessageOnKeyDownHandler}
-					value = {this.state.inputValue}
-					className = {classes.TextField}
-					multiline 
-					fullWidth
-					rowsMax = '3' 
-					rows = '2' 
-					size = 'medium' 
-					placeholder = 'Введите сообщение'
-				/>
-				<IconButton onClick = {this.sendMessageOnClickHandler}>
-					<SendIcon/>
-				</IconButton>	
-				<IconButton>
+  validateOnClick = (e) => {
+    if (this.state.inputValue !== '') this.createMessage('text');
+  };
+
+  validateOnKeyUp = (e) => {
+    if (this.state.inputValue === `\n` || this.state.inputValue === '') {
+      this.setState({ inputValue: '' });
+      return;
+    }
+    if (e.keyCode === 13) this.createMessage('text', true);
+  };
+
+  render() {
+    return (
+      <div className={classes.TextArea}>
+        <TextField
+          onChange={(e) => {
+            this.setState({ inputValue: e.target.value });
+          }}
+          onKeyUp={this.validateOnKeyUp}
+          value={this.state.inputValue}
+          className={classes.TextField}
+          multiline
+          fullWidth
+          rowsMax="3"
+          rows="2"
+          size="medium"
+          placeholder="TextHere"
+        />
+        <IconButton onClick={this.validateOnClick}>
+          <SendIcon />
+        </IconButton>
+        <IconButton>
 					<MenuDialog /* sendMessage={this.sendMessageOnClickHandler} *//>
 				</IconButton>	
-				
-			</div>
-		)
-	}
-	
+      </div>
+    );
+  }
 }
-export default TextArea
+function mapStateToProps(state) {
+  return {
+    user: state.user,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {};
+}
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(TextArea));

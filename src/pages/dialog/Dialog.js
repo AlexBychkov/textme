@@ -1,111 +1,82 @@
-import React, {Component} from 'react'
-import { Container } from '@material-ui/core';
-import classes from './Dialog.module.css'
-import MessageItemYours from './components/MessageItemYours'
-import MessageItemNotYours from './components/MessageItemNotYours'
-import InputTextArea from './components/InputTextArea'
+import React, { useCallback, useEffect, useState } from 'react';
 
+import MessageItemYours from './components/MessageItemYours';
+import MessageItemNotYours from './components/MessageItemNotYours';
+import InputTextArea from './components/InputTextArea';
 
-export default class Dialog extends Component {
+import { connect } from 'react-redux';
+import { database } from '../../firebase';
+import { Container, CircularProgress } from '@material-ui/core';
 
-	state = {
-		// Temporal data.....
-		messagesData : [
-			{
-				id : 0, 
-				time: new Date().toLocaleTimeString(), 
-				user: {}, 
-				messageValue : 'hello buddy',
-				areYou: true	
-			},
-			{
-				id : 1, 
-				time: new Date().toLocaleTimeString(), 
-				user: {}, 
-				messageValue : 'hi'	,
-				areYou: false	
-			},
-			{
-				id : 2, 
-				time: new Date().toLocaleTimeString(), 
-				user: {}, 
-				messageValue : 'How it\'s going',
-				areYou: true	
-			},
-			{
-				id : 3, 
-				time: new Date().toLocaleTimeString(), 
-				user: {}, 
-				messageValue : 'As always, perfect!!As always, perfect!!As always, perfect!!As always, perfect!!As always, perfect!!As always, perfect!!As always, perfect!!As always, perfect!!As always, perfect!!',
-				areYou: false	
-			},
-			{
-				id : 4, 
-				time: new Date().toLocaleTimeString(), 
-				user: {}, 
-				messageValue : 'Are you joking? loremadsasdfasdfAre you joking? loremadsasdfasdfAre you joking? loremadsasdfasdfAre you joking? loremadsasdfasdfAre you joking? loremadsasdfasdfAre you joking? loremadsasdfasdf',
-				areYou: true	
-			},
-		],
-	}
-	myRef = React.createRef();
+import classes from './Dialog.module.css';
 
+const Dialog = (props) => {
+  const [dialogHeight] = useState(window.innerHeight);
+  const [messages, setMessages] = useState('');
+  const [personInfo, setPersonInfo] = useState('');
+  const [loaded, setLoaded] = useState(false);
+  const { dialogId } = props.match.params;
 
-	
-	sendMessageHandler = (objToPush) => {
-		const copy = [...this.state.messagesData];
-		copy.push(objToPush);
-		this.setState({
-			messagesData: copy
-		})	
-	}
-	//still workin on that
-	setScroll = () => {
-		if (this.myRef) 
-			this.myRef.current.scrollTop = this.myRef.current.scrollHeight;
-	}
-	
+  const getData = useCallback(() => {
+    const dbUsers = database.ref().child('users');
+    const dbMessages = database.ref().child(`messages/${dialogId}`);
 
-	render() {
-		return (
-			<Container className = {classes.Container}> 
-				<div className = {classes.Dialog}> 
-					<div 
-						className = {classes.DialogField}
-						ref = {this.myRef}
-					> 						
-						{this.state.messagesData.map((value, index) => {
-							if (value.areYou) {
-								return (
-									<MessageItemYours 
-										key = {index}
-										value = {value.messageValue} 
-										time = {value.time}
-										name = 'wolf'
-										avatar = "https://i.pinimg.com/originals/c5/d6/6a/c5d66aa224f958d90a1c66f031fec857.jpg"
-									/>
-							)} else {
-								return (
-									<MessageItemNotYours
-										key = {index}
-										value = {value.messageValue}
-										time = {value.time}
-										name = 'tiger'
-										avatar = 'https://www.nepalitimes.com/wp-content/uploads/2018/08/page-8-9a-1.jpg'
-									/>
-								)
-							}	
-						})}	
-						{/* temporal */}
-						{/* {this.setScroll()} */}
-					</div>
+    dbMessages.on('value', (snap) => {
+      setMessages(snap.val());
+    });
+    dbUsers.once('value', (snap) => {
+      setPersonInfo(snap.val());
+      setLoaded(true);
+    });
 
-					<InputTextArea 
-						sendMessage = {this.sendMessageHandler}
-						messagesData = {this.state.messagesData}
-					/>
-				</div>
-			</Container>
-		)
-	}
+    return () => {
+      dbMessages.off();
+    };
+  }, [dialogId]);
+
+  useEffect(getData, []);
+
+  return (
+    <Container style={{ height: dialogHeight - 68 }} className={classes.Container}>
+      <div className={classes.Dialog}>
+        <div className={classes.DialogField}>
+          <h3>Welcome</h3>
+          {!loaded && <CircularProgress className={classes.Progress} />}
+          {loaded &&
+            messages !== null &&
+            Object.keys(messages).map((messageItemKey, index) => {
+              const ItemProps = {};
+              const name = personInfo[messages[messageItemKey].user].name;
+              const avatar = personInfo[messages[messageItemKey].user].avatar;
+
+              ItemProps.key = messageItemKey;
+              ItemProps.value = messages[messageItemKey].message;
+              ItemProps.name = name ? name : 'NoName';
+              ItemProps.time = new Date(
+                messages[messageItemKey].timestamp
+              ).toLocaleTimeString();
+              ItemProps.avatar = avatar
+                ? avatar
+                : 'https://124ural.ru/wp-content/uploads/2017/04/no-avatar.png'; // default avatar
+              if (props.user.uid === messages[messageItemKey].user)
+                return <MessageItemYours {...ItemProps} />;
+              else return <MessageItemNotYours {...ItemProps} />;
+            })}
+        </div>
+
+        <InputTextArea />
+      </div>
+    </Container>
+  );
+};
+
+function mapStateToProps(state) {
+  return {
+    user: state.user,
+  };
 }
+
+function mapDispatchToProps(dispatch) {
+  return {};
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Dialog);

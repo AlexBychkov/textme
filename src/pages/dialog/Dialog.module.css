@@ -1,4 +1,4 @@
-body {
+.Container {
 	background-color: #f1f3f4;
 }
 
@@ -6,9 +6,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	margin-top: 10px;
-	margin-bottom: 10px;
-	height: 95vh;
+	height: 85vh;
 }
 .DialogField {
 	display: flex;
@@ -18,4 +16,8 @@ body {
 	padding: 20px;
 	width: 60vw;
 	overflow-y: scroll;
+}
+
+.Progress {
+	margin: 0 auto;
 }
