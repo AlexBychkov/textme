@@ -26,3 +26,4 @@ yarn-error.log*
 .vs/react-app/v16/.suo
 .vs/VSWorkspaceState.json
 .vs/slnx.sqlite
+.debug.log

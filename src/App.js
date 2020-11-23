@@ -24,8 +24,8 @@ function App(props) {
       <Header />
       <Route path="/">
         <Switch>
-          <Route path="/dialog" exact component={DialogList} />
-          <Route exact path="/dialog/:dialogId" component={Dialog} />
+          <Route path="/dialog" component={DialogList} exact />
+          <Route path="/dialog/:dialogId" component={Dialog} />
           <Route path="/contact" component={Contact} />
           <Route path="/contactList" component={ContactList} />
         </Switch>
