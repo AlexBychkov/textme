@@ -1,30 +1,50 @@
-import React, { Component } from 'react';
-import { auth } from '../../services/firebase';
-import 'fontsource-roboto';
-import { TextField, Container, Button } from '@material-ui/core';
-import { AsYouType } from 'libphonenumber-js';
+import React, { Component, useState, useEffect } from 'react';
+
 import { connect } from 'react-redux';
-import logo from '../../big-logo.png';
 import { logIn, loading } from '../../redux/actions';
 
+import { auth } from '../../services/firebase';
+
+import PhoneInput from 'react-phone-number-input';
+import { AsYouType } from 'libphonenumber-js';
+
+import 'fontsource-roboto';
+import {
+  TextField,
+  Container,
+  Button,
+  Backdrop,
+  CircularProgress,
+} from '@material-ui/core';
+
+import 'react-phone-number-input/style.css';
+import './Login.css';
+
+import logo from '../../big-logo.png';
+
 function PhoneBlock(props) {
+  const [value, setValue] = useState();
+  const { changePhone, sendPhone } = props;
+  useEffect(() => {
+    changePhone(value);
+  }, [changePhone, value]);
   return (
-    <div>
+    <div className="first-input-section">
       <p>Welcome</p>
       <p>
         To enter the application, enter your phone number, <br />
         we will send an SMS with a code to it
       </p>
-      <TextField
+      <PhoneInput
         key="phone-number"
         label="Phone"
-        placeholder="+7 707 070 00 77"
-        onChange={props.changePhone}
-        helperText={props.phone.error ? 'Error' : ''}
-        error={props.phone.error}
-      />
+        international
+        placeholder="Enter phone number"
+        value={value}
+        onChange={setValue}
+      ></PhoneInput>
       <br />
-      <Button id="send-sms" onClick={props.sendPhone} color="primary">
+      <Button id="send-sms" onClick={sendPhone} color="primary">
         Send SMS
       </Button>
     </div>
@@ -89,9 +109,9 @@ class Login extends Component {
     });
   }
 
-  handleChangePhone(e) {
+  handleChangePhone(value) {
     const newPhone = this.state.phone;
-    newPhone.value = e.target.value;
+    newPhone.value = value;
     this.setState({ phone: newPhone });
   }
 
@@ -131,7 +151,7 @@ class Login extends Component {
       });
   }
 
-  handleSendCode() {
+  handleSendCode(e) {
     const code = this.state.code.value;
     this.props.onLoading(true);
     this.confirmationResult

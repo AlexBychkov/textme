@@ -1,0 +1,26 @@
+.first-input-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.PhoneInput {
+  height: 40px;
+  width: 300px;
+}
+.PhoneInput input {
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #ccc;
+  height: 20px;
+  width: 200px;
+}
+
+.PhoneInput input:hover {
+  border-bottom: 2px solid rgb(0, 0, 0);
+}
+
+.PhoneInput input:focus,
+.PhoneInput input:active {
+  border-bottom: 2px solid rgb(17, 0, 255);
+}
