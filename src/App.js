@@ -6,6 +6,7 @@ import { auth, db } from './services/firebase';
 import { loading, logIn, logOut } from './redux/actions';
 
 import Login from './pages/login/Login';
+import DialogList from './pages/dialogList/DialogList';
 import Dialog from './pages/dialog/Dialog';
 import ContactList from './pages/contact/contactList/ContactList';
 import Contact from './pages/contact/Contact';
@@ -43,11 +44,11 @@ class App extends React.Component {
     }
     return (
       <div className="App">
-        <Loading open={this.props.loading} />
         <Header />
         <Route path="/">
           <Switch>
-            <Route path="/dialog" component={Dialog} />
+            <Route path="/dialog" component={DialogList} exact />
+            <Route path="/dialog/:dialogId" component={Dialog} />
             <Route path="/contact" component={Contact} />
             <Route path="/contactList" component={ContactList} />
           </Switch>
