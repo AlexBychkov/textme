@@ -29,7 +29,7 @@ export default function MenuDialog(props) {
                 onClose={handleClose}
             >
                   <MenuItem onClick={handleClose}>
-                    <AddLocation/>
+                    <AddLocation createMessage={props.createMessage}/>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
                     <AddAPhotoIcon></AddAPhotoIcon>

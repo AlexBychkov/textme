@@ -16,13 +16,25 @@ class TextArea extends Component {
     dialogId: this.props.match.params.dialogId,
   };
 
-  createMessage = (type, enter) => {
+  createMessage = (type, enter, coodrs) => {
     const objToPush = {};
     let messageValue = this.state.inputValue;
 
     if (enter) messageValue = messageValue.slice(0, messageValue.length - 1);
-
-    objToPush.message = messageValue;
+    
+    switch (type) {
+      case 'text':
+        objToPush.message = messageValue;
+        break;
+    
+      case 'location':
+        objToPush.message = coodrs;
+        break;
+    
+      default:
+        break;
+    }
+   
     objToPush.timestamp = new Date().getTime();
     objToPush.type = type;
     objToPush.user = this.props.user.uid;
@@ -66,7 +78,7 @@ class TextArea extends Component {
           <SendIcon />
         </IconButton>
         <IconButton>
-					<MenuDialog /* sendMessage={this.sendMessageOnClickHandler} *//>
+					<MenuDialog createMessage={this.createMessage}/>
 				</IconButton>	
       </div>
     );

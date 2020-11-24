@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import AddLocationIcon from '@material-ui/icons/AddLocation';
 
@@ -12,13 +12,10 @@ export default function AddLocation(props) {
         maximumAge: 0,
       };
 
-    const onChange = ({coords, timestamp}) => {
+    const onChange = ({coords}) => {
         setPosition({
           latitude: coords.latitude,
           longitude: coords.longitude,
-          accuracy: coords.accuracy,
-          speed: coords.speed,
-          timestamp,
         });
       };
     
@@ -31,14 +28,15 @@ export default function AddLocation(props) {
           setError('Geolocation is not supported');
           return;
         }
-    
         navigator.geolocation.getCurrentPosition(onChange, onError, defaultSettings);
     }
 
-    const handleLocation = () => {
-			/*  props.sendMessage() */
-			console.log(position);
-    };
+    useEffect(() => {
+     if (position.latitude) {
+      props.createMessage('location',false, position);
+     }
+    }, [position.latitude])
+   
 
     return (
         <AddLocationIcon onClick={handlerPosition}></AddLocationIcon>

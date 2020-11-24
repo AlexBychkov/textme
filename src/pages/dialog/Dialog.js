@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import MessageItemYours from './components/MessageItemYours';
 import MessageItemNotYours from './components/MessageItemNotYours';
 import InputTextArea from './components/InputTextArea';
+import MessageItemMap from './components/MessageItemMap';
 
 import { connect } from 'react-redux';
 import { database } from '../../firebase';
@@ -52,15 +53,23 @@ const Dialog = (props) => {
               ItemProps.key = messageItemKey;
               ItemProps.value = messages[messageItemKey].message;
               ItemProps.name = name ? name : 'NoName';
+              ItemProps.yours = props.user.uid === messages[messageItemKey].user ? true : false
               ItemProps.time = new Date(
                 messages[messageItemKey].timestamp
               ).toLocaleTimeString();
               ItemProps.avatar = avatar
                 ? avatar
                 : 'https://124ural.ru/wp-content/uploads/2017/04/no-avatar.png'; // default avatar
-              if (props.user.uid === messages[messageItemKey].user)
-                return <MessageItemYours {...ItemProps} />;
-              else return <MessageItemNotYours {...ItemProps} />;
+              
+              if (typeof(ItemProps.value) !== "string"){
+                return <MessageItemMap {...ItemProps} />
+              }
+                
+              if (props.user.uid === messages[messageItemKey].user) {
+                  return <MessageItemYours {...ItemProps} />;
+              } else {
+                 return <MessageItemNotYours {...ItemProps} />;
+              }
             })}
         </div>
 

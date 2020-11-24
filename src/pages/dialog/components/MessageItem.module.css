@@ -53,3 +53,32 @@
 	font-weight: 100;
 	font-size: 0.7em;
 }
+
+
+/*  */
+
+.message {
+	max-width: 40vw;
+	display: flex;
+	position: relative;
+	left: 5vw;
+}
+.messageBlock {
+	display: flex;
+	flex-direction: column;
+}
+.messageBlock span {
+	text-align: start;
+	margin-left: 20px;
+	font-weight: 100;
+	font-size: 0.7em;
+}
+.messageBlock p {
+	max-width: 30vw;
+	margin: 5px 0px 5px 5px;
+	padding: 5px;
+	background-color: white;
+	border: 1px solid #f1f3f4;
+	border-radius: 10px 10px 10px 0px;
+	white-space: pre-wrap;
+}

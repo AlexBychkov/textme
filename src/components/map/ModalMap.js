@@ -7,6 +7,9 @@ import Modal from '@material-ui/core/Modal';
 import MapIcon from '@material-ui/icons/Map';
 
 export default function ModalMap(props) {
+  const coords = { 
+    lat: props.value ? parseFloat(props.value.latitude) : '',
+    lng: props.value ?  parseFloat(props.value.longitude) : '' };
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -27,7 +30,7 @@ export default function ModalMap(props) {
         aria-describedby="simple-modal-description"
       >
         <div className={classes.paper}>
-          {props.error ? props.error : <MyMapComponent isMarkerShown coords={{ lat: parseFloat(props.latitude), lng: parseFloat(props.longitude) }} />}
+          {props.error ? props.error : <MyMapComponent isMarkerShown coords={coords} />}
         </div>
       </Modal>
     </div>
