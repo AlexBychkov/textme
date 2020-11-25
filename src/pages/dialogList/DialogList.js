@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { database } from '../../firebase';
+import { db as database } from '../../services/firebase';
 
 import { Grid, Typography, List, CircularProgress, ListItem } from '@material-ui/core';
 

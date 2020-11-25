@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { database } from '../../../firebase';
+import { db as database } from '../../../services/firebase';
 
 import { TextField, IconButton } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';

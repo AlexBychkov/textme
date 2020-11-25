@@ -7,6 +7,13 @@ export const message = () => {
   };
 };
 
+export const loading = (isLoad) => {
+  return {
+    type: types.LOADING,
+    payload: isLoad,
+  };
+};
+
 export const logIn = (user) => {
   return {
     type: types.USER_LOGIN,

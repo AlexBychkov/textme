@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import MessageItemYours from './components/MessageItemYours';
 import MessageItemNotYours from './components/MessageItemNotYours';
@@ -6,17 +6,19 @@ import InputTextArea from './components/InputTextArea';
 import MessageItemMap from './components/MessageItemMap';
 
 import { connect } from 'react-redux';
-import { database } from '../../firebase';
+import { db as database } from '../../services/firebase';
 import { Container, CircularProgress } from '@material-ui/core';
 
 import classes from './Dialog.module.css';
 
 const Dialog = (props) => {
   const [dialogHeight] = useState(window.innerHeight);
+  const { dialogId } = props.match.params;
+  const scrollTo = useRef();
+
   const [messages, setMessages] = useState('');
   const [personInfo, setPersonInfo] = useState('');
   const [loaded, setLoaded] = useState(false);
-  const { dialogId } = props.match.params;
 
   const getData = useCallback(() => {
     const dbUsers = database.ref().child('users');
@@ -35,7 +37,13 @@ const Dialog = (props) => {
     };
   }, [dialogId]);
 
+  const scrollToBottomHandler = () => {
+    scrollTo.current.scrollIntoView({ behaviour: 'smooth' });
+  };
+
   useEffect(getData, []);
+
+  useEffect(scrollToBottomHandler, [messages]);
 
   return (
     <Container style={{ height: dialogHeight - 68 }} className={classes.Container}>
@@ -60,17 +68,13 @@ const Dialog = (props) => {
               ItemProps.avatar = avatar
                 ? avatar
                 : 'https://124ural.ru/wp-content/uploads/2017/04/no-avatar.png'; // default avatar
-              
-              if (typeof(ItemProps.value) !== "string"){
-                return <MessageItemMap {...ItemProps} />
-              }
-                
-              if (props.user.uid === messages[messageItemKey].user) {
-                  return <MessageItemYours {...ItemProps} />;
-              } else {
-                 return <MessageItemNotYours {...ItemProps} />;
-              }
+              // delete below after you merge your location feature
+              if (messages[messageItemKey].type !== 'text') return <MessageItemMap {...ItemProps} />
+              if (props.user.uid === messages[messageItemKey].user)
+                return <MessageItemYours {...ItemProps} />;
+              else return <MessageItemNotYours {...ItemProps} />;
             })}
+          <div ref={scrollTo}></div>
         </div>
 
         <InputTextArea />
