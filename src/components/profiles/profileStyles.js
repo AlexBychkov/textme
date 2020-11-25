@@ -4,7 +4,6 @@ export const useStyles = makeStyles((theme) => ({
   modalPaper: {
     position: 'absolute',
     width: '40vw',
-    height: '60vh',
     left: '30vw',
     top: '20vh',
     outline: 'none',

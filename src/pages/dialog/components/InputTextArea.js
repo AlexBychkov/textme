@@ -1,38 +1,60 @@
 import React, { Component } from 'react';
-import classes from './InputTextArea.module.css';
+import { withRouter } from 'react-router-dom';
+
+import { connect } from 'react-redux';
+import { db as database } from '../../../services/firebase';
+
 import { TextField, IconButton } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
+import MenuDialog from '../../../components/menuDialog/MenuDialog';
+
+import classes from './InputTextArea.module.css';
 
 class TextArea extends Component {
   state = {
     inputValue: '',
+    dialogId: this.props.match.params.dialogId,
   };
 
-  createMessageObjectClickHandler = () => {
-    let obj = {};
-    obj.id = this.props.messagesData.length;
-    obj.time = new Date().toLocaleTimeString();
-    obj.messageValue = this.state.inputValue;
-    obj.areYou = true;
-    obj.user = {};
+  createMessage = (type, enter, coodrs) => {
+    const objToPush = {};
+    let messageValue = this.state.inputValue;
+
+    if (enter) messageValue = messageValue.slice(0, messageValue.length - 1);
+    
+    switch (type) {
+      case 'text':
+        objToPush.message = messageValue;
+        break;
+    
+      case 'location':
+        objToPush.message = coodrs;
+        break;
+    
+      default:
+        break;
+    }
+   
+    objToPush.timestamp = new Date().getTime();
+    objToPush.type = type;
+    objToPush.user = this.props.user.uid;
+
     this.setState({
       inputValue: '',
     });
-    return obj;
+    database.ref().child(`/messages/${this.state.dialogId}`).push(objToPush);
   };
 
-  sendMessageOnClickHandler = (e) => {
-    if (this.state.inputValue !== '')
-      this.props.sendMessage(this.createMessageObjectClickHandler(), e);
+  validateOnClick = (e) => {
+    if (this.state.inputValue !== '') this.createMessage('text');
   };
 
-  sendMessageOnKeyUpHandler = (e) => {
+  validateOnKeyUp = (e) => {
     if (this.state.inputValue === `\n` || this.state.inputValue === '') {
       this.setState({ inputValue: '' });
       return;
     }
-    if (e.keyCode === 13)
-      this.props.sendMessage(this.createMessageObjectClickHandler(), e);
+    if (e.keyCode === 13) this.createMessage('text', true);
   };
 
   render() {
@@ -42,7 +64,7 @@ class TextArea extends Component {
           onChange={(e) => {
             this.setState({ inputValue: e.target.value });
           }}
-          onKeyUp={this.sendMessageOnKeyUpHandler}
+          onKeyUp={this.validateOnKeyUp}
           value={this.state.inputValue}
           className={classes.TextField}
           multiline
@@ -52,11 +74,23 @@ class TextArea extends Component {
           size="medium"
           placeholder="TextHere"
         />
-        <IconButton onClick={this.sendMessageOnClickHandler}>
+        <IconButton onClick={this.validateOnClick}>
           <SendIcon />
         </IconButton>
+        <IconButton>
+					<MenuDialog createMessage={this.createMessage}/>
+				</IconButton>	
       </div>
     );
   }
 }
-export default TextArea;
+function mapStateToProps(state) {
+  return {
+    user: state.user,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {};
+}
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(TextArea));

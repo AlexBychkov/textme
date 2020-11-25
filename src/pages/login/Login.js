@@ -1,58 +1,44 @@
-import React, { Component } from 'react';
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
-import 'fontsource-roboto';
-import {
-  TextField,
-  Container,
-  Button,
-  Backdrop,
-  CircularProgress,
-} from '@material-ui/core';
-import { AsYouType } from 'libphonenumber-js';
+import React, { Component, useState, useEffect } from 'react';
+
 import { connect } from 'react-redux';
+import { logIn, loading } from '../../redux/actions';
+
+import { auth } from '../../services/firebase';
+
+import PhoneInput from 'react-phone-number-input';
+import { AsYouType } from 'libphonenumber-js';
+
+import 'fontsource-roboto';
+import { TextField, Container, Button } from '@material-ui/core';
+
+import 'react-phone-number-input/style.css';
+import './Login.css';
+
 import logo from '../../big-logo.png';
-import { logIn, logOut } from '../../redux/actions';
-
-function Progress(props) {
-  return (
-    <Backdrop open={props.open} style={{ zIndex: 10 }}>
-      <CircularProgress style={{ color: '#ffffff' }} />
-    </Backdrop>
-  );
-}
-
-function User(props) {
-  return (
-    <div>
-      <p>We entered</p>
-      <p>Phone number: {props.user.phoneNumber}</p>
-      <p>ID: {props.user.uid}</p>
-      <Button id="logout" onClick={props.logout} color="primary">
-        Sign Out
-      </Button>
-    </div>
-  );
-}
 
 function PhoneBlock(props) {
+  const [value, setValue] = useState();
+  const { changePhone, sendPhone } = props;
+  useEffect(() => {
+    changePhone(value);
+  }, [changePhone, value]);
   return (
-    <div>
+    <div className="first-input-section">
       <p>Welcome</p>
       <p>
         To enter the application, enter your phone number, <br />
         we will send an SMS with a code to it
       </p>
-      <TextField
+      <PhoneInput
         key="phone-number"
         label="Phone"
-        placeholder="+7 707 070 00 77"
-        onChange={props.changePhone}
-        helperText={props.phone.error ? 'Error' : ''}
-        error={props.phone.error}
-      />
+        international
+        placeholder="Enter phone number"
+        value={value}
+        onChange={setValue}
+      ></PhoneInput>
       <br />
-      <Button id="send-sms" onClick={props.sendPhone} color="primary">
+      <Button id="send-sms" onClick={sendPhone} color="primary">
         Send SMS
       </Button>
     </div>
@@ -84,59 +70,42 @@ function CodeBlock(props) {
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.firebaseConfig = {
-      apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-      authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-      databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
-      projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-      storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-      messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-      appId: process.env.REACT_APP_FIREBASE_APP_ID,
-    };
-
     this.state = {
       phone: { value: '', error: false },
       code: { value: '', error: false },
       codeSended: false,
-      progress: true,
     };
 
     this.handleChangePhone = this.handleChangePhone.bind(this);
     this.handleChangeCode = this.handleChangeCode.bind(this);
     this.handleSendPhone = this.handleSendPhone.bind(this);
     this.handleSendCode = this.handleSendCode.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
 
     this.asYouType = new AsYouType('RU');
   }
 
-  firebaseInit() {
-    if (!firebase.apps.length) {
-      firebase.initializeApp(this.firebaseConfig);
-    }
-  }
-
   componentDidMount() {
-    this.firebaseInit();
-    firebase.auth().onAuthStateChanged((user) => {
-      this.setState({ progress: false });
-      if (user) {
-        this.props.onLogin(user);
-      } else {
-        console.log('No user is signed in');
-      }
-    });
-    this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('send-sms', {
+    this.recaptchaVerifier = new auth.RecaptchaVerifier('send-sms', {
       size: 'invisible',
       callback: (response) => {
-        console.log('reCAPTCHA solved');
+        return new Promise((resolve, reject) => {
+          if (response) {
+            const data = {
+              token: response,
+            };
+            return resolve(data); // We need to resolve promise anyway
+          } else {
+            this.recaptchaVerifier.reset();
+            return reject('Invalid captcha verification.');
+          }
+        });
       },
     });
   }
 
-  handleChangePhone(e) {
+  handleChangePhone(value) {
     const newPhone = this.state.phone;
-    newPhone.value = e.target.value;
+    newPhone.value = value;
     this.setState({ phone: newPhone });
   }
 
@@ -158,73 +127,58 @@ class Login extends Component {
 
     const newPhone = this.state.phone;
     newPhone.error = false;
-    this.setState({ progress: true, phone: newPhone });
+    this.props.onLoading(true);
+    this.setState({ phone: newPhone });
 
     const phoneNumber = this.asYouType.getNumber().number;
-    const appVerifier = this.recaptchaVerifier;
-    firebase
-      .auth()
-      .signInWithPhoneNumber(phoneNumber, appVerifier)
+    auth()
+      .signInWithPhoneNumber(phoneNumber, this.recaptchaVerifier)
       .then((confirmationResult) => {
-        this.setState({ progress: false, codeSended: true });
+        console.log('confirmationResult');
+        this.props.onLoading(false);
+        this.setState({ codeSended: true });
         this.confirmationResult = confirmationResult;
       })
       .catch((error) => {
-        this.setState({ progress: false });
+        this.recaptchaVerifier.reset();
+        this.props.onLoading(false);
       });
   }
 
-  handleLogout() {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        this.props.onLogout();
-        this.setState({ codeSended: false });
-      })
-      .catch((error) => {
-        console.log(error, 'signOut error');
-      });
-  }
-
-  handleSendCode() {
+  handleSendCode(e) {
     const code = this.state.code.value;
-    this.setState({ progress: true });
+    this.props.onLoading(true);
     this.confirmationResult
       .confirm(code)
       .then((result) => {
-        this.setState({ progress: false });
+        this.props.onLoading(false);
       })
       .catch((error) => {
         const newCode = this.state.code;
         newCode.error = true;
-        this.setState({ code: newCode, progress: false });
+        this.props.onLoading(false);
+        this.setState({ code: newCode });
       });
   }
 
   render() {
     return (
       <Container maxWidth="sm">
-        <Progress open={this.state.progress} />
         <img src={logo} alt="Logo" style={{ maxWidth: '256px' }} />
         <br />
-        {!this.props.user ? (
-          this.state.codeSended ? (
-            <CodeBlock
-              formatPhone={this.asYouType.getNumber().formatInternational()}
-              changeCode={this.handleChangeCode}
-              sendCode={this.handleSendCode}
-              code={this.state.code}
-            />
-          ) : (
-            <PhoneBlock
-              phone={this.state.phone}
-              changePhone={this.handleChangePhone}
-              sendPhone={this.handleSendPhone}
-            />
-          )
+        {this.state.codeSended ? (
+          <CodeBlock
+            formatPhone={this.asYouType.getNumber().formatInternational()}
+            changeCode={this.handleChangeCode}
+            sendCode={this.handleSendCode}
+            code={this.state.code}
+          />
         ) : (
-          <User user={this.props.user} logout={this.handleLogout} />
+          <PhoneBlock
+            phone={this.state.phone}
+            changePhone={this.handleChangePhone}
+            sendPhone={this.handleSendPhone}
+          />
         )}
       </Container>
     );
@@ -234,13 +188,14 @@ class Login extends Component {
 function mapStateToProps(state) {
   return {
     user: state.user,
+    loading: state.loading,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     onLogin: (user) => dispatch(logIn(user)),
-    onLogout: () => dispatch(logOut()),
+    onLoading: (isLoad) => dispatch(loading(isLoad)),
   };
 }
 

@@ -2,25 +2,26 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { Router } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
+import { BrowserRouter } from 'react-router-dom';
 import { applyMiddleware, compose, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { rootReducer } from './redux/rootReducer';
-import { message } from './redux/actions';
 import './index.css';
 
-const store = createStore(rootReducer, compose(applyMiddleware()));
+const composeEnhancers =
+  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose;
 
-console.log(store.dispatch(message()));
+const enhancer = composeEnhancers(applyMiddleware());
 
-const history = createBrowserHistory();
+const store = createStore(rootReducer, enhancer);
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={history}>
+    <BrowserRouter>
       <App />
-    </Router>
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 );

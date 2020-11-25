@@ -17,3 +17,7 @@
 	width: 60vw;
 	overflow-y: scroll;
 }
+
+.Progress {
+	margin: 0 auto;
+}
