@@ -54,7 +54,7 @@ export function ListMenu(props) {
       {itemList.map((elem, index) => {
         if (elem.text === 'Profile') {
           return (
-            <ProfileModal profile key ={itemList[index].text}>
+            <ProfileModal profile key={itemList[index].text}>
               <ListItem button>
                 <ListItemIcon>
                   <PersonIcon />
