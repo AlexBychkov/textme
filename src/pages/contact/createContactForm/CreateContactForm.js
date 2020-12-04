@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Modal from '@material-ui/core/Modal';
+import { Button, TableCell, TableRow, TextField } from '@material-ui/core';
 
 class CreateContactForm extends Component {
   constructor(props) {
@@ -13,15 +14,20 @@ class CreateContactForm extends Component {
   }
 
   handleSubmit = (e) => {
-    e.preventDefault();
     const { contactName, contactPhone, contactEmail } = this.state;
-    if (contactName.length > 0 && contactPhone.length > 0 && contactEmail.length > 0)
+    if (contactName.length > 0 && contactPhone.length > 0 && contactEmail.length > 0) {
       this.props.addPerson({
         name: contactName,
         phone: contactPhone,
         email: contactEmail,
         id: uuidv4(),
       });
+      this.setState({
+        contactName: '',
+        contactPhone: '',
+        contactEmail: '',
+      });
+    }
   };
 
   handleChange = (e) =>
@@ -33,14 +39,9 @@ class CreateContactForm extends Component {
   render() {
     const { contactName, contactPhone, contactEmail } = this.state;
     return (
-      <Modal
-        open={this.props.isOpen}
-        onClose={() => this.props.toggleModal()}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        <form className="create-form" onSubmit={(e) => this.handleSubmit(e)}>
-          <input
+      <TableRow>
+        <TableCell>
+          <TextField
             type="text"
             placeholder="name"
             required
@@ -48,7 +49,9 @@ class CreateContactForm extends Component {
             name="contactName"
             onChange={(e) => this.handleChange(e)}
           />
-          <input
+        </TableCell>
+        <TableCell>
+          <TextField
             type="text"
             placeholder="phone"
             required
@@ -56,7 +59,9 @@ class CreateContactForm extends Component {
             name="contactPhone"
             onChange={(e) => this.handleChange(e)}
           />
-          <input
+        </TableCell>
+        <TableCell>
+          <TextField
             type="email"
             placeholder="email"
             required
@@ -64,9 +69,11 @@ class CreateContactForm extends Component {
             name="contactEmail"
             onChange={(e) => this.handleChange(e)}
           />
-          <button type="submit">Add Contact</button>
-        </form>
-      </Modal>
+        </TableCell>
+        <TableCell>
+          <Button onClick={(e) => this.handleSubmit(e)}>Add Contact</Button>
+        </TableCell>
+      </TableRow>
     );
   }
 }

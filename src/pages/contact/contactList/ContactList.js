@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Contact from '../Contact';
 import CreateContactForm from '../createContactForm/CreateContactForm';
 import {
+  Input,
   Table,
   TableBody,
   TableCell,
@@ -10,6 +11,7 @@ import {
   TextField,
 } from '@material-ui/core';
 import './ContactList.css';
+import { TextFields } from '@material-ui/icons';
 
 class ContactList extends Component {
   constructor(props) {
@@ -118,30 +120,12 @@ class ContactList extends Component {
 
     return (
       <div className="contact-list">
-        <div className="contact-seaerch">
-          {createContactModal && (
-            <CreateContactForm
-              addPerson={this.addContact}
-              isOpen={createContactModal}
-              toggleModal={this.toggleModal}
-            />
-          )}
-        </div>
         <Table className={'table'} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell>Phone</TableCell>
               <TableCell>Email</TableCell>
-              <TableCell>
-                <button
-                  type="button"
-                  className="table-add-btn"
-                  onClick={() => this.toggleModal()}
-                >
-                  &#43;
-                </button>
-              </TableCell>
               <TableCell>
                 <div className={'contact-list'}>
                   <TextField
@@ -154,7 +138,14 @@ class ContactList extends Component {
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>{this.renderContacts()}</TableBody>
+          <TableBody>
+            <CreateContactForm
+              addPerson={this.addContact}
+              isOpen={createContactModal}
+              toggleModal={this.toggleModal}
+            />
+            {this.renderContacts()}
+          </TableBody>
         </Table>
       </div>
     );
