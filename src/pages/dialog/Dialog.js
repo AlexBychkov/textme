@@ -12,6 +12,7 @@ import { Container, CircularProgress } from '@material-ui/core';
 import classes from './Dialog.module.css';
 
 const Dialog = (props) => {
+  const defaultAvater = 'https://124ural.ru/wp-content/uploads/2017/04/no-avatar.png'
   const [dialogHeight] = useState(window.innerHeight);
   const { dialogId } = props.match.params;
   const scrollTo = useRef();
@@ -67,7 +68,7 @@ const Dialog = (props) => {
               ).toLocaleTimeString();
               ItemProps.avatar = avatar
                 ? avatar
-                : 'https://124ural.ru/wp-content/uploads/2017/04/no-avatar.png'; // default avatar
+                : defaultAvater;
               // delete below after you merge your location feature
               if (messages[messageItemKey].type !== 'text') return <MessageItemMap {...ItemProps} />
               if (props.user.uid === messages[messageItemKey].user)
