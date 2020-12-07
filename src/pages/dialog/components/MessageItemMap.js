@@ -5,20 +5,24 @@ import ModalMap from '../../../components/map/ModalMap';
 
 const MessageItemMap = (props) => {
    
-    let styled;
+    let styled, messageContainer, messageHeader;
     if (props.yours) {
-        styled = {flexDirection: 'row', left: '5vw'};
+        styled = {flexDirection: 'row'};
+        messageHeader = classes.LeftHeader
+        messageContainer = classes.LeftMessage
     } else {
-        styled = {flexDirection: 'row-reverse', left: '15vw'};
+        styled = {flexDirection: 'row-reverse'};
+        messageHeader = classes.RightHeader
+        messageContainer = classes.RightMessage
     }
   return (
-    <div style={styled} className={classes.message}>
+    <div style={styled} className={messageContainer}>
       <div>
         <img className={classes.Avatar} src={props.avatar} alt="avatar" />
       </div>
 
-      <div className={classes.messageBlock}>
-        <span>
+      <div className={classes.MessageBlock}>
+        <span className = {messageHeader}>
           <ProfileModal profile>{props.name}</ProfileModal> {props.time}
         </span>
         <ModalMap {...props} />

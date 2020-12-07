@@ -13,11 +13,17 @@
 	flex-direction: column;
 	background-color: white;
 	margin: 0 auto;
-	padding: 20px;
 	width: 60vw;
 	overflow-y: scroll;
+	scrollbar-width: thin;
 }
 
 .Progress {
 	margin: 0 auto;
+}
+
+@media screen and (max-width : 500px) {
+	.DialogField {
+		width: 80vw;
+	}
 }
