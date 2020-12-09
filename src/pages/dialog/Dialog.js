@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import InputTextArea from './components/InputTextArea';
-import MessageItemMap from './components/MessageItemMap';
 import MessageItem from './components/MessageItem'
 
 import { connect } from 'react-redux';
@@ -59,6 +58,7 @@ const Dialog = (props) => {
               const avatar = personInfo[messages[messageItemKey].user].avatar;
 
               ItemProps.key = messageItemKey;
+              ItemProps.type = messages[messageItemKey].type
               ItemProps.value = messages[messageItemKey].message;
               ItemProps.name = name ? name : 'NoName';
               ItemProps.yours = props.user.uid === messages[messageItemKey].user ? true : false
@@ -69,7 +69,6 @@ const Dialog = (props) => {
                 ? avatar
                 : defaultAvatar;
                 
-              if (messages[messageItemKey].type !== 'text') return <MessageItemMap {...ItemProps} />
               return <MessageItem {...ItemProps}/>
               
             })}
