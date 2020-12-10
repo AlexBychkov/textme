@@ -13,7 +13,7 @@
 	flex-direction: column;
 	background-color: white;
 	margin: 0 auto;
-	width: 60vw;
+	width: 90%;
 	overflow-y: scroll;
 	scrollbar-width: thin;
 }
@@ -24,6 +24,6 @@
 
 @media screen and (max-width : 500px) {
 	.DialogField {
-		width: 80vw;
+		width: 100%;
 	}
 }

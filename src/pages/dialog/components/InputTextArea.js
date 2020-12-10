@@ -73,7 +73,6 @@ class TextArea extends Component {
           value={this.state.inputValue}
           className={classes.TextField}
           multiline
-          fullWidth
           rowsMax="3"
           rows="2"
           size="medium"
