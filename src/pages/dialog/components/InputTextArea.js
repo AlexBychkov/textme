@@ -6,6 +6,7 @@ import { db as database } from '../../../services/firebase';
 
 import { TextField, IconButton } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
+import MicIcon from '@material-ui/icons/Mic';
 import MenuDialog from '../../../components/menuDialog/MenuDialog';
 
 import classes from './InputTextArea.module.css';
@@ -14,6 +15,7 @@ class TextArea extends Component {
   state = {
     inputValue: '',
     dialogId: this.props.match.params.dialogId,
+    isRecording: '',
   };
 
   createMessage = (type, enter, coodrs) => {
@@ -60,26 +62,29 @@ class TextArea extends Component {
   render() {
     return (
       <div className={classes.TextArea}>
-        <TextField
-          onChange={(e) => {
-            this.setState({ inputValue: e.target.value });
-          }}
-          onKeyUp={this.validateOnKeyUp}
-          value={this.state.inputValue}
-          className={classes.TextField}
-          multiline
-          fullWidth
-          rowsMax="3"
-          rows="2"
-          size="medium"
-          placeholder="TextHere"
-        />
+            <TextField
+              onChange={(e) => {
+                this.setState({ inputValue: e.target.value });
+              }}
+              onKeyUp={this.validateOnKeyUp}
+              value={this.state.inputValue}
+              className={classes.TextField}
+              multiline
+              fullWidth
+              rowsMax="3"
+              rows="2"
+              size="medium"
+              placeholder="TextHere"
+            />
         <IconButton onClick={this.validateOnClick}>
           <SendIcon />
         </IconButton>
         <IconButton>
 					<MenuDialog createMessage={this.createMessage}/>
 				</IconButton>	
+        <IconButton>
+            <MicIcon />
+          </IconButton>
       </div>
     );
   }
