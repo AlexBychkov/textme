@@ -1,5 +1,4 @@
 import { Modal, Paper } from '@material-ui/core';
-
 import React from 'react';
 import Profile from './Profile';
 import ContactProfile from './ContactProfile';
@@ -22,11 +21,7 @@ export default function ProfileModal(props) {
       </strong>
       <Modal open={open} onClose={handleClose} disableAutoFocus>
         <Paper className={classes.modalPaper}>
-          {props.profile ? (
-            <Profile handleClose={handleClose} />
-          ) : (
-            <ContactProfile handleClose={handleClose} />
-          )}
+          {props.profile ? <Profile /> : <ContactProfile />}
         </Paper>
       </Modal>
     </>

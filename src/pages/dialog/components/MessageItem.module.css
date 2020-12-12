@@ -5,24 +5,24 @@
 	object-fit: cover;
 }
 
-.MessageBlock {
+
+.YourMessage {
+	max-width: 40vw;
+	display: flex;
+	position: relative;
+	left: 5vw;
+}
+.YourMessageRightBlock, .NotYourMessageLeftBlock {
 	display: flex;
 	flex-direction: column;
 }
-
-
-.LeftMessage {
-	max-width: 40vw;
-	display: flex;
-	margin-left: 5vw;
-}
-.LeftHeader {
+.YourMessageRightBlock span {
 	text-align: start;
 	margin-left: 20px;
 	font-weight: 100;
 	font-size: 0.7em;
 }
-.LeftContent {
+.YourMessageRightBlock p {
 	max-width: 30vw;
 	margin: 5px 0px 5px 5px;
 	padding: 5px;
@@ -33,21 +33,21 @@
 }
 
 
-.RightMessage {
+.NotYourMessage {
 	max-width: 40vw;
-	align-self: flex-end;
 	display: flex;
+	position: relative;
 	justify-content: flex-end; 
-	margin-right: 5vw;
+	left: 15vw;
 }
-.RightContent{
+.NotYourMessageLeftBlock p{
 	max-width: 30vw;
 	padding: 5px;
 	background-color:#1976d2;
 	border-radius: 10px 10px 0px 10px;
 	color: white;
 }
-.RightHeader {
+.NotYourMessageLeftBlock span {
 	text-align: end;
 	margin-right: 10px;
 	font-weight: 100;
@@ -55,15 +55,30 @@
 }
 
 
-@media screen and (max-width : 500px) {
-	.Avatar {
-		width: 40px;
-		height: 40px;
-	}
-	.LeftMessage, .RightMessage {
-		max-width: 60vw;
-	}
-	.LeftContent, .RightContent {
-		max-width: 50vw;
-	}
+/*  */
+
+.message {
+	max-width: 40vw;
+	display: flex;
+	position: relative;
+	left: 5vw;
+}
+.messageBlock {
+	display: flex;
+	flex-direction: column;
+}
+.messageBlock span {
+	text-align: start;
+	margin-left: 20px;
+	font-weight: 100;
+	font-size: 0.7em;
+}
+.messageBlock p {
+	max-width: 30vw;
+	margin: 5px 0px 5px 5px;
+	padding: 5px;
+	background-color: white;
+	border: 1px solid #f1f3f4;
+	border-radius: 10px 10px 10px 0px;
+	white-space: pre-wrap;
 }

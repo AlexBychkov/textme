@@ -16,7 +16,7 @@ class TextArea extends Component {
     dialogId: this.props.match.params.dialogId,
   };
 
-  createMessage = (type, enter, payload) => {
+  createMessage = (type, enter, coodrs) => {
     const objToPush = {};
     let messageValue = this.state.inputValue;
 
@@ -28,14 +28,9 @@ class TextArea extends Component {
         break;
     
       case 'location':
-        objToPush.message = payload;
+        objToPush.message = coodrs;
         break;
-
-      // Uncomment below, pass param to createMessage and use it here below
-      // case 'audio':
-      //   objToPush.message = 
-      //   break;
-
+    
       default:
         break;
     }
@@ -73,6 +68,7 @@ class TextArea extends Component {
           value={this.state.inputValue}
           className={classes.TextField}
           multiline
+          fullWidth
           rowsMax="3"
           rows="2"
           size="medium"

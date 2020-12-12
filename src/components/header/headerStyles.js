@@ -22,6 +22,9 @@ export const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
+  menuButton: {
+    marginRight: 36,
+  },
   hide: {
     display: 'none',
   },
@@ -47,12 +50,6 @@ export const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       width: theme.spacing(9) + 1,
     },
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up('sm')]: {
-      display: 'none',
-    }
   },
   toolbar: {
     display: 'flex',

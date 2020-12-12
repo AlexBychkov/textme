@@ -1,14 +1,3 @@
-.TextArea {
-	display: flex;
-	justify-content: center;
-}
-
 .TextField {
-	width: 70%;
-}
-
-@media screen and (max-width : 500px) {
-	.TextField {
-		width: 50%;
-	}
+	max-width: 60vw;
 }

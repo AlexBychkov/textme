@@ -12,7 +12,6 @@ import {
   Divider,
   IconButton,
   Box,
-  Hidden,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -25,10 +24,13 @@ export default function Header() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -44,9 +46,11 @@ export default function Header() {
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerToggle}
+            onClick={handleDrawerOpen}
             edge="start"
-            className={classes.menuButton}
+            className={clsx(classes.menuButton, {
+              [classes.hide]: open,
+            })}
           >
             <MenuIcon />
           </IconButton>
@@ -60,30 +64,8 @@ export default function Header() {
           </Box>
         </Toolbar>
       </AppBar>
-      <Hidden xsDown implementation="css">
       <Drawer
         variant="permanent"
-        className={classes.drawerOpen}
-        classes={{
-          paper: classes.drawerOpen,
-        }}
-      >
-        <div className={classes.toolbar}>
-          <IconButton onClick={handleDrawerToggle}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </div>
-        <Divider />
-        <FirstListMenu />
-        <Divider />
-        <SecondListMenu />
-      </Drawer>
-      </Hidden>
-      <Hidden smUp implementation="css">
-      <Drawer
-        variant="temporary"
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
         className={clsx(classes.drawer, {
           [classes.drawerOpen]: open,
           [classes.drawerClose]: !open,
@@ -96,7 +78,7 @@ export default function Header() {
         }}
       >
         <div className={classes.toolbar}>
-          <IconButton onClick={handleDrawerToggle}>
+          <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </div>
@@ -105,8 +87,6 @@ export default function Header() {
         <Divider />
         <SecondListMenu />
       </Drawer>
-      </Hidden>
-
       <main className={classes.content}>
         <div className={classes.toolbar} />
       </main>

@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
+import MessageItemYours from './components/MessageItemYours';
+import MessageItemNotYours from './components/MessageItemNotYours';
 import InputTextArea from './components/InputTextArea';
-import MessageItem from './components/MessageItem'
+import MessageItemMap from './components/MessageItemMap';
 
 import { connect } from 'react-redux';
 import { db as database } from '../../services/firebase';
@@ -11,7 +13,6 @@ import classes from './Dialog.module.css';
 
 const Dialog = (props) => {
   const [dialogHeight] = useState(window.innerHeight);
-  const [defaultAvatar] = useState('https://124ural.ru/wp-content/uploads/2017/04/no-avatar.png')
   const { dialogId } = props.match.params;
   const scrollTo = useRef();
 
@@ -58,7 +59,6 @@ const Dialog = (props) => {
               const avatar = personInfo[messages[messageItemKey].user].avatar;
 
               ItemProps.key = messageItemKey;
-              ItemProps.type = messages[messageItemKey].type
               ItemProps.value = messages[messageItemKey].message;
               ItemProps.name = name ? name : 'NoName';
               ItemProps.yours = props.user.uid === messages[messageItemKey].user ? true : false
@@ -67,10 +67,12 @@ const Dialog = (props) => {
               ).toLocaleTimeString();
               ItemProps.avatar = avatar
                 ? avatar
-                : defaultAvatar;
-                
-              return <MessageItem {...ItemProps}/>
-              
+                : 'https://124ural.ru/wp-content/uploads/2017/04/no-avatar.png'; // default avatar
+              // delete below after you merge your location feature
+              if (messages[messageItemKey].type !== 'text') return <MessageItemMap {...ItemProps} />
+              if (props.user.uid === messages[messageItemKey].user)
+                return <MessageItemYours {...ItemProps} />;
+              else return <MessageItemNotYours {...ItemProps} />;
             })}
           <div ref={scrollTo}></div>
         </div>
