@@ -16,13 +16,13 @@ class ContactList extends Component {
       contacts: [
         {
           id: 1,
-          name: 'Tolik',
+          name: 'Ivan',
           phone: '123456',
           email: 'tol@mail.com',
         },
         {
           id: 2,
-          name: 'Valera',
+          name: 'Maxim',
           phone: '123789',
           email: 'val@mail.com',
         },
