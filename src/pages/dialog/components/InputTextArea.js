@@ -6,16 +6,17 @@ import { db as database } from '../../../services/firebase';
 
 import { TextField, IconButton } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
-import MicIcon from '@material-ui/icons/Mic';
+
 import MenuDialog from '../../../components/menuDialog/MenuDialog';
+import Voice from './voiceMessage/Voice';
 
 import classes from './InputTextArea.module.css';
+
 
 class TextArea extends Component {
   state = {
     inputValue: '',
     dialogId: this.props.match.params.dialogId,
-    isRecording: '',
   };
 
   createMessage = (type, enter, coodrs) => {
@@ -59,6 +60,8 @@ class TextArea extends Component {
     if (e.keyCode === 13) this.createMessage('text', true);
   };
 
+  
+
   render() {
     return (
       <div className={classes.TextArea}>
@@ -80,15 +83,14 @@ class TextArea extends Component {
           <SendIcon />
         </IconButton>
         <IconButton>
-					<MenuDialog createMessage={this.createMessage}/>
+					<MenuDialog createMessage={this.createMessage} />
 				</IconButton>	
-        <IconButton>
-            <MicIcon />
-          </IconButton>
+        <Voice />
       </div>
     );
-  }
-}
+  };
+};
+
 function mapStateToProps(state) {
   return {
     user: state.user,
