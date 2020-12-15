@@ -8,7 +8,7 @@ import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 
 
 
-export default function MenuDialog(props) {
+export default function  MenuDialog(props) {
     const [anchorEl, setAnchorEl] = useState(null);
 		
     const handleClick = (event) => {

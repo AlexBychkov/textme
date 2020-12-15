@@ -17,7 +17,7 @@ const MessageItem = (props) => {
 			break;
 
 		case 'audio' : 
-			content = (<p>Audio Here</p>) //  Valera assign your component to content variable here!!!!
+			content =  <audio src={props.value} controls /> //  Valera assign your component to content variable here!!!!
 			break;
 			
 		default: 
