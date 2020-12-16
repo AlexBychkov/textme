@@ -9,5 +9,6 @@
   },
   "[javascriptreact]": {
     "editor.formatOnSave": false
-  }
+  },
+  "editor.tabSize": 2
 }

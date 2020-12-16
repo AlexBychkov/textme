@@ -2,6 +2,7 @@ import React from 'react';
 import classes from './MessageItem.module.css';
 import ProfileModal from '../../../components/profiles/ProfilesModal';
 import ModalMap from './../../../components/map/ModalMap';
+import Content from './Content';
 
 const MessageItem = (props) => {
 	let content;
@@ -9,7 +10,7 @@ const MessageItem = (props) => {
 		case 'text' : 
 			content = (<p className = {props.yours 
 				? classes.LeftContent 
-				: classes.RightContent}>{props.value}</p>)
+				: classes.RightContent}><Content text = {props.value}/></p>)
 			break;
 
 		case 'location' :
