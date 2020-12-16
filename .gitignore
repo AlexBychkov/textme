@@ -27,3 +27,5 @@ yarn-error.log*
 .vs/VSWorkspaceState.json
 .vs/slnx.sqlite
 debug.log
+
+.firebase/*

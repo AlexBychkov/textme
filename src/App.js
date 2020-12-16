@@ -10,6 +10,7 @@ import DialogList from './pages/dialogList/DialogList';
 import Dialog from './pages/dialog/Dialog';
 import ContactList from './pages/contact/contactList/ContactList';
 import Contact from './pages/contact/Contact';
+import Settings from './pages/settings/Settings';
 
 import Loading from './components/Loading';
 import Header from './components/header/Header';
@@ -51,6 +52,7 @@ class App extends React.Component {
             <Route path="/dialog/:dialogId" component={Dialog} />
             <Route path="/contact" component={Contact} />
             <Route path="/contactList" component={ContactList} />
+            <Route path="/settings" component={Settings} />
           </Switch>
         </Route>
       </div>
