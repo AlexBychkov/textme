@@ -6,6 +6,9 @@
 .TextField {
 	width: 70%;
 }
+.EmojiIconContainer {
+	position: relative;
+}
 
 @media screen and (max-width : 500px) {
 	.TextField {
