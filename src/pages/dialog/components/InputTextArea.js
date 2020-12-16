@@ -6,6 +6,9 @@ import MenuDialog from '../../../components/menuDialog/MenuDialog';
 import { connect } from 'react-redux';
 import { db as database } from '../../../services/firebase';
 
+import MenuDialog from '../../../components/menuDialog/MenuDialog';
+import Voice from './voiceMessage/Voice';
+
 import { TextField, IconButton, Grid } from '@material-ui/core';
 import { Send, EmojiEmotionsOutlined } from '@material-ui/icons';
 
@@ -13,6 +16,7 @@ import 'emoji-mart/css/emoji-mart.css';
 import { Picker } from 'emoji-mart';
 
 import classes from './InputTextArea.module.css';
+
 
 class TextArea extends Component {
   state = {
@@ -36,10 +40,9 @@ class TextArea extends Component {
         objToPush.message = payload;
         break;
 
-      // Uncomment below, pass param to createMessage and use it here below
-      // case 'audio':
-      //   objToPush.message =
-      //   break;
+      case 'audio':
+        objToPush.message = payload;
+        break;
 
       default:
         break;
@@ -94,8 +97,11 @@ class TextArea extends Component {
           <Send />
         </IconButton>
         <IconButton>
-          <MenuDialog createMessage={this.createMessage} />
-        </IconButton>
+          
+					<MenuDialog createMessage={this.createMessage} />
+				</IconButton>	
+        <Voice createMessage = {this.createMessage}/>
+
         <Grid className = {classes.EmojiIconContainer}>
           <IconButton onClick={this.pickerToggle}> 
             <EmojiEmotionsOutlined />
@@ -112,8 +118,9 @@ class TextArea extends Component {
         </Grid>
       </div>
     );
-  }
-}
+  };
+};
+
 function mapStateToProps(state) {
   return {
     user: state.user,
