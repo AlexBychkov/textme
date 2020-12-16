@@ -7,54 +7,62 @@ import { IconButton } from '@material-ui/core';
 import { storage } from '../../../../services/firebase';
 import { connect } from 'react-redux';
 
-const Voice = (props) => {
-  const device = navigator.mediaDevices.getUserMedia({audio: true});
-  let recorder;
-  let chunk;
+const device = navigator.mediaDevices.getUserMedia({ audio: true });
 
-  
-  const start = () => {
-    device
-      .then((stream) => {
-        chunk = [];
-        recorder = new MediaRecorder(stream);
-        recorder.start();
+let recorder;
+let chunk;
 
-      })
-      .catch((e) => {
-        console.log(e);
+const start = () => {
+  device
+    .then((stream) => {
+      chunk = [];
+      recorder = new MediaRecorder(stream);
+      recorder.start();
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+
+const stop = (uid, createMessage) => {
+  if (recorder !== undefined) {
+    recorder.stop();
+    recorder.ondataavailable = (e) => {
+      chunk.push(e.data);
+
+      let blob = new Blob(chunk, { type: 'audio/webm' });
+      let voice = storage.ref().child(`users/${uid}/voices/${recorder.stream.id}`);
+      voice.put(blob).then(() => {
+        voice.getDownloadURL().then((url) => createMessage('audio', false, url));
       });
-  };
+    };
+  }
+};
 
-  const stop = () => {
-    console.log(recorder);
-    if (recorder !== undefined) {
-      recorder.stop();
-
-      recorder.ondataavailable = (e) => {
-        chunk.push(e.data);
-
-        let blob = new Blob(chunk, { type: 'audio/webm' });
-        let voice = storage
-          .ref()
-          .child(`users/${props.user.uid}/voices/${recorder.stream.id}`);
-        voice.put(blob).then(() => {
-          voice.getDownloadURL().then((url) => props.createMessage('audio', false, url));
-        });
-      };
-    }
-
-  };
+const Voice = (props) => {
+  const [recording, setRecording] = React.useState(false);
 
   return (
     <div>
-        <IconButton onClick={start}>
-          <MicIcon />
-        </IconButton>
-
-        <IconButton onClick={stop}>
+      {recording ? (
+        <IconButton
+          onClick={() => {
+            stop(props.user.uid, props.createMessage);
+            setRecording(false);
+          }}
+        >
           <StopIcon />
         </IconButton>
+      ) : (
+        <IconButton
+          onClick={() => {
+            start();
+            setRecording(true);
+          }}
+        >
+          <MicIcon />
+        </IconButton>
+      )}
     </div>
   );
 };
@@ -66,62 +74,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(Voice);
-
-
-// here i trying to solve render problem... 
-
-// const [recording, setRecording] = useState(false);
-// const [initial, setInitial] = useState(false);
-
-
-// const superHandler = useCallback(() => {
-//   const device = navigator.mediaDevices.getUserMedia({ audio: true });
-//   let recorder;
-//   let chunk;
-
-//   if (!recording) {
-//     device
-//       .then((stream) => {
-//         chunk = [];
-//         recorder = new MediaRecorder(stream);
-//         recorder.start();
-//         console.log(recording);
-//       })
-//       .catch((e) => {
-//         console.log(e);
-//       });
-//       setInitial(true);
-//       return;
-//   }
-//   console.log(recording, recorder)
-//   if (recording && recorder) {
-//     console.log('here?')
-//     recorder.stop();
-
-//     recorder.ondataavailable = (e) => {
-//       chunk.push(e.data);
-
-//       let blob = new Blob(chunk, { type: 'audio/webm' });
-//       let voice = storage
-//         .ref()
-//         .child(`users/${props.user.uid}/voices/${recorder.stream.id}`);
-//       voice.put(blob).then(() => {
-//         voice.getDownloadURL().then((url) => props.createMessage('audio', false, url));
-//       });
-//     };
-//   }
-//   setRecording((prev) => !prev);
-// }, []);
-// console.log('render');
-
-// {recording && (
-//   <IconButton onClick={superHandler}>
-//     <StopIcon />
-//   </IconButton>
-// )}
-
-// {!recording && (
-//   <IconButton onClick={superHandler}>
-//     <MicIcon />
-//   </IconButton>
-// )}
