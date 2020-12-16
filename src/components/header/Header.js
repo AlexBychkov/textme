@@ -12,6 +12,7 @@ import {
   Divider,
   IconButton,
   Box,
+  Hidden,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -23,14 +24,11 @@ import { FirstListMenu, SecondListMenu } from './listMenu/ListMenu';
 export default function Header() {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
   };
 
   return (
@@ -46,11 +44,9 @@ export default function Header() {
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
+            onClick={handleDrawerToggle}
             edge="start"
-            className={clsx(classes.menuButton, {
-              [classes.hide]: open,
-            })}
+            className={classes.menuButton}
           >
             <MenuIcon />
           </IconButton>
@@ -64,29 +60,53 @@ export default function Header() {
           </Box>
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
-        })}
-        classes={{
-          paper: clsx({
+      <Hidden xsDown implementation="css">
+        <Drawer
+          variant="permanent"
+          className={classes.drawerOpen}
+          classes={{
+            paper: classes.drawerOpen,
+          }}
+        >
+          <div className={classes.toolbar}>
+            <IconButton onClick={handleDrawerToggle}>
+              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            </IconButton>
+          </div>
+          <Divider />
+          <FirstListMenu />
+          <Divider />
+          <SecondListMenu />
+        </Drawer>
+      </Hidden>
+      <Hidden smUp implementation="css">
+        <Drawer
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          className={clsx(classes.drawer, {
             [classes.drawerOpen]: open,
             [classes.drawerClose]: !open,
-          }),
-        }}
-      >
-        <div className={classes.toolbar}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </div>
-        <Divider />
-        <FirstListMenu />
-        <Divider />
-        <SecondListMenu />
-      </Drawer>
+          })}
+          classes={{
+            paper: clsx({
+              [classes.drawerOpen]: open,
+              [classes.drawerClose]: !open,
+            }),
+          }}
+        >
+          <div className={classes.toolbar}>
+            <IconButton onClick={handleDrawerToggle}>
+              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            </IconButton>
+          </div>
+          <Divider />
+          <FirstListMenu />
+          <Divider />
+          <SecondListMenu />
+        </Drawer>
+      </Hidden>
+
       <main className={classes.content}>
         <div className={classes.toolbar} />
       </main>
