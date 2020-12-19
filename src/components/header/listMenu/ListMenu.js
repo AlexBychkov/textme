@@ -7,7 +7,7 @@ import SendIcon from '@material-ui/icons/Send';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ProfileModal from './../../profiles/ProfilesModal';
 
-export function FirstListMenu() {
+export function FirstListMenu(props) {
   const itemList = [
     {
       text: 'Send message',
@@ -20,10 +20,10 @@ export function FirstListMenu() {
     { text: 'Contact', path: '/contactList', icon: <PermContactCalendarIcon /> },
   ];
 
-  return <ListMenu itemList={itemList} />;
+  return <ListMenu itemList={itemList} onClick={props.onClick} />;
 }
 
-export function SecondListMenu() {
+export function SecondListMenu(props) {
   const itemList = [
     {
       text: 'Settings',
@@ -32,7 +32,7 @@ export function SecondListMenu() {
     },
   ];
 
-  return <ListMenu itemList={itemList} />;
+  return <ListMenu itemList={itemList} onClick={props.onClick} />;
 }
 
 export function ListMenu(props) {
@@ -70,6 +70,7 @@ export function ListMenu(props) {
               activeStyle={active}
               key={itemList[index].text}
               style={styleLink}
+              onClick={props.onClick}
             >
               <ListItem button>
                 <ListItemIcon>{itemList[index].icon}</ListItemIcon>
