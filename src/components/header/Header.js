@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import clsx from 'clsx';
 import { useTheme } from '@material-ui/core/styles';
@@ -24,8 +24,8 @@ import { FirstListMenu, SecondListMenu } from './listMenu/ListMenu';
 export default function Header() {
   const classes = useStyles();
   const theme = useTheme();
-  const [open] = React.useState(false);
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [open] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
