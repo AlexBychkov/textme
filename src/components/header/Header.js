@@ -101,9 +101,9 @@ export default function Header() {
             </IconButton>
           </div>
           <Divider />
-          <FirstListMenu />
+          <FirstListMenu onClick={handleDrawerToggle} />
           <Divider />
-          <SecondListMenu />
+          <SecondListMenu onClick={handleDrawerToggle}/>
         </Drawer>
       </Hidden>
 
