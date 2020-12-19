@@ -8,6 +8,7 @@ import {
   TableHead,
   TableRow,
   TextField,
+  Container
 } from '@material-ui/core';
 import './ContactList.css';
 
@@ -117,46 +118,50 @@ class ContactList extends Component {
     const { contactSearch, createContactModal } = this.state;
 
     return (
-      <div className="contact-list">
-        <div className="contact-seaerch">
-          {createContactModal && (
-            <CreateContactForm
-              addPerson={this.addContact}
-              isOpen={createContactModal}
-              toggleModal={this.toggleModal}
-            />
-          )}
+      <Container>
+        <div className="contact-list">
+          <div className="contact-search">
+            {createContactModal && (
+              <CreateContactForm
+                addPerson={this.addContact}
+                isOpen={createContactModal}
+                toggleModal={this.toggleModal}
+              />
+            )}
+          </div>
+          <Table className={'table'} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>
+                  <div className={'contact-list'}>
+                    <TextField
+                      id="outlined-basic"
+                      label="search"
+                      value={contactSearch}
+                      onChange={(e) => this.handleSearch(e)}
+                    />
+                  </div>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell>Phone</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>
+                  <button
+                    type="button"
+                    className="table-add-btn"
+                    onClick={() => this.toggleModal()}
+                  >
+                    &#43;
+                  </button>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>{this.renderContacts()}</TableBody>
+          </Table>
         </div>
-        <Table className={'table'} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Phone</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>
-                <button
-                  type="button"
-                  className="table-add-btn"
-                  onClick={() => this.toggleModal()}
-                >
-                  &#43;
-                </button>
-              </TableCell>
-              <TableCell>
-                <div className={'contact-list'}>
-                  <TextField
-                    id="outlined-basic"
-                    label="search"
-                    value={contactSearch}
-                    onChange={(e) => this.handleSearch(e)}
-                  />
-                </div>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>{this.renderContacts()}</TableBody>
-        </Table>
-      </div>
+      </Container>
     );
   }
 }
