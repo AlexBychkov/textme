@@ -1,21 +1,38 @@
 import React, { Component } from 'react';
-import { TableCell, TableRow } from '@material-ui/core';
+
 import ProfileModal from './../../components/profiles/ProfilesModal';
+
+import {
+  IconButton,
+  Avatar,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  ListItemSecondaryAction,
+} from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 class Contact extends Component {
   render() {
-    const {
-      contactData: { name, phone, email, id },
-    } = this.props;
+    let user = this.props.contactData;
     return (
-      <TableRow>
-        <TableCell>
-          <ProfileModal>{name}</ProfileModal>
-        </TableCell>
-        <TableCell>{phone}</TableCell>
-        <TableCell>{email}</TableCell>
-        <TableCell onClick={() => this.props.deleteContact(id)}>X</TableCell>
-      </TableRow>
+      <ListItem>
+        <ListItemAvatar>
+          <ProfileModal user={user}>
+            <Avatar src={user.avatar ? user.avatar : ''}>
+              {user.name && user.name.charAt(0)}
+            </Avatar>
+          </ProfileModal>
+        </ListItemAvatar>
+        <ProfileModal user={user}>
+          <ListItemText primary={user.name} secondary={user.phone} />
+        </ProfileModal>
+        <ListItemSecondaryAction onClick={() => this.props.deleteContact(user.id)}>
+          <IconButton edge="end" aria-label="delete">
+            <DeleteIcon />
+          </IconButton>
+        </ListItemSecondaryAction>
+      </ListItem>
     );
   }
 }
