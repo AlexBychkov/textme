@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import clsx from 'clsx';
 import { useTheme } from '@material-ui/core/styles';
@@ -21,11 +21,11 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import MenuUser from '../menuUser/MenuUser';
 import { FirstListMenu, SecondListMenu } from './listMenu/ListMenu';
 
-export default function Header() {
+export default function Header(props) {
   const classes = useStyles();
   const theme = useTheme();
-  const [open] = React.useState(false);
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [open] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -101,14 +101,15 @@ export default function Header() {
             </IconButton>
           </div>
           <Divider />
-          <FirstListMenu />
+          <FirstListMenu onClick={handleDrawerToggle} />
           <Divider />
-          <SecondListMenu />
+          <SecondListMenu onClick={handleDrawerToggle}/>
         </Drawer>
       </Hidden>
 
       <main className={classes.content}>
         <div className={classes.toolbar} />
+        {props.children}
       </main>
     </div>
   );

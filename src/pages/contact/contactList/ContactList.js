@@ -10,6 +10,7 @@ import { List, Fab } from '@material-ui/core';
 
 import SearchIcon from '@material-ui/icons/Search';
 
+
 class ContactList extends Component {
   constructor(props) {
     super(props);
