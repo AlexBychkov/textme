@@ -30,12 +30,18 @@ function PhoneBlock(props) {
         we will send an SMS with a code to it
       </p>
       <PhoneInput
+        autoFocus
         key="phone-number"
         label="Phone"
         international
         placeholder="Enter phone number"
         value={value}
         onChange={setValue}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            sendPhone();
+          }
+        }}
       ></PhoneInput>
       <br />
       <Button id="send-sms" onClick={sendPhone} color="primary">
@@ -52,12 +58,18 @@ function CodeBlock(props) {
         Enter the code sent to the number <b>{props.formatPhone}</b>
       </p>
       <TextField
+        autoFocus
         key="sms-code"
         label="Code"
         placeholder="123456"
         onChange={props.changeCode}
         helperText={props.code.error ? 'Error' : ''}
         error={props.code.error}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            props.sendCode();
+          }
+        }}
       />
       <br />
       <Button onClick={props.sendCode} color="primary">
