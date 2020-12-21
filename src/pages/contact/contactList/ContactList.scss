@@ -1,49 +1,23 @@
+input{
+  width: 100%;
+  padding-right: 22px;
+}
+&:after{
+  content: "\1F50D";
+  position: absolute;
+  right: .5rem;
+  top: 50%;
+  width: 15px;
+  height: 15px;
+  transform: translateY(-50%);
+}
+.table-add-btn{
+  background: #00ff3c;
+  border-radius: 4px;
+  height: 20px;
+  width: 30px;
+}
 .contact-list{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  .table{
-    width: 70%;
-    thead {
-      .table-item{
-        position: relative;
-        max-width: 200px;
-        input{
-          width: 100%;
-          padding-right: 22px;
-        }
-          &:after{
-            content: "\1F50D";
-            position: absolute;
-            right: .5rem;
-            top: 50%;
-            width: 15px;
-            height: 15px;
-            transform: translateY(-50%);
-          }
-          
-        
-      }
-      th{
-          &:nth-last-child(1) {
-          max-width: 50px;
-        }
-      }
-      
-    }
-    tbody{
-      tr{
-        &:nth-child(2n){
-          background: darken(#fff, 10);
-        }
-      }
-    }
-  }
-  .table-add-btn{
-    background: #00ff3c;
-    border-radius: 4px;
-    height: 20px;
-    width: 30px;
-  }
+  width: 90%;
+  max-width: 570px;
 }

@@ -45,16 +45,17 @@ class App extends React.Component {
     }
     return (
       <div className="App">
-        <Header />
-        <Route path="/">
-          <Switch>
-            <Route path="/dialog" component={DialogList} exact />
-            <Route path="/dialog/:dialogId" component={Dialog} />
-            <Route path="/contact" component={Contact} />
-            <Route path="/contactList" component={ContactList} />
-            <Route path="/settings" component={Settings} />
-          </Switch>
-        </Route>
+        <Header>
+          <Route path="/">
+            <Switch>
+              <Route path="/dialog" component={DialogList} exact />
+              <Route path="/dialog/:dialogId" component={Dialog} />
+              <Route path="/contact" component={Contact} />
+              <Route path="/contactList" component={ContactList} />
+              <Route path="/settings" component={Settings} />
+            </Switch>
+          </Route>
+        </Header>
       </div>
     );
   }
