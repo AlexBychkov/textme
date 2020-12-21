@@ -21,7 +21,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import MenuUser from '../menuUser/MenuUser';
 import { FirstListMenu, SecondListMenu } from './listMenu/ListMenu';
 
-export default function Header() {
+export default function Header(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open] = useState(false);
@@ -109,6 +109,7 @@ export default function Header() {
 
       <main className={classes.content}>
         <div className={classes.toolbar} />
+        {props.children}
       </main>
     </div>
   );
