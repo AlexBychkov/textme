@@ -47,3 +47,8 @@
     width: 30px;
   }
 }
+
+@media (min-width: 500px) {
+  .contact-list{
+    .table{ width: 100%;}}
+}
