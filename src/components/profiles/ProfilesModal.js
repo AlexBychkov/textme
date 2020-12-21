@@ -25,7 +25,7 @@ export default function ProfileModal(props) {
           {props.profile ? (
             <Profile handleClose={handleClose} />
           ) : (
-            <ContactProfile handleClose={handleClose} />
+            <ContactProfile userData = {props.user} contactId = {props.userId}handleClose={handleClose} />
           )}
         </Paper>
       </Modal>

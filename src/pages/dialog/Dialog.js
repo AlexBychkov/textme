@@ -43,7 +43,7 @@ const Dialog = (props) => {
   useEffect(getData, []);
 
   useEffect(scrollToBottomHandler, [messages]);
-
+  
   return (
     <Container style={{ height: dialogHeight - 68 }} className={classes.Container}>
       <div className={classes.Dialog}>
@@ -57,6 +57,10 @@ const Dialog = (props) => {
               const name = personInfo[messages[messageItemKey].user].name;
               const avatar = personInfo[messages[messageItemKey].user].avatar;
 
+        
+              ItemProps.userData = personInfo[messages[messageItemKey].user]
+              ItemProps.userData.id = messages[messageItemKey].user
+              
               ItemProps.key = messageItemKey;
               ItemProps.type = messages[messageItemKey].type
               ItemProps.value = messages[messageItemKey].message;

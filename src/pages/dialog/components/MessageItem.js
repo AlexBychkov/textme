@@ -5,6 +5,7 @@ import ModalMap from './../../../components/map/ModalMap';
 import Content from './Content';
 
 const MessageItem = (props) => {
+
 	let content;
 	switch(props.type) {
 		case 'text' : 
@@ -18,7 +19,7 @@ const MessageItem = (props) => {
 			break;
 
 		case 'audio' : 
-			content =  <audio src={props.value} controls /> //  Valera assign your component to content variable here!!!!
+			content =  <audio src={props.value} controls />
 			break;
 			
 		default: 
@@ -45,7 +46,7 @@ const MessageItem = (props) => {
 			<div className={classes.RightMessage}>
 			  <div className={classes.MessageBlock}>
 				<span className = {classes.RightHeader}>
-				  <ProfileModal>{props.name}</ProfileModal> {props.time}
+				  <ProfileModal user = {props.userData} userId = {props.userId}>{props.name}</ProfileModal> {props.time}
 				</span>
 				{content}
 			  </div>

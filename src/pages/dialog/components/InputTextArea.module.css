@@ -14,7 +14,6 @@
 	.TextField {
 		width: 50%;
 	}
-	/* max-width: 60vw; */
 }
 .chat-input__record-status .stop-recording {
   margin-left: 5px;
