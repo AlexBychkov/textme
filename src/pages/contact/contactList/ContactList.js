@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import Contact from '../Contact';
 import CreateContactForm from '../createContactForm/CreateContactForm';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  TextField,
-  Container
-} from '@material-ui/core';
-import './ContactList.css';
+
+import { db } from '../../../services/firebase';
+
+import { List, Fab } from '@material-ui/core';
+
+import SearchIcon from '@material-ui/icons/Search';
+
 
 class ContactList extends Component {
   constructor(props) {
     super(props);
+    this.user = props.user;
     this.state = {
       contacts: [],
       contactSearch: '',
@@ -24,23 +24,23 @@ class ContactList extends Component {
   }
 
   loadContacts = () => {
-    const initContacts = [
-      {
-        id: 1,
-        name: 'Tolik',
-        phone: '123456',
-        email: 'tol@mail.com',
-      },
-      {
-        id: 2,
-        name: 'Valera',
-        phone: '123789',
-        email: 'val@mail.com',
-      },
-    ];
-    this.setState({
-      ...this.state,
-      contacts: initContacts,
+    db.ref('users/' + this.user.uid + '/contacts').once('value', (usersRaw) => {
+      if (usersRaw.val()) {
+        Object.keys(usersRaw.val()).forEach((userId) => {
+          db.ref(`users/${userId}`).once('value', (userRaw) => {
+            this.setState({
+              ...this.state,
+              contacts: [
+                ...this.state.contacts,
+                {
+                  ...userRaw.val(),
+                  id: userRaw.key,
+                },
+              ],
+            });
+          });
+        });
+      }
     });
   };
 
@@ -83,6 +83,8 @@ class ContactList extends Component {
   };
 
   deleteContact = (id) => {
+    db.ref('users/' + this.user.uid + '/contacts/' + id).remove();
+
     this.setState({
       ...this.state,
       contacts: this.state.contacts.filter((item) => item.id !== id),
@@ -115,55 +117,37 @@ class ContactList extends Component {
     });
 
   render() {
-    const { contactSearch, createContactModal } = this.state;
+    const { createContactModal } = this.state;
 
     return (
-      <Container>
-        <div className="contact-list">
-          <div className="contact-search">
-            {createContactModal && (
-              <CreateContactForm
-                addPerson={this.addContact}
-                isOpen={createContactModal}
-                toggleModal={this.toggleModal}
-              />
-            )}
-          </div>
-          <Table className={'table'} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  <div className={'contact-list'}>
-                    <TextField
-                      id="outlined-basic"
-                      label="search"
-                      value={contactSearch}
-                      onChange={(e) => this.handleSearch(e)}
-                    />
-                  </div>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Phone</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>
-                  <button
-                    type="button"
-                    className="table-add-btn"
-                    onClick={() => this.toggleModal()}
-                  >
-                    &#43;
-                  </button>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>{this.renderContacts()}</TableBody>
-          </Table>
-        </div>
-      </Container>
+      <div>
+        <Fab
+          color="primary"
+          aria-label="add"
+          style={{ position: 'absolute', bottom: '15px', right: '15px' }}
+          onClick={() => this.toggleModal()}
+        >
+          <SearchIcon />
+        </Fab>
+        {createContactModal && (
+          <CreateContactForm
+            addPerson={this.addContact}
+            isOpen={createContactModal}
+            toggleModal={this.toggleModal}
+          />
+        )}
+        <List style={{ maxWidth: '360px', width: '100%', margin: '0 auto' }}>
+          {this.renderContacts()}
+        </List>
+      </div>
     );
   }
 }
 
-export default ContactList;
+function mapStateToProps(state) {
+  return {
+    user: state.user,
+  };
+}
+
+export default connect(mapStateToProps)(ContactList);
