@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
-import { Redirect, useHistory, withRouter } from 'react-router-dom';
+import React from 'react';
+// import { Redirect, useHistory, withRouter } from 'react-router-dom';
+import history from './../../services/history'
 import { connect } from 'react-redux';
 import { db } from '../../services/firebase';
 
@@ -16,14 +17,12 @@ const ContactProfile = (props) => {
   const about = props.userData.about ? props.userData.about : ' ';
   const avatar = props.userData.avatar && props.userData.avatar;
   const contactId = props.userData.id;
-
-  // const [redirect, setRedirect] = useState(null)
-
-  const classes = useStyles();
-
-  let {history} = props
   const privateChatId = props.user.privateChats[contactId]
 
+
+  const classes = useStyles();
+  // let {history} = props
+  
   const createPrivateChat = () => {
     // for safety =_=
     if (contactId === undefined) return
@@ -52,7 +51,6 @@ const ContactProfile = (props) => {
     };
 
     db.ref().update(updates).then(history.push(`/dialog/${key}`));
-    console.log(contactId)
     
   };
 
@@ -72,8 +70,12 @@ const ContactProfile = (props) => {
     }
 
   };
-  const test = () => {
-    history.push('/dialog/lalal')
+  const addFriend = () => {
+    // history.push(`/dialog/testurl`)
+    // add friend
+    const updates = {}
+    updates[`/users/${props.user.uid}/contacts/${contactId}`] = true
+    db.ref().update(updates)
   }
  
  
@@ -117,7 +119,7 @@ const ContactProfile = (props) => {
         </Typography>
         <Typography className={classes.profilePaddings}>{about}</Typography>
         <Grid>
-          <Button variant="contained" color="secondary" className={classes.profileButton} onClick = {test}>
+          <Button variant="contained" color="secondary" className={classes.profileButton} onClick = {addFriend}>
             follow
           </Button>
           <Button
@@ -140,6 +142,7 @@ function mapStateToProps(state) {
   };
 }
 
-// export default connect(mapStateToProps)(ContactProfile);
+export default connect(mapStateToProps)(ContactProfile);
 // export default connect(mapStateToProps)(withRouter(ContactProfile));
-export default withRouter(connect(mapStateToProps)(ContactProfile))
+// export default withRouter(connect(mapStateToProps)(ContactProfile))
+// export default withRouter(ContactProfile)

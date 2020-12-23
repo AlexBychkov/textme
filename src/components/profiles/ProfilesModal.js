@@ -5,7 +5,8 @@ import Profile from './Profile';
 import ContactProfile from './ContactProfile';
 import { useStyles } from './profileStyles';
 
-export default function ProfileModal(props) {
+
+const ProfileModal = props => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -32,3 +33,4 @@ export default function ProfileModal(props) {
     </>
   );
 }
+export default ProfileModal
