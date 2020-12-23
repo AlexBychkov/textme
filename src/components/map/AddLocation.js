@@ -4,7 +4,7 @@ import AddLocationIcon from '@material-ui/icons/AddLocation';
 
 export default function AddLocation(props) {
   const [position, setPosition] = useState({});
-  const [setError] = useState(null);
+  const [, setError] = useState(null);
 
   const defaultSettings = {
     enableHighAccuracy: false,
