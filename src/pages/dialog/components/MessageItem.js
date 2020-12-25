@@ -46,7 +46,7 @@ const MessageItem = (props) => {
 			<div className={classes.RightMessage}>
 			  <div className={classes.MessageBlock}>
 				<span className = {classes.RightHeader}>
-				  <ProfileModal user = {props.userData} userId = {props.userId}>{props.name}</ProfileModal> {props.time}
+				  <ProfileModal user = {props.userData}>{props.name}</ProfileModal> {props.time}
 				</span>
 				{content}
 			  </div>

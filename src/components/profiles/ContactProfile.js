@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Redirect, useHistory, withRouter } from 'react-router-dom';
 import history from './../../services/history'
 import { connect } from 'react-redux';
 import { db } from '../../services/firebase';
@@ -21,7 +20,6 @@ const ContactProfile = (props) => {
 
 
   const classes = useStyles();
-  // let {history} = props
   
   const createPrivateChat = () => {
     // for safety =_=
@@ -71,7 +69,6 @@ const ContactProfile = (props) => {
 
   };
   const addFriend = () => {
-    // history.push(`/dialog/testurl`)
     // add friend
     const updates = {}
     updates[`/users/${props.user.uid}/contacts/${contactId}`] = true
@@ -143,6 +140,4 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(ContactProfile);
-// export default connect(mapStateToProps)(withRouter(ContactProfile));
-// export default withRouter(connect(mapStateToProps)(ContactProfile))
-// export default withRouter(ContactProfile)
+

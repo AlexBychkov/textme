@@ -23,12 +23,10 @@ const DialogList = (props) => {
   const [userList, setUserList] = useState();
   const [loaded, setLoaded] = useState(false);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+
+  const toggleModal = () => {
+    setOpen(prev => !prev)
+  }
 
   const { history } = props;
   const classes = useStyles();
@@ -78,7 +76,7 @@ const DialogList = (props) => {
       <List>
         {loaded &&
           chatList !== null &&
-          Object.keys(chatList).map((item, index) => {
+          Object.keys(chatList).map((item) => {
             const { title, chatId, message, type, user } = chatList[item];
             return (
                 <ListItem
@@ -86,7 +84,7 @@ const DialogList = (props) => {
                   className={classes.itemContainer}
                   onClick={() => history.push(`/dialog/${chatId}`)}
                 >
-                  <Typography variant="h6">{title}</Typography>
+                  <Typography variant="h6">{title ? title : 'no title'}</Typography>
                   <Grid
                     container
                     direction="row"
@@ -108,14 +106,14 @@ const DialogList = (props) => {
       </List>
 
       <Grid>
-        <Button onClick={handleOpen} color="primary" variant="contained">
+        <Button onClick={toggleModal} color="primary" variant="contained">
           CreateThem!!
         </Button>
       </Grid>
 
-      <Modal open={open} onClose={handleClose}>
+      <Modal open={open} onClose={toggleModal}>
         <Paper className={classes.paper}>
-          {userList && <SelectUsers handleClose = {handleClose}users={userList} />}
+          {userList && <SelectUsers handleClose = {toggleModal}users={userList} />}
         </Paper>
       </Modal>
     </Grid>

@@ -8,7 +8,6 @@ import { db as database } from '../../services/firebase';
 import { Container, CircularProgress } from '@material-ui/core';
 
 import classes from './Dialog.module.css';
-// import history from './../../services/history';
 
 const Dialog = (props) => {
   const [dialogHeight] = useState(window.innerHeight);

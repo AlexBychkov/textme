@@ -56,11 +56,10 @@ const SelectUsers = (props) => {
       user: props.user.uid
     }
 
-    
-
     for (let userId in ObjToPush) {
       update[`users/${userId}/chats/${key}`] = true;
     }
+
     db.ref().update(update)
     setTitle('');
     props.handleClose();

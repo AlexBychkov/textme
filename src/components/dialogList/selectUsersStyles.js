@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles({
 	formGroup: {
 		padding: '15px'
 	},
@@ -14,4 +14,4 @@ export const useStyles = makeStyles(theme => ({
 		color: '#000',
 		cursor: 'pointer',
 	}
-}))
+})

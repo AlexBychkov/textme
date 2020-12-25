@@ -19,14 +19,6 @@ const enhancer = composeEnhancers(applyMiddleware());
 const store = createStore(rootReducer, enhancer);
 
 
-// ReactDOM.render(
-//   <Provider store={store}>
-//     <BrowserRouter>
-//       <App />
-//     </BrowserRouter>
-//   </Provider>,
-//   document.getElementById('root')
-// );
 ReactDOM.render(
   <Provider store={store}>
     <Router history = {history}>

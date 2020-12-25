@@ -22,6 +22,8 @@ export const useStyles = makeStyles((theme) => ({
 	paper : {
 		position: 'absolute',
 		width: 400,
+		maxHeight: '70vh',
+		overflowY: 'scroll',
 		marginLeft: 'auto',
     marginRight: 'auto',
     left: 0,
