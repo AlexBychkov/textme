@@ -14,7 +14,7 @@ export default function ModalMap(props) {
       return this.lat + ',' + this.lng;
     }
    };
-  let  srcMaps ='https://maps.googleapis.com/maps/api/staticmap?center=' + coords.strCords + '&markers=color:red%7Clabel:C%7C' + coords.strCords + '&zoom=13&size=200x200&key='  + process.env.REACT_APP_GOOGLEMAP_APP_KEY;
+  let  srcMaps ='https://maps.googleapis.com/maps/api/staticmap?center=' + coords.strCords + '&markers=color:red%7C' + coords.strCords + '&zoom=13&size=200x200&key='  + process.env.REACT_APP_GOOGLEMAP_APP_KEY;
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
