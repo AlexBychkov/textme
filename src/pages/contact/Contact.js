@@ -11,10 +11,17 @@ import {
   ListItemSecondaryAction,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
 
 class Contact extends Component {
   render() {
     let user = this.props.contactData;
+    let btnAddDel = <ListItemSecondaryAction onClick={() => user.friend ? this.props.deleteContact(user.id) : this.props.addContact(user.id)}>
+       <IconButton edge="end">
+       {user.friend ? <DeleteIcon /> : <AddIcon />}
+      </IconButton>
+    </ListItemSecondaryAction>
+
     return (
       <ListItem>
         <ListItemAvatar>
@@ -27,11 +34,7 @@ class Contact extends Component {
         <ProfileModal user={user}>
           <ListItemText primary={user.name} secondary={user.phone} />
         </ProfileModal>
-        <ListItemSecondaryAction onClick={() => this.props.deleteContact(user.id)}>
-          <IconButton edge="end" aria-label="delete">
-            <DeleteIcon />
-          </IconButton>
-        </ListItemSecondaryAction>
+        {btnAddDel}
       </ListItem>
     );
   }
