@@ -14,7 +14,7 @@ export default function ModalMap(props) {
       return this.lng + ',' + this.lat;
     }
    };
-  let  srcMaps ='https://static-maps.yandex.ru/1.x/?ll=' + coords.strCords + '&pt=' + coords.strCords + ',pm2dgm&z=13&l=map&size=200,200';
+  let  srcMaps ='https://maps.googleapis.com/maps/api/staticmap?center=' + coords.strCords + '&markers=color:red%7Clabel:C%7C' + coords.strCords + '&zoom=13&size=200x200&key='  + process.env.REACT_APP_GOOGLEMAP_APP_KEY;
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
