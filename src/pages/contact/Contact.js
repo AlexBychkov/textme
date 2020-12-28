@@ -16,21 +16,11 @@ import AddIcon from '@material-ui/icons/Add';
 class Contact extends Component {
   render() {
     let user = this.props.contactData;
-    let btnAddDel
-
-    if (user.friend) {
-      btnAddDel =  <ListItemSecondaryAction onClick={() => this.props.deleteContact(user.id)}>
-      <IconButton edge="end" aria-label="delete">
-        <DeleteIcon />
+    let btnAddDel = <ListItemSecondaryAction onClick={() => user.friend ? this.props.deleteContact(user.id) : this.props.addContact(user.id)}>
+       <IconButton edge="end">
+       {user.friend ? <DeleteIcon /> : <AddIcon />}
       </IconButton>
     </ListItemSecondaryAction>
-    } else {
-      btnAddDel =  <ListItemSecondaryAction onClick={() => this.props.addContact(user.id)}>
-      <IconButton edge="end" aria-label="addFriend">
-        <AddIcon />
-      </IconButton>
-    </ListItemSecondaryAction>
-    }
 
     return (
       <ListItem>

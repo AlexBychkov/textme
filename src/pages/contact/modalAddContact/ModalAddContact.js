@@ -103,7 +103,7 @@ class ModalAddContact extends Component {
     return (
       <Modal
         open={this.props.isOpen}
-        onClose={() => this.props.toggleModal()}
+        onClose={this.props.toggleModal}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
