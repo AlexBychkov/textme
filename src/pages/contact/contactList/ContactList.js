@@ -32,7 +32,6 @@ class ContactList extends Component {
     });
     db.ref('users/' + this.user.uid + '/contacts').once('value', (usersRaw) => {
       if (usersRaw.val()) {
-
         Object.keys(usersRaw.val()).forEach((userId) => {
           db.ref(`users/${userId}`).once('value', (userRaw) => {
             this.setState({
@@ -149,7 +148,6 @@ class ContactList extends Component {
           id="outlined-basic"
           label="search in your"
           style={{ maxWidth: '360px', width: '100%'}}
-          value={this.state.contactSearch}
           onChange={(e) => this.handleSearch(e)}
         />
 

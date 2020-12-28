@@ -22,8 +22,7 @@ class ModalAddContact extends Component {
     db.ref('users/').once('value', (usersRaw) => {
       if (usersRaw.val()) {
         Object.keys(usersRaw.val()).forEach((userId) => {
-
-          if (this.user.uid !== userId) { //не показываем свой контакт
+          if (this.user.uid !== userId) { 
             db.ref(`users/${userId}`).once('value', (userRaw) => {
               let friend = false;
               if (this.user.contacts[userId]) {
