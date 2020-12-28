@@ -9,10 +9,12 @@ import {
   List,
   CircularProgress,
   ListItem,
-  Button,
+  Fab,
   Modal,
   Paper,
 } from '@material-ui/core';
+
+import AddIcon from '@material-ui/icons/Add';
 
 import { useStyles } from './dialogListStyles';
 
@@ -104,11 +106,14 @@ const DialogList = (props) => {
         )}
       </List>
 
-      <Grid>
-        <Button onClick={toggleModal} color="primary" variant="contained">
-          CreateThem!!
-        </Button>
-      </Grid>
+      <Fab
+        color="primary"
+        aria-label="add"
+        style={{ position: 'fixed', bottom: '15px', right: '15px' }}
+        onClick={toggleModal}
+      >
+        <AddIcon />
+      </Fab>
 
       <Modal open={open} onClose={toggleModal}>
         <Paper className={classes.paper}>
