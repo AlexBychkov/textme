@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import clsx from 'clsx';
 import { useTheme } from '@material-ui/core/styles';
-import { useStyles } from './headerStyles';
 import {
   Drawer,
   AppBar,
@@ -20,6 +19,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 import MenuUser from '../menuUser/MenuUser';
 import { FirstListMenu, SecondListMenu } from './listMenu/ListMenu';
+import { useStyles } from './headerStyles';
 
 export default function Header(props) {
   const classes = useStyles();
@@ -103,7 +103,7 @@ export default function Header(props) {
           <Divider />
           <FirstListMenu onClick={handleDrawerToggle} />
           <Divider />
-          <SecondListMenu onClick={handleDrawerToggle}/>
+          <SecondListMenu onClick={handleDrawerToggle} />
         </Drawer>
       </Hidden>
 
