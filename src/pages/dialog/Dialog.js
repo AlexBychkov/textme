@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import InputTextArea from './components/InputTextArea';
-import MessageItem from './components/MessageItem'
+import MessageItem from './components/MessageItem';
 
 import { connect } from 'react-redux';
 import { db as database } from '../../services/firebase';
@@ -10,8 +10,9 @@ import { Container, CircularProgress } from '@material-ui/core';
 import classes from './Dialog.module.css';
 
 const Dialog = (props) => {
-  const [dialogHeight] = useState(window.innerHeight);
-  const [defaultAvatar] = useState('https://124ural.ru/wp-content/uploads/2017/04/no-avatar.png')
+  const [defaultAvatar] = useState(
+    'https://124ural.ru/wp-content/uploads/2017/04/no-avatar.png'
+  );
   const { dialogId } = props.match.params;
   const scrollTo = useRef();
 
@@ -45,7 +46,7 @@ const Dialog = (props) => {
   useEffect(scrollToBottomHandler, [messages]);
 
   return (
-    <Container style={{ height: dialogHeight - 68 }} className={classes.Container}>
+    <Container className={classes.Container}>
       <div className={classes.Dialog}>
         <div className={classes.DialogField}>
           <h3>Welcome</h3>
@@ -57,20 +58,21 @@ const Dialog = (props) => {
               const name = personInfo[messages[messageItemKey].user].name;
               const avatar = personInfo[messages[messageItemKey].user].avatar;
 
+              ItemProps.userData = personInfo[messages[messageItemKey].user];
+              ItemProps.userData.id = messages[messageItemKey].user;
+
               ItemProps.key = messageItemKey;
-              ItemProps.type = messages[messageItemKey].type
+              ItemProps.type = messages[messageItemKey].type;
               ItemProps.value = messages[messageItemKey].message;
               ItemProps.name = name ? name : 'NoName';
-              ItemProps.yours = props.user.uid === messages[messageItemKey].user ? true : false
+              ItemProps.yours =
+                props.user.uid === messages[messageItemKey].user ? true : false;
               ItemProps.time = new Date(
                 messages[messageItemKey].timestamp
               ).toLocaleTimeString();
-              ItemProps.avatar = avatar
-                ? avatar
-                : defaultAvatar;
-                
-              return <MessageItem {...ItemProps}/>
-              
+              ItemProps.avatar = avatar ? avatar : defaultAvatar;
+
+              return <MessageItem {...ItemProps} />;
             })}
           <div ref={scrollTo}></div>
         </div>

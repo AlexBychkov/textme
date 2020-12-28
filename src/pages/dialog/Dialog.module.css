@@ -1,5 +1,6 @@
 .Container {
 	background-color: #f1f3f4;
+	height: calc(100vh - 68px)
 }
 
 .Dialog {
@@ -22,19 +23,11 @@
 	margin: 0 auto;
 }
 
-@media screen and (max-width : 500px) {
+@media screen and (max-width: 600px) {
 	.DialogField {
 		width: 100%;
 	}
+	.Container {
+		height: calc(100vh - 56px)
+	}
 }
-/* .microfon-icon {
-	background-color: #ccc;
-	border: 1px solid #fff;
-	border-radius: 100%;
-	width: 1rem;
-	height: 2rem;
-}
-
-.microfon-icon:hover {
-	background-color: rgb(161, 161, 161);
-} */

@@ -1,15 +1,84 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import history from './../../services/history'
+import { connect } from 'react-redux';
+import { db } from '../../services/firebase';
 
 import { Grid, Avatar, Typography, Button } from '@material-ui/core';
 import { Smartphone, CloseOutlined } from '@material-ui/icons';
 
 import { useStyles } from './profileStyles';
 
+
 const ContactProfile = (props) => {
+  const contactStatus = props.userData.status ? props.userData.status : 'no status';
+  const phone = props.userData.phone;
+  const contactName = props.userData.name ? props.userData.name : 'noName';
+  const about = props.userData.about ? props.userData.about : ' ';
+  const avatar = props.userData.avatar && props.userData.avatar;
+  const contactId = props.userData.id;
+  const privateChatId = props.user.privateChats[contactId]
+
+
   const classes = useStyles();
-  const { history } = props;
+  
+  const createPrivateChat = () => {
+    // for safety =_=
+    if (contactId === undefined) return
+
+    const updates = {};
+    const key = db.ref().child('chats').push().key;
+
+    // privateChats and chats because dialog list map chats
+    updates[`/users/${props.user.uid}/privateChats/${contactId}`] =  key ;
+    updates[`/users/${props.user.uid}/chats/${key}`] = true;
+    updates[`/users/${contactId}/privateChats/${props.user.uid}`] =  key ;
+    updates[`/users/${contactId}/chats/${key}`] = true;
+
+
+    updates[`/chats/${key}`] = {
+      title: `${contactName}-${props.user.name} chat`,
+      created: props.user.uid,
+      message: `write here something`,
+      type: 'text',
+      user: props.user.uid,
+    };
+
+    updates[`/members/${key}`] = {
+      [props.user.uid]: true,
+      [contactId]: true,
+    };
+
+    db.ref().update(updates).then(history.push(`/dialog/${key}`));
+    
+  };
+
+
+  const textMeOption = () => {
+    // Object.keys(undefined) protection
+
+    if (!props.user.privateChats) {
+      createPrivateChat();
+      return;
+    }
+
+    if (Object.keys(props.user.privateChats).includes(contactId)) {
+      history.push(`/dialog/${privateChatId}`); 
+    } else {
+      createPrivateChat();
+    }
+
+  };
+  const addFriend = () => {
+    // add friend
+    const updates = {}
+    updates[`/users/${props.user.uid}/contacts/${contactId}`] = true
+    db.ref().update(updates)
+  }
+ 
+ 
+
   return (
+    
     <Grid container direction="column" className={classes.profileMainGrid}>
       <Grid
         container
@@ -20,10 +89,12 @@ const ContactProfile = (props) => {
         xs={12}
       >
         <CloseOutlined className={classes.closeIcon} onClick={props.handleClose} />
-        <Avatar classes={{ root: classes.profileAvatar }}>R</Avatar>
-        <Typography variant="h5">Name</Typography>
+        <Avatar classes={{ root: classes.profileAvatar }} src={avatar && avatar}>
+          {contactName && contactName.charAt(0)}
+        </Avatar>
+        <Typography variant="h5">{contactName}</Typography>
         <Typography variant="caption" className={classes.profileSecondaryText}>
-          Status text
+          {contactStatus}
         </Typography>
       </Grid>
       <Grid
@@ -35,7 +106,7 @@ const ContactProfile = (props) => {
         className={classes.profileContentContainer}
       >
         <Typography className={classes.profilePaddings}>
-          <Smartphone fontSize="small" /> +7 900 978 11 32
+          <Smartphone fontSize="small" /> {phone}
         </Typography>
         <Typography
           variant="caption"
@@ -43,17 +114,15 @@ const ContactProfile = (props) => {
         >
           About
         </Typography>
-        <Typography className={classes.profilePaddings}>
-          about content of contact
-        </Typography>
+        <Typography className={classes.profilePaddings}>{about}</Typography>
         <Grid>
-          <Button variant="contained" color="secondary" className={classes.profileButton}>
+          <Button variant="contained" color="secondary" className={classes.profileButton} onClick = {addFriend}>
             follow
           </Button>
           <Button
             variant="contained"
             color="primary"
-            onClick={() => history.push('/dialog')}
+            onClick={textMeOption}
             className={classes.profileButton}
           >
             textme
@@ -64,4 +133,11 @@ const ContactProfile = (props) => {
   );
 };
 
-export default withRouter(ContactProfile);
+function mapStateToProps(state) {
+  return {
+    user: state.user,
+  };
+}
+
+export default connect(mapStateToProps)(ContactProfile);
+

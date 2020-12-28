@@ -2,11 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { applyMiddleware, compose, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { rootReducer } from './redux/rootReducer';
 import './index.css';
+import history from './services/history'
 
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -17,11 +18,12 @@ const enhancer = composeEnhancers(applyMiddleware());
 
 const store = createStore(rootReducer, enhancer);
 
+
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <Router history = {history}>
       <App />
-    </BrowserRouter>
+    </Router>
   </Provider>,
   document.getElementById('root')
 );
