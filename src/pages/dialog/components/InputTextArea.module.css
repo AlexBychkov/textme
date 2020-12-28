@@ -1,5 +1,6 @@
 .TextArea {
-	display: flex;
+  display: flex;
+  align-items: center;
 	justify-content: center;
 }
 
@@ -10,52 +11,15 @@
 	position: relative;
 }
 
-@media screen and (max-width : 500px) {
+
+@media screen and (max-width : 600px) {
 	.TextField {
-		width: 50%;
-	}
-}
-.chat-input__record-status .stop-recording {
-  margin-left: 5px;
-}
-.chat-input__record-status .stop-recording svg {
-  position: relative;
-  top: -1px;
-  width: 14px;
-  height: 14px;
-}
-.chat-input__record-status-bubble {
-  display: inline-block;
-  position: relative;
-  height: 10px;
-  width: 10px;
-  background-color: #f56b6b;
-  border-radius: 30px;
-  margin-right: 8px;
-}
-.chat-input__record-status-bubble::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 10px;
-  width: 10px;
-  background-color: rgba(245, 107, 107, 0.5);
-  border-radius: 30px;
-  animation: wave-animation 1s ease-in-out infinite;
-  transition: transform 0.15s ease-in-out;
-  transform: scale(1);
-}
-
-
-@keyframes wave-animation {
-  0% {
-    transform: scale(1);
+		width: 65%;
   }
-  50% {
-    transform: scale(1.5);
+  .IconButton {
+    padding: 4px !important;
   }
-  100% {
-    transform: scale(1);
+  .Icon {
+    font-size: 1rem !important;
   }
 }

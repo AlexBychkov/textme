@@ -34,6 +34,9 @@ export const useStyles = makeStyles((theme) => ({
     borderRadius: '12px',
     boxShadow: theme.shadows[5],
 		padding: theme.spacing(2, 4, 3),
-		outline: 'none'
+		outline: 'none',
+		'@media (max-width: 500px)': {
+			width: '95vw'
+		}
 	}
 }))

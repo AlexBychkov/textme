@@ -6,7 +6,7 @@ import { Menu, MenuItem } from '@material-ui/core';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 
-
+import classes from '../../pages/dialog/components/InputTextArea.module.css'
 
 export default function  MenuDialog(props) {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -21,7 +21,7 @@ export default function  MenuDialog(props) {
 
     return (
         <div>
-            <AttachFileIcon onClick={handleClick}></AttachFileIcon>
+            <AttachFileIcon className={classes.Icon} onClick={handleClick}></AttachFileIcon>
             <Menu
                 anchorEl={anchorEl}
                 keepMounted

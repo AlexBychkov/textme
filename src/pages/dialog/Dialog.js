@@ -10,7 +10,6 @@ import { Container, CircularProgress } from '@material-ui/core';
 import classes from './Dialog.module.css';
 
 const Dialog = (props) => {
-  const [dialogHeight] = useState(window.innerHeight);
   const [defaultAvatar] = useState(
     'https://124ural.ru/wp-content/uploads/2017/04/no-avatar.png'
   );
@@ -47,7 +46,7 @@ const Dialog = (props) => {
   useEffect(scrollToBottomHandler, [messages]);
 
   return (
-    <Container style={{ height: dialogHeight - 68 }} className={classes.Container}>
+    <Container className={classes.Container}>
       <div className={classes.Dialog}>
         <div className={classes.DialogField}>
           <h3>Welcome</h3>

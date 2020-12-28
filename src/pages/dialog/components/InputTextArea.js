@@ -22,6 +22,7 @@ class TextArea extends Component {
     dialogId: this.props.match.params.dialogId,
     picker: false,
   };
+  textInputRef = React.createRef();
 
   createMessage = (type, enter, payload) => {
     const objToPush = {};
@@ -54,9 +55,12 @@ class TextArea extends Component {
       inputValue: '',
     });
     database.ref().child(`/messages/${this.state.dialogId}`).push(objToPush);
+    this.textInputRef.current.focus();
   };
 
   validateOnClick = (e) => {
+    this.textInputRef.current.focus();
+
     if (this.state.inputValue !== '') this.createMessage('text');
   };
 
@@ -89,23 +93,26 @@ class TextArea extends Component {
           rowsMax="3"
           rows="2"
           size="medium"
+          autoFocus={true}
           placeholder="TextHere"
+          inputRef={this.textInputRef}
         />
-        <IconButton onClick={this.validateOnClick}>
-          <Send />
+        <IconButton className={classes.IconButton} onClick={this.validateOnClick}>
+          <Send className={classes.Icon} />
         </IconButton>
-        <IconButton>
+        <IconButton className={classes.IconButton}>
           <MenuDialog createMessage={this.createMessage} />
         </IconButton>
         <Voice createMessage={this.createMessage} />
 
         <Grid className={classes.EmojiIconContainer}>
-          <IconButton onClick={this.pickerToggle}>
-            <EmojiEmotionsOutlined />
+          <IconButton className={classes.IconButton} onClick={this.pickerToggle}>
+            <EmojiEmotionsOutlined className={classes.Icon} />
           </IconButton>
           {this.state.picker && (
             <Picker
               sheetSize={32}
+              perLine={8}
               onClick={this.addEmoji}
               title="Pick your emoji…"
               set="twitter"
