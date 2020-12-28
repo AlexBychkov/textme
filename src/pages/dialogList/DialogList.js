@@ -16,17 +16,15 @@ import {
 
 import { useStyles } from './dialogListStyles';
 
-
 const DialogList = (props) => {
   const [open, setOpen] = useState(false);
   const [chatList, setChatList] = useState();
   const [userList, setUserList] = useState();
   const [loaded, setLoaded] = useState(false);
 
-
   const toggleModal = () => {
-    setOpen(prev => !prev)
-  }
+    setOpen((prev) => !prev);
+  };
 
   const { history } = props;
   const classes = useStyles();
@@ -36,16 +34,18 @@ const DialogList = (props) => {
     const db = database.ref();
 
     db.child(`users/${props.user.uid}/chats/`).on('value', (UserChatSnap) => {
-      Object.keys(UserChatSnap.val()).forEach((chatId, index) => {
-        db.child(`chats/${chatId}`).once('value', (chatSnap) => {
-          chatObjToUpdate[chatId] = chatSnap.val();
-          chatObjToUpdate[chatId].chatId = chatId;
-          if (index === Object.keys(UserChatSnap.val()).length - 1) {
-            setChatList(chatObjToUpdate);
-            setLoaded(true);
-          }
+      if (UserChatSnap.val()) {
+        Object.keys(UserChatSnap.val()).forEach((chatId, index) => {
+          db.child(`chats/${chatId}`).once('value', (chatSnap) => {
+            chatObjToUpdate[chatId] = chatSnap.val();
+            chatObjToUpdate[chatId].chatId = chatId;
+            if (index === Object.keys(UserChatSnap.val()).length - 1) {
+              setChatList(chatObjToUpdate);
+              setLoaded(true);
+            }
+          });
         });
-      });
+      } else setLoaded(true);
     });
     return () => {
       db.child(`users/${props.user.uid}/chats`).off();
@@ -75,34 +75,33 @@ const DialogList = (props) => {
 
       <List>
         {loaded &&
-          chatList !== null &&
+          chatList &&
           Object.keys(chatList).map((item) => {
             const { title, chatId, message, type, user } = chatList[item];
             return (
-                <ListItem
-                  key={chatId}
-                  className={classes.itemContainer}
-                  onClick={() => history.push(`/dialog/${chatId}`)}
-                >
-                  <Typography variant="h6">{title ? title : 'no title'}</Typography>
-                  <Grid
-                    container
-                    direction="row"
-                    className={classes.lastMessageContainer}
-                  >
-                    <Typography className={classes.marginHorizontal} variant="caption">
-                      {userList && userList[user].name}:
-                    </Typography>
-                    <Typography className={classes.marginHorizontal} variant="caption">
-                      {type === 'text' && message}
-                      {type === 'audio' && 'Audio'}
-                      {type === 'location' && 'Location'}
-                    </Typography>
-                  </Grid>
-                </ListItem>
+              <ListItem
+                key={chatId}
+                className={classes.itemContainer}
+                onClick={() => history.push(`/dialog/${chatId}`)}
+              >
+                <Typography variant="h6">{title ? title : 'no title'}</Typography>
+                <Grid container direction="row" className={classes.lastMessageContainer}>
+                  <Typography className={classes.marginHorizontal} variant="caption">
+                    {userList && userList[user].name}:
+                  </Typography>
+                  <Typography className={classes.marginHorizontal} variant="caption">
+                    {type === 'text' && message}
+                    {type === 'audio' && 'Audio'}
+                    {type === 'location' && 'Location'}
+                  </Typography>
+                </Grid>
+              </ListItem>
             );
           })}
         {!loaded && <CircularProgress />}
+        {loaded && (chatList === undefined || chatList === null) && (
+          <Typography>No chats yet</Typography>
+        )}
       </List>
 
       <Grid>
@@ -113,7 +112,7 @@ const DialogList = (props) => {
 
       <Modal open={open} onClose={toggleModal}>
         <Paper className={classes.paper}>
-          {userList && <SelectUsers handleClose = {toggleModal}users={userList} />}
+          {userList && <SelectUsers handleClose={toggleModal} users={userList} />}
         </Paper>
       </Modal>
     </Grid>
