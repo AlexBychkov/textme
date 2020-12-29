@@ -5,16 +5,14 @@ import Profile from './Profile';
 import ContactProfile from './ContactProfile';
 import { useStyles } from './profileStyles';
 
-
-const ProfileModal = props => {
+const ProfileModal = (props) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
- 
   const handleModal = () => {
-    setOpen(prev => !prev)
-  }
-  
+    setOpen((prev) => !prev);
+  };
+
   return (
     <>
       <strong className={classes.modalPointer} onClick={handleModal}>
@@ -25,11 +23,11 @@ const ProfileModal = props => {
           {props.profile ? (
             <Profile handleClose={handleModal} />
           ) : (
-            <ContactProfile userData = {props.user} handleClose={handleModal} />
+            <ContactProfile userData={props.user} handleClose={handleModal} />
           )}
         </Paper>
       </Modal>
     </>
   );
-}
-export default ProfileModal
+};
+export default ProfileModal;

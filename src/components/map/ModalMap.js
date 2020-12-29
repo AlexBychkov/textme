@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 
 import MyMapComponent from './Map';
 
-import classes from './ModalMap.module.css'
+import classes from './ModalMap.module.css';
 import Modal from '@material-ui/core/Modal';
 import { Container } from '@material-ui/core';
 
 export default function ModalMap(props) {
-  const coords = { 
+  const coords = {
     lat: props.value ? parseFloat(props.value.latitude) : '',
     lng: props.value ?  parseFloat(props.value.longitude) : '',
     get strCords(){
@@ -27,7 +27,12 @@ export default function ModalMap(props) {
 
   return (
     <div>
-      <img className={classes.map_icon} onClick={handleOpen} src={srcMaps} alt='map'></img>
+      <img
+        className={classes.map_icon}
+        onClick={handleOpen}
+        src={srcMaps}
+        alt="map"
+      ></img>
       <Modal
         open={open}
         onClose={handleClose}
@@ -35,7 +40,7 @@ export default function ModalMap(props) {
         aria-describedby="simple-modal-description"
       >
         <Container className={classes.paper} maxWidth="lg">
-        {props.error ? props.error : <MyMapComponent isMarkerShown coords={coords} />}
+          {props.error ? props.error : <MyMapComponent isMarkerShown coords={coords} />}
         </Container>
       </Modal>
     </div>

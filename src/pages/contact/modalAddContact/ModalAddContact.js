@@ -22,7 +22,7 @@ class ModalAddContact extends Component {
     db.ref('users/').once('value', (usersRaw) => {
       if (usersRaw.val()) {
         Object.keys(usersRaw.val()).forEach((userId) => {
-          if (this.user.uid !== userId) { 
+          if (this.user.uid !== userId) {
             db.ref(`users/${userId}`).once('value', (userRaw) => {
               let friend = false;
               if (this.user.contacts[userId]) {
@@ -48,14 +48,15 @@ class ModalAddContact extends Component {
 
   filterAllContacts = () => {
     let newArray = this.state.allContacts.filter((item) => {
-      let flagName = item.name.toLowerCase().includes(this.state.contactSearch.toLocaleLowerCase())
+      let flagName = item.name
+        .toLowerCase()
+        .includes(this.state.contactSearch.toLocaleLowerCase());
       if (flagName) {
-        return flagName
+        return flagName;
       } else {
-        return item.phone.includes(this.state.contactSearch)
+        return item.phone.includes(this.state.contactSearch);
       }
-    }
-    );
+    });
     this.setState({
       ...this.state,
       filteredAllContacts: newArray,
@@ -74,7 +75,7 @@ class ModalAddContact extends Component {
         }
       );
     }
-  }
+  };
 
   renderContacts = () => {
     const { filteredAllContacts, contactSearch, allContacts } = this.state;
@@ -83,14 +84,24 @@ class ModalAddContact extends Component {
       return (
         filteredAllContacts.length > 0 &&
         filteredAllContacts.map((item, index) => (
-          <Contact contactData={item} key={index} deleteContact={this.props.deleteContact} addContact={this.props.addContact} />
+          <Contact
+            contactData={item}
+            key={index}
+            deleteContact={this.props.deleteContact}
+            addContact={this.props.addContact}
+          />
         ))
       );
     } else
       return (
         allContacts.length > 0 &&
         allContacts.map((item, index) => (
-          <Contact contactData={item} key={index} deleteContact={this.props.deleteContact} addContact={this.props.addContact} />
+          <Contact
+            contactData={item}
+            key={index}
+            deleteContact={this.props.deleteContact}
+            addContact={this.props.addContact}
+          />
         ))
       );
   };
@@ -107,16 +118,23 @@ class ModalAddContact extends Component {
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        <Container style={{ backgroundColor: '#ffffff', maxWidth: '360px', margin: '10vh auto' }}>
+        <Container
+          style={{
+            backgroundColor: '#ffffff',
+            maxWidth: '360px',
+            margin: '10vh auto',
+            overflowY: 'auto',
+            maxHeight: '80vh',
+            scrollbarWidth: 'thin',
+          }}
+        >
           <TextField
             label="search other contact"
             style={{ maxWidth: '360px', width: '100%' }}
             value={this.statecontactSearch}
             onChange={(e) => this.handleSearchOther(e)}
           />
-          <List>
-            {this.renderContacts()}
-          </List>
+          <List>{this.renderContacts()}</List>
         </Container>
       </Modal>
     );

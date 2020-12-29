@@ -1,11 +1,12 @@
 .TextArea {
   display: flex;
   align-items: center;
-	justify-content: center;
+  justify-content: center;
+  padding-bottom: 20px;
 }
 
 .TextField {
-	width: 70%;
+	width: 100%;
 }
 .EmojiIconContainer {
 	position: relative;
@@ -13,13 +14,7 @@
 
 
 @media screen and (max-width : 600px) {
-	.TextField {
-		width: 65%;
-  }
-  .IconButton {
-    padding: 4px !important;
-  }
-  .Icon {
-    font-size: 1rem !important;
+  .TextArea {
+    padding-bottom: 10px;
   }
 }

@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const drawerWidth = 240;
+const drawerWidth = 210;
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,7 +52,7 @@ export const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
     [theme.breakpoints.up('sm')]: {
       display: 'none',
-    }
+    },
   },
   toolbar: {
     display: 'flex',

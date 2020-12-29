@@ -1,21 +1,23 @@
 .Container {
 	background-color: #f1f3f4;
-	height: calc(100vh - 68px)
+	height: calc(100vh - 68px);
 }
 
 .Dialog {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	height: 85vh;
+	height: 100%;
+	max-width: 560px;
+	margin:0 auto;
 }
 .DialogField {
 	display: flex;
 	flex-direction: column;
 	background-color: white;
 	margin: 0 auto;
-	width: 90%;
-	overflow-y: scroll;
+	width: 100%;
+	overflow-y: auto;
 	scrollbar-width: thin;
 }
 

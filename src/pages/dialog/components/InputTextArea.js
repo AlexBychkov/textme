@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
-import MenuDialog from '../../../components/menuDialog/MenuDialog';
+//import MenuDialog from '../../../components/menuDialog/MenuDialog';
+import AddLocation from '../../../components/map/AddLocation';
 
 import { connect } from 'react-redux';
 import { db as database } from '../../../services/firebase';
@@ -90,20 +91,25 @@ class TextArea extends Component {
           value={this.state.inputValue}
           className={classes.TextField}
           multiline
-          rowsMax="3"
-          rows="2"
+          rowsMax="4"
+          rows="1"
           size="medium"
           autoFocus={true}
           placeholder="TextHere"
           inputRef={this.textInputRef}
         />
-        <IconButton className={classes.IconButton} onClick={this.validateOnClick}>
-          <Send className={classes.Icon} />
-        </IconButton>
-        <IconButton className={classes.IconButton}>
-          <MenuDialog createMessage={this.createMessage} />
-        </IconButton>
-        <Voice createMessage={this.createMessage} />
+        {this.state.inputValue ? (
+          <IconButton className={classes.IconButton} onClick={this.validateOnClick}>
+            <Send className={classes.Icon} />
+          </IconButton>
+        ) : (
+          <>
+            <Voice createMessage={this.createMessage} />
+            <IconButton className={classes.IconButton}>
+              <AddLocation createMessage={this.createMessage} />
+            </IconButton>
+          </>
+        )}
 
         <Grid className={classes.EmojiIconContainer}>
           <IconButton className={classes.IconButton} onClick={this.pickerToggle}>
@@ -112,9 +118,9 @@ class TextArea extends Component {
           {this.state.picker && (
             <Picker
               sheetSize={32}
-              perLine={8}
+              perLine={6}
               onClick={this.addEmoji}
-              title="Pick your emoji…"
+              title="Pick emoji…"
               set="twitter"
               style={{ position: 'absolute', bottom: '50px', right: '20px' }}
             />
