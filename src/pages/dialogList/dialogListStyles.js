@@ -12,12 +12,23 @@ export const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
   },
   lastMessageContainer: {
-    justifyContent: 'center',
+    display: 'block',
     color: 'rgba(0,0,0,0.54)',
     padding: '6px',
+    textAlign: 'center',
+  },
+  fabButton: {
+    position: 'fixed',
+    bottom: '15px',
+    right: '15px',
+    zIndex: '99999',
   },
   marginHorizontal: {
     margin: '0 6px',
+  },
+  userName: {
+    margin: '0 6px',
+    fontWeight: 'bold',
   },
   paper: {
     position: 'absolute',
