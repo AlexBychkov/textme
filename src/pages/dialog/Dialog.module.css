@@ -1,6 +1,6 @@
 .Container {
 	background-color: #f1f3f4;
-	height: calc(100vh - 68px)
+	height: calc(100vh - 68px);
 }
 
 .Dialog {
@@ -8,6 +8,8 @@
 	flex-direction: column;
 	justify-content: space-between;
 	height: 100%;
+	max-width: 560px;
+	margin:0 auto;
 }
 .DialogField {
 	display: flex;
