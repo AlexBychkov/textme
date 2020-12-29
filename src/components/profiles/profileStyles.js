@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => {
-  return ({
+  return {
     modalPaper: {
       position: 'absolute',
       marginLeft: 'auto',
@@ -13,29 +13,29 @@ export const useStyles = makeStyles((theme) => {
       top: '20vh',
       outline: 'none',
       borderRadius: '15px',
-      [theme.breakpoints.down("xs")]: {
+      [theme.breakpoints.down('xs')]: {
         width: '90vw',
       },
       '@media (max-height: 500px) and (orientation: landscape)': {
         borderRadius: '0px',
         top: '0',
         height: '100%',
-        overflowY: 'scroll'
-      }
+        overflowY: 'scroll',
+      },
     },
     modalPointer: {
       cursor: 'pointer',
       fontWeight: 'normal',
     },
-  
+
     profileHeader: {
       flexBasis: '40%',
       minHeight: '100px',
       backgroundColor: '#4791db',
       borderRadius: '12px 12px 0px 0px',
-      '@media (max-height: 500px) and (orientation: landscape)' : {
-        borderRadius: '0'
-      }
+      '@media (max-height: 500px) and (orientation: landscape)': {
+        borderRadius: '0',
+      },
     },
     closeIcon: {
       position: 'absolute',
@@ -60,12 +60,12 @@ export const useStyles = makeStyles((theme) => {
     profileSecondaryText: {
       color: 'rgba(0,0,0,0.54)',
     },
-    profileTextFields : {
+    profileTextFields: {
       width: '250px',
       paddingBottom: '8px',
-      [theme.breakpoints.down("xs")]: {
+      [theme.breakpoints.down('xs')]: {
         width: '200px',
-      }
+      },
     },
     profileButton: {
       margin: '6px',
@@ -75,5 +75,5 @@ export const useStyles = makeStyles((theme) => {
       top: 0,
       width: '100vw',
     },
-  })
+  };
 });

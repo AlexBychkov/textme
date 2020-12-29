@@ -1,5 +1,5 @@
 import React from 'react';
-import history from './../../services/history'
+import history from './../../services/history';
 import { connect } from 'react-redux';
 import { db } from '../../services/firebase';
 
@@ -8,7 +8,6 @@ import { Smartphone, CloseOutlined } from '@material-ui/icons';
 
 import { useStyles } from './profileStyles';
 
-
 const ContactProfile = (props) => {
   const contactStatus = props.userData.status ? props.userData.status : 'no status';
   const phone = props.userData.phone;
@@ -16,24 +15,22 @@ const ContactProfile = (props) => {
   const about = props.userData.about ? props.userData.about : ' ';
   const avatar = props.userData.avatar && props.userData.avatar;
   const contactId = props.userData.id;
-  const privateChatId = props.user.privateChats[contactId]
-
+  const privateChatId = props.user.privateChats[contactId];
 
   const classes = useStyles();
-  
+
   const createPrivateChat = () => {
     // for safety =_=
-    if (contactId === undefined) return
+    if (contactId === undefined) return;
 
     const updates = {};
     const key = db.ref().child('chats').push().key;
 
     // privateChats and chats because dialog list map chats
-    updates[`/users/${props.user.uid}/privateChats/${contactId}`] =  key ;
+    updates[`/users/${props.user.uid}/privateChats/${contactId}`] = key;
     updates[`/users/${props.user.uid}/chats/${key}`] = true;
-    updates[`/users/${contactId}/privateChats/${props.user.uid}`] =  key ;
+    updates[`/users/${contactId}/privateChats/${props.user.uid}`] = key;
     updates[`/users/${contactId}/chats/${key}`] = true;
-
 
     updates[`/chats/${key}`] = {
       title: `${contactName}-${props.user.name} chat`,
@@ -48,10 +45,10 @@ const ContactProfile = (props) => {
       [contactId]: true,
     };
 
-    db.ref().update(updates).then(history.push(`/dialog/${key}`));
-    
+    db.ref()
+      .update(updates)
+      .then(history.push(`/dialog/${key}`));
   };
-
 
   const textMeOption = () => {
     // Object.keys(undefined) protection
@@ -62,23 +59,19 @@ const ContactProfile = (props) => {
     }
 
     if (Object.keys(props.user.privateChats).includes(contactId)) {
-      history.push(`/dialog/${privateChatId}`); 
+      history.push(`/dialog/${privateChatId}`);
     } else {
       createPrivateChat();
     }
-
   };
   const addFriend = () => {
     // add friend
-    const updates = {}
-    updates[`/users/${props.user.uid}/contacts/${contactId}`] = true
-    db.ref().update(updates)
-  }
- 
- 
+    const updates = {};
+    updates[`/users/${props.user.uid}/contacts/${contactId}`] = true;
+    db.ref().update(updates);
+  };
 
   return (
-    
     <Grid container direction="column" className={classes.profileMainGrid}>
       <Grid
         container
@@ -116,7 +109,12 @@ const ContactProfile = (props) => {
         </Typography>
         <Typography className={classes.profilePaddings}>{about}</Typography>
         <Grid>
-          <Button variant="contained" color="secondary" className={classes.profileButton} onClick = {addFriend}>
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.profileButton}
+            onClick={addFriend}
+          >
             follow
           </Button>
           <Button
@@ -140,4 +138,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(ContactProfile);
-

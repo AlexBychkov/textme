@@ -23,7 +23,7 @@ const SelectUsers = (props) => {
 
   const classes = useStyles();
 
-  // updating obj where we save info about check/uncheck 
+  // updating obj where we save info about check/uncheck
   const handleChecker = (event) => {
     setSelected((prev) => {
       const id = event.target.value;
@@ -35,10 +35,9 @@ const SelectUsers = (props) => {
     });
   };
 
-
   const createChatHandler = () => {
     const ObjToPush = {};
-    const update = {}
+    const update = {};
     // clear selected from false properties(which was been selected and then deselected)
     for (let prop in selected) {
       selected[prop] && (ObjToPush[prop] = true);
@@ -47,20 +46,20 @@ const SelectUsers = (props) => {
 
     const key = db.ref().child(`chats`).push().key;
 
-    update[`/members/${key}`] = ObjToPush
+    update[`/members/${key}`] = ObjToPush;
     update[`/chats/${key}`] = {
       title: title,
       created: props.user.uid,
       message: `welcome to ${title}`,
       type: 'text',
-      user: props.user.uid
-    }
+      user: props.user.uid,
+    };
 
     for (let userId in ObjToPush) {
       update[`users/${userId}/chats/${key}`] = true;
     }
 
-    db.ref().update(update)
+    db.ref().update(update);
     setTitle('');
     props.handleClose();
   };
@@ -76,7 +75,7 @@ const SelectUsers = (props) => {
             labelPlacement="top"
             control={
               <TextField
-                className = {classes.field}
+                className={classes.field}
                 value={title}
                 onChange={(e) => {
                   setTitle(e.target.value);

@@ -7,7 +7,7 @@ import { IconButton } from '@material-ui/core';
 import { storage } from '../../../../services/firebase';
 import { connect } from 'react-redux';
 
-import classes from '../InputTextArea.module.css'
+import classes from '../InputTextArea.module.css';
 
 const device = navigator.mediaDevices.getUserMedia({ audio: true });
 
@@ -47,22 +47,24 @@ const Voice = (props) => {
   return (
     <div>
       {recording ? (
-        <IconButton className = {classes.IconButton}
+        <IconButton
+          className={classes.IconButton}
           onClick={() => {
             stop(props.user.uid, props.createMessage);
             setRecording(false);
           }}
         >
-          <StopIcon className = {classes.Icon}/>
+          <StopIcon className={classes.Icon} />
         </IconButton>
       ) : (
-        <IconButton className = {classes.IconButton}
+        <IconButton
+          className={classes.IconButton}
           onClick={() => {
             start();
             setRecording(true);
           }}
         >
-          <MicIcon className = {classes.Icon}/>
+          <MicIcon className={classes.Icon} />
         </IconButton>
       )}
     </div>

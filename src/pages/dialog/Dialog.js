@@ -9,10 +9,10 @@ import { Container, CircularProgress } from '@material-ui/core';
 
 import classes from './Dialog.module.css';
 
+import noAvatar from '../../no-avatar.png';
+
 const Dialog = (props) => {
-  const [defaultAvatar] = useState(
-    'https://124ural.ru/wp-content/uploads/2017/04/no-avatar.png'
-  );
+  const [defaultAvatar] = useState(noAvatar);
   const { dialogId } = props.match.params;
   const scrollTo = useRef();
 
@@ -72,6 +72,7 @@ const Dialog = (props) => {
               ).toLocaleTimeString();
               ItemProps.avatar = avatar ? avatar : defaultAvatar;
 
+              // eslint-disable-next-line react/jsx-key
               return <MessageItem {...ItemProps} />;
             })}
           <div ref={scrollTo}></div>

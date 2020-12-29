@@ -55,7 +55,8 @@ function CodeBlock(props) {
   return (
     <div>
       <p>
-        Enter the code sent to the number <b>{props.formatPhone}</b>
+        Enter the code sent to the number <br />
+        <b>{props.formatPhone}</b>
       </p>
       <TextField
         autoFocus
