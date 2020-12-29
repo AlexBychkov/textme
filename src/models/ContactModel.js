@@ -1,4 +1,4 @@
-export var ContactModel =  {
+export var ContactModel = {
   name: '',
   id: '',
   phone: '',

@@ -9,10 +9,12 @@ import {
   List,
   CircularProgress,
   ListItem,
-  Button,
+  Fab,
   Modal,
   Paper,
 } from '@material-ui/core';
+
+import AddIcon from '@material-ui/icons/Add';
 
 import { useStyles } from './dialogListStyles';
 
@@ -68,8 +70,8 @@ const DialogList = (props) => {
       spacing={2}
       className={classes.container}
       xs={11}
-      md={5}
-      lg={3}
+      md={9}
+      lg={7}
     >
       <h3>TextThem!</h3>
 
@@ -86,7 +88,7 @@ const DialogList = (props) => {
               >
                 <Typography variant="h6">{title ? title : 'no title'}</Typography>
                 <Grid container direction="row" className={classes.lastMessageContainer}>
-                  <Typography className={classes.marginHorizontal} variant="caption">
+                  <Typography className={classes.userName} variant="caption">
                     {userList && userList[user].name}:
                   </Typography>
                   <Typography className={classes.marginHorizontal} variant="caption">
@@ -104,11 +106,14 @@ const DialogList = (props) => {
         )}
       </List>
 
-      <Grid>
-        <Button onClick={toggleModal} color="primary" variant="contained">
-          CreateThem!!
-        </Button>
-      </Grid>
+      <Fab
+        color="primary"
+        aria-label="add"
+        className={classes.fabButton}
+        onClick={toggleModal}
+      >
+        <AddIcon />
+      </Fab>
 
       <Modal open={open} onClose={toggleModal}>
         <Paper className={classes.paper}>

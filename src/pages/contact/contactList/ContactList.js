@@ -67,14 +67,15 @@ class ContactList extends Component {
 
   filterContacts = () => {
     let newArray = this.state.myContacts.filter((item) => {
-      let flagName = item.name.toLowerCase().includes(this.state.contactSearch.toLocaleLowerCase())
+      let flagName = item.name
+        .toLowerCase()
+        .includes(this.state.contactSearch.toLocaleLowerCase());
       if (flagName) {
-        return flagName
+        return flagName;
       } else {
-        return item.phone.includes(this.state.contactSearch)
+        return item.phone.includes(this.state.contactSearch);
       }
-    }
-    );
+    });
     this.setState({
       ...this.state,
       filteredContacts: newArray,
@@ -104,14 +105,24 @@ class ContactList extends Component {
       return (
         filteredContacts.length > 0 &&
         filteredContacts.map((item, index) => (
-          <Contact contactData={item} key={index} deleteContact={this.deleteContact} addContact={this.addContact} />
+          <Contact
+            contactData={item}
+            key={index}
+            deleteContact={this.deleteContact}
+            addContact={this.addContact}
+          />
         ))
       );
     } else
       return (
         myContacts.length > 0 &&
         myContacts.map((item, index) => (
-          <Contact contactData={item} key={index} deleteContact={this.deleteContact} addContact={this.addContact} />
+          <Contact
+            contactData={item}
+            key={index}
+            deleteContact={this.deleteContact}
+            addContact={this.addContact}
+          />
         ))
       );
   };
@@ -130,7 +141,7 @@ class ContactList extends Component {
         <Fab
           color="primary"
           aria-label="add"
-          style={{ position: 'absolute', bottom: '15px', right: '15px' }}
+          style={{ position: 'fixed', bottom: '15px', right: '15px', zIndex: 200 }}
           onClick={() => this.toggleModal()}
         >
           <SearchIcon />
@@ -142,12 +153,11 @@ class ContactList extends Component {
             isOpen={createContactModal}
             toggleModal={this.toggleModal}
           />
-
         )}
         <TextField
           id="outlined-basic"
           label="search in your"
-          style={{ maxWidth: '360px', width: '100%'}}
+          style={{ maxWidth: '360px', width: '100%' }}
           onChange={(e) => this.handleSearch(e)}
         />
 
