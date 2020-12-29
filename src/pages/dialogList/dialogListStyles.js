@@ -35,6 +35,7 @@ export const useStyles = makeStyles((theme) => ({
     width: 400,
     maxHeight: '70vh',
     overflowY: 'auto',
+    scrollbarWidth: 'thin',
     marginLeft: 'auto',
     marginRight: 'auto',
     left: 0,

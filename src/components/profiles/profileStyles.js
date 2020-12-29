@@ -20,7 +20,8 @@ export const useStyles = makeStyles((theme) => {
         borderRadius: '0px',
         top: '0',
         height: '100%',
-        overflowY: 'scroll',
+        overflowY: 'auto',
+        scrollbarWidth: 'thin',
       },
     },
     modalPointer: {

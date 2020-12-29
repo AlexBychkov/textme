@@ -123,8 +123,9 @@ class ModalAddContact extends Component {
             backgroundColor: '#ffffff',
             maxWidth: '360px',
             margin: '10vh auto',
-            overflow: 'auto',
+            overflowY: 'auto',
             maxHeight: '80vh',
+            scrollbarWidth: 'thin',
           }}
         >
           <TextField

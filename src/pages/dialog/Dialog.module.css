@@ -7,15 +7,15 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	height: 85vh;
+	height: 100%;
 }
 .DialogField {
 	display: flex;
 	flex-direction: column;
 	background-color: white;
 	margin: 0 auto;
-	width: 90%;
-	overflow-y: scroll;
+	width: 100%;
+	overflow-y: auto;
 	scrollbar-width: thin;
 }
 
