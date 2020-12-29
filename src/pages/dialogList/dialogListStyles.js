@@ -16,12 +16,13 @@ export const useStyles = makeStyles((theme) => ({
     color: 'rgba(0,0,0,0.54)',
     padding: '6px',
     textAlign: 'center',
+    wordWrap: 'anywhere',
   },
   fabButton: {
     position: 'fixed',
     bottom: '15px',
     right: '15px',
-    zIndex: '99999',
+    zIndex: '200',
   },
   marginHorizontal: {
     margin: '0 6px',

@@ -141,7 +141,7 @@ class ContactList extends Component {
         <Fab
           color="primary"
           aria-label="add"
-          style={{ position: 'fixed', bottom: '15px', right: '15px', zIndex: 99999 }}
+          style={{ position: 'fixed', bottom: '15px', right: '15px', zIndex: 200 }}
           onClick={() => this.toggleModal()}
         >
           <SearchIcon />

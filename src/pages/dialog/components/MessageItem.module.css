@@ -23,9 +23,6 @@
 	font-size: 0.7em;
 }
 .LeftContent {
-	max-width: 30vw;
-	margin: 5px 0px 5px 5px;
-	padding: 5px;
 	background-color: white;
 	border: 1px solid #f1f3f4;
 	border-radius: 0px 10px 10px 10px;
@@ -41,8 +38,6 @@
 	margin-right: 5vw;
 }
 .RightContent{
-	max-width: 30vw;
-	padding: 5px;
 	background-color:#1976d2;
 	border-radius: 10px 0px 10px 10px;
 	color: white;
@@ -52,6 +47,12 @@
 	margin-right: 10px;
 	font-weight: 100;
 	font-size: 0.7em;
+}
+.LeftContent, .RightContent {
+	word-wrap: break-word;
+	max-width: 30vw;
+	padding: 5px;
+	margin:5px;
 }
 
 
